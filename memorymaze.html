@@ -415,17 +415,33 @@
             .levels-timeline::before { display: none; }
             .level-node-wrapper { display: none; }
             .level-row { grid-template-columns: 1fr; gap: 2rem; }
-            
+
             .project-title { font-size: 15vw; }
-            
+
             .scroll-container-outer { height: auto; }
             .scroll-container-sticky { position: relative; height: auto; top: 0; padding: 4rem 0; }
             .scroll-track { overflow-x: auto; width: 100%; gap: 1rem; padding-bottom: 2rem; }
             .scroll-item { width: 85vw; height: auto; margin-right: 1rem; }
             .scroll-item img { width: 100%; height: auto; }
-            
+
             .slider-btn { display: none; }
             .char-img { height: 250px; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 1rem; grid-template-columns: 1fr; gap: 0.5rem; justify-items: center; }
+            .nav-left, .nav-right, .logo-container { justify-self: center; }
+            .nav-right ul { gap: 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            .project-hero { padding: 100px 5% 40px 5%; }
+            .hero-info-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .project-nav { flex-direction: column; gap: 1rem; text-align: center; }
+            .level-row { margin-bottom: 3rem; }
+            .level-text h3 { font-size: 1.5rem; }
+            .char-card { min-width: 220px; }
+            .char-img { height: 200px; }
         }
     </style>
 </head>

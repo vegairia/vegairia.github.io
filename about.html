@@ -443,10 +443,18 @@
             header { padding: 1rem; grid-template-columns: 1fr; gap: 1rem; justify-items: center; }
             .nav-left, .nav-right, .logo-container { justify-self: center; }
             .bio-container { grid-template-columns: 1fr; gap: 2rem; }
-            .bio-image-wrapper { height: 400px; } 
+            .bio-image-wrapper { height: 400px; }
             .resume-section { grid-template-columns: 1fr; }
-            .skills-grid { grid-template-columns: 1fr; } /* 1 columna en móvil */
+            .skills-grid { grid-template-columns: 1fr; }
             .contact-panel { grid-template-columns: 1fr; gap: 2rem; }
+            .cp-link { font-size: 1.2rem; }
+        }
+
+        @media (max-width: 480px) {
+            .bio-image-wrapper { height: 300px; }
+            .bio-text h1 { font-size: 2.5rem; }
+            .cp-left h2 { font-size: 2rem; }
+            main { padding-top: 120px; width: 95%; }
         }
     </style>
 </head>

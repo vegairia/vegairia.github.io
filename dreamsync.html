@@ -265,8 +265,23 @@
         @media (max-width: 900px) {
             .info-grid, .style-guide-grid { grid-template-columns: 1fr; }
             .project-title { font-size: 15vw; }
-            .browser-mockup { height: 400px; }
+            .browser-mockup { height: 50vh; min-height: 350px; }
             .color-palette { justify-content: center; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 1rem; grid-template-columns: 1fr; gap: 0.5rem; justify-items: center; }
+            .nav-left, .nav-right, .logo-container { justify-self: center; }
+            .nav-right ul { gap: 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            .project-hero { padding: 100px 5% 40px 5%; }
+            .project-nav { flex-direction: column; gap: 1rem; text-align: center; }
+            .browser-mockup { height: 300px; min-height: auto; }
+            .color-swatch { width: 90px; height: 90px; font-size: 0.7rem; }
+            .color-palette { gap: 10px; }
+            .details-col { gap: 1rem; }
         }
     </style>
 </head>

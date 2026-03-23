@@ -273,24 +273,38 @@
         @media (max-width: 900px) {
             .project-hero { grid-template-columns: 1fr; padding-top: 120px; gap: 2rem; }
             .hero-left-image { max-width: 80%; }
-            .project-title { font-size: 10vw; white-space: normal;} /* Permitimos doble línea en móvil si no cabe */
-            
+            .project-title { font-size: 10vw; white-space: normal; }
+
             .buddies-grid { grid-template-columns: 1fr 1fr; }
             .ds-grid { grid-template-columns: 1fr; gap: 4rem; }
-            
-            .color-palette-grid { grid-template-columns: repeat(5, 1fr); gap: 0.5rem;}
-            
+
+            .color-palette-grid { grid-template-columns: repeat(5, 1fr); gap: 0.5rem; }
+
             .landings-grid { grid-template-columns: 1fr; }
             .pdf-mobile { height: 60vh; width: 80%; margin: 0 auto; }
 
             .scroll-container-outer { height: auto; margin-bottom: 4rem; }
             .scroll-container-sticky { position: relative; height: auto; top: 0; padding: 4rem 0; }
-            .scroll-track { overflow-x: auto; width: 100%; gap: 1.5rem; padding-bottom: 2rem; margin-top: 2rem;}
-            .flow-header { position: relative; top: 0; padding: 0 5%; margin-bottom: 2rem; flex-direction: column; align-items: flex-start;}
+            .scroll-track { overflow-x: auto; width: 100%; gap: 1.5rem; padding-bottom: 2rem; margin-top: 2rem; }
+            .flow-header { position: relative; top: 0; padding: 0 5%; margin-bottom: 2rem; flex-direction: column; align-items: flex-start; }
             .scroll-item { height: 50vh; }
         }
+
+        @media (max-width: 768px) {
+            header { padding: 1rem; grid-template-columns: 1fr; gap: 0.5rem; justify-items: center; }
+            .nav-left, .nav-right, .logo-container { justify-self: center; }
+            .nav-right ul { gap: 1rem; }
+        }
+
         @media (max-width: 500px) {
             .buddies-grid { grid-template-columns: 1fr; }
+            .hero-info-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .project-nav { flex-direction: column; gap: 1rem; text-align: center; }
+            .project-hero { padding: 100px 5% 40px 5%; }
+            .pdf-desktop { height: 50vh; }
+            .pdf-mobile { height: 50vh; width: 100%; }
+            .color-palette-grid { grid-template-columns: repeat(3, 1fr); }
+            .scroll-item { height: 40vh; }
         }
     </style>
 </head>

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iria Vega | Hospital Buddies</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet">
+    
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
+    <style>
+        /* --- VARIABLES --- */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1a1a1a;
+            --accent-color: #666;
+            --line-color: #e0e0e0;
+            --project-color: #00B4D8; /* CYAN MÉDICO */
+            --hover-red: #CD2424; /* ROJO PARA CONTACTO */
+            
+            /* Colores de la App */
+            --c-orange: #FE903C;
+            --c-pink: #FE8BAC;
+            --c-green: #00BA18;
+            --c-blue: #009FFF;
+            
+            /* TIPOGRAFÍA ÚNICA (HELVETICA NEUE) */
+            --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --font-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+            /* Switch Variables */
+            --switch-bg-off: #e9e9ea;
+            --switch-bg-on: #ffffff;
+            --switch-knob-off: #ffffff;
+            --switch-knob-on: #000000;
+        }
+
+        body.dark-mode {
+            --bg-color: #050505;
+            --text-color: #f0f0f0;
+            --accent-color: #aaa;
+            --line-color: #333;
+            --switch-bg-off: #3a3a3c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { text-decoration: none; color: inherit; transition: all 0.3s; }
+        a:hover { opacity: 0.6; }
+        
+        ul, li { list-style: none; margin: 0; padding: 0; }
+
+        /* --- ANIMACIONES SCROLL REVEAL --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- HEADER --- */
+        header {
+            display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+            padding: 1.5rem 3rem; position: fixed; top: 0; width: 100%; z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px);
+            text-transform: uppercase; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px;
+            font-family: var(--font-display);
+        }
+        body.dark-mode header { background-color: rgba(10, 10, 10, 0.8); }
+        
+        .nav-left { justify-self: start; }
+        .nav-left a:hover { color: var(--hover-red); opacity: 1; }
+
+        .nav-right { justify-self: end; }
+        .nav-right ul { display: flex; gap: 2rem; align-items: center; }
+
+        /* LOGO CENTRADO Y DINÁMICO */
+        .logo-container { justify-self: center; }
+        .logo-img { height: 35px; width: auto; display: block; transition: opacity 0.3s; }
+        .logo-dark { display: none; } 
+        body.dark-mode .logo-light { display: none; } 
+        body.dark-mode .logo-dark { display: block; } 
+
+        /* --- HERO STYLES --- */
+        .project-hero {
+            padding: 160px 5% 80px 5%; max-width: 1400px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+        }
+
+        /* PORTADA MÁS PEQUEÑA Y CENTRADA */
+        .hero-left-image {
+            width: 100%; height: auto; background: transparent; 
+            max-width: 90%; /* Reducido para hacerla mucho más pequeña */
+            justify-self: center; 
+        }
+        .main-image { 
+            width: 100%; height: auto; display: block; 
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15)); 
+        }
+
+        .hero-right-content { display: flex; flex-direction: column; justify-content: center; }
+
+        /* TÍTULO EN UNA LÍNEA Y MÁS PEQUEÑO */
+        .project-title {
+            font-family: var(--font-display); 
+            font-size: clamp(2rem, 4vw, 3.8rem); /* Reducido */
+            font-weight: 900;
+            text-transform: uppercase; line-height: 0.9; margin-bottom: 1rem;
+            color: var(--project-color); letter-spacing: -1px;
+            white-space: nowrap; /* Fuerza a que esté en una sola línea */
+        }
+        .project-subtitle {
+            font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 3rem;
+            color: var(--accent-color); text-transform: uppercase; letter-spacing: 1px; font-weight: 300;
+        }
+
+        .hero-info-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem;
+            font-family: var(--font-display); font-size: 0.85rem; padding-top: 2rem; border-top: 1px solid var(--line-color);
+        }
+        .detail-item { display: flex; flex-direction: column; gap: 0.5rem; }
+        .detail-label { color: var(--accent-color); text-transform: uppercase; font-size: 0.75rem; font-weight: 300; }
+        .detail-value { font-weight: 700; text-transform: uppercase; }
+
+        .hero-description p { font-size: 1.1rem; line-height: 1.6; font-weight: 300; margin-bottom: 1.5rem; }
+        .highlight { color: var(--project-color); font-weight: 700; font-family: var(--font-display); }
+
+        /* --- COMMON SECTION STYLES --- */
+        .content-wrapper { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
+        .section-margin { margin-bottom: 8rem; }
+        .section-header {
+            font-family: var(--font-display); color: var(--accent-color); text-transform: uppercase;
+            margin-bottom: 3rem; font-size: 1rem; display: block; border-bottom: 1px solid var(--line-color); padding-bottom: 1rem;
+            letter-spacing: 1px; font-weight: 700;
+        }
+        
+        .intro-text { font-size: 1.1rem; line-height: 1.6; margin-bottom: 4rem; font-weight: 300; }
+        .narrow-text { max-width: 600px; }
+
+        /* --- THE BUDDIES GRID (MODELOS 3D MÁS LENTOS) --- */
+        .buddies-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .buddy-card { text-align: center; }
+        
+        .buddy-3d-wrapper {
+            background-color: transparent; border-radius: 0; padding: 0; margin-bottom: 1.5rem;
+            aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+            border: none; transition: transform 0.3s ease; position: relative;
+        }
+        
+        .buddy-3d-wrapper:hover { transform: scale(1.05) translateY(-10px); }
+        
+        model-viewer {
+            width: 100%; height: 100%;
+            --poster-color: transparent;
+        }
+
+        .buddy-name { font-family: var(--font-display); font-weight: 900; font-size: 1.2rem; text-transform: uppercase; display: block; color: var(--text-color); }
+        .buddy-trait { font-size: 0.9rem; color: var(--accent-color); display: block; margin-top: 0.5rem; font-family: var(--font-display); text-transform: uppercase; font-weight: 300;}
+
+
+        /* --- DESIGN SYSTEM REDISEÑADO --- */
+        .ds-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+        .ds-block h3 { font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 1rem; color: var(--project-color); text-transform: uppercase; font-weight: 800;}
+        
+        /* Paleta de Colores en Rectángulos (1 Fila de 5) */
+        .color-palette-grid { 
+            display: grid; 
+            grid-template-columns: repeat(5, 1fr); /* 5 columnas iguales */
+            gap: 1rem; 
+            margin-top: 2.5rem; 
+            width: 100%;
+        }
+        .color-item { display: flex; flex-direction: column; gap: 0.5rem; }
+        .color-swatch { 
+            width: 100%; height: 60px; /* Rectángulos */
+            border-radius: 6px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s; 
+        }
+        .color-swatch:hover { transform: scale(1.05); }
+        .color-hex { font-family: var(--font-main); font-size: 0.75rem; color: var(--accent-color); text-transform: uppercase; font-weight: 600;}
+        
+        .c-1 { background: #FE903C; }
+        .c-2 { background: #FE8BAC; }
+        .c-3 { background: #00BA18; }
+        .c-4 { background: #009FFF; }
+        .c-5 { background: #3D3D3D; }
+
+        /* Tipografía Sin Recuadro */
+        .type-preview { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 2rem; } /* Quitamos fondo, borde y padding */
+        
+        .type-item { display: flex; flex-direction: column; gap: 0.5rem; }
+        .type-title { font-size: 2.8rem; font-weight: 900; line-height: 1.1; font-family: var(--font-display); color: var(--text-color); }
+        .type-body { font-size: 1.1rem; line-height: 1.5; color: var(--text-color); font-family: var(--font-main); font-weight: 300;}
+        .type-label { font-family: var(--font-main); font-size: 0.7rem; color: var(--accent-color); text-transform: uppercase; letter-spacing: 1px; font-weight: 700;}
+
+
+        /* --- HORIZONTAL SCROLL (APP FLOW) --- */
+        .scroll-container-outer { height: 400vh; position: relative; margin-bottom: 8rem; }
+        .scroll-container-sticky { position: sticky; top: 0; height: 100vh; width: 100%; overflow: hidden; display: flex; flex-direction: column; justify-content: center; background-color: var(--bg-color); }
+        
+        .flow-header { position: absolute; top: 80px; left: 5%; z-index: 10; display: flex; flex-direction: column; gap: 1rem; }
+        .gallery-label { font-family: var(--font-display); color: var(--accent-color); text-transform: uppercase; font-size: 0.9rem; z-index: 10; letter-spacing: 1px; font-weight: 300;}
+        
+        /* Selector de color más corto */
+        .color-selector { 
+            display: inline-flex; /* Hace que ocupe solo el espacio necesario */
+            gap: 1rem; background: rgba(0,0,0,0.03); padding: 0.5rem 1rem; 
+            border-radius: 50px; border: 1px solid var(--line-color); 
+            backdrop-filter: blur(5px); width: fit-content;
+        }
+        body.dark-mode .color-selector { background: rgba(255,255,255,0.05); }
+        .color-btn { width: 25px; height: 25px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: all 0.3s ease; }
+        .color-btn.active { border-color: var(--text-color); transform: scale(1.2); box-shadow: 0 0 10px rgba(0,0,0,0.2); }
+        
+        .btn-orange { background-color: var(--c-orange); }
+        .btn-pink { background-color: var(--c-pink); }
+        .btn-green { background-color: var(--c-green); }
+        .btn-blue { background-color: var(--c-blue); }
+
+        .scroll-track { display: flex; gap: 4rem; padding-left: 5%; width: max-content; will-change: transform; margin-top: 100px; align-items: center; }
+
+        .scroll-item { width: auto; height: 65vh; flex-shrink: 0; position: relative; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+        .scroll-item img { width: auto; height: 100%; object-fit: contain; border-radius: 24px; box-shadow: 0 15px 30px rgba(0,0,0,0.15); border: 1px solid var(--line-color); transition: opacity 0.3s ease; }
+        .screen-caption { font-family: var(--font-display); font-size: 0.85rem; color: var(--accent-color); text-transform: uppercase; text-align: center; font-weight: 700;}
+
+
+        /* --- LANDING PAGES (PDF EMBEDS) --- */
+        .landings-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+        .pdf-container { border: 1px solid var(--line-color); border-radius: 8px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); background: #222; }
+        .pdf-desktop { height: 75vh; }
+        .pdf-mobile { height: 75vh; }
+        .pdf-frame { width: 100%; height: 100%; border: none; }
+
+
+        /* --- FOOTER NAV --- */
+        .project-nav {
+            display: flex; justify-content: space-between; padding: 4rem 5%;
+            border-top: 1px solid var(--line-color); text-transform: uppercase; font-weight: 300; font-size: 1rem; font-family: var(--font-display);
+            background-color: var(--bg-color); position: relative; z-index: 10;
+        }
+        .project-nav a:hover { color: var(--project-color); text-decoration: underline; }
+
+        /* --- SWITCH --- */
+        .apple-switch { position: fixed; bottom: 30px; right: 30px; z-index: 1000; display: inline-block; width: 50px; height: 30px; }
+        .apple-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--switch-bg-off); transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 2px; bottom: 2px; background-color: var(--switch-knob-off); transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--switch-bg-on); }
+        input:checked + .slider:before { transform: translateX(20px); background-color: var(--switch-knob-on); }
+
+        @media (max-width: 900px) {
+            .project-hero { grid-template-columns: 1fr; padding-top: 120px; gap: 2rem; }
+            .hero-left-image { max-width: 80%; }
+            .project-title { font-size: 10vw; white-space: normal;} /* Permitimos doble línea en móvil si no cabe */
+            
+            .buddies-grid { grid-template-columns: 1fr 1fr; }
+            .ds-grid { grid-template-columns: 1fr; gap: 4rem; }
+            
+            .color-palette-grid { grid-template-columns: repeat(5, 1fr); gap: 0.5rem;}
+            
+            .landings-grid { grid-template-columns: 1fr; }
+            .pdf-mobile { height: 60vh; width: 80%; margin: 0 auto; }
+
+            .scroll-container-outer { height: auto; margin-bottom: 4rem; }
+            .scroll-container-sticky { position: relative; height: auto; top: 0; padding: 4rem 0; }
+            .scroll-track { overflow-x: auto; width: 100%; gap: 1.5rem; padding-bottom: 2rem; margin-top: 2rem;}
+            .flow-header { position: relative; top: 0; padding: 0 5%; margin-bottom: 2rem; flex-direction: column; align-items: flex-start;}
+            .scroll-item { height: 50vh; }
+        }
+        @media (max-width: 500px) {
+            .buddies-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-left"><a href="index.html#contact">Contact</a></div>
+        
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="logos/LOGO_ROJO.png" alt="Logo Iria Vega" class="logo-img logo-light">
+                <img src="logos/bLOGO_ROJO.png" alt="Logo Iria Vega" class="logo-img logo-dark">
+            </a>
+        </div>
+
+        <nav class="nav-right">
+            <ul>
+                <li><a href="about.html">About Me</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        
+        <section class="project-hero reveal">
+            <div class="hero-left-image">
+                <img src="hospitalbuddies_img/portada.png" alt="Hospital Buddies App" class="main-image">
+            </div>
+            
+            <div class="hero-right-content">
+                <h1 class="project-title">Hospital Buddies</h1>
+                <p class="project-subtitle">El Walkie-Talkie Vecinal / App & Landing</p>
+
+                <div class="hero-description">
+                    <p>
+                        En un hospital infantil, las barreras físicas impiden que los niños interactúen de forma natural. <span class="highlight">Hospital Buddies</span> es una experiencia digital diseñada para romper las paredes de la habitación. 
+                    </p>
+                    <p>
+                        Inspirada en el clásico "teléfono de vasos de hilo", permite a los pacientes descubrir quién está cerca y comunicarse mediante voz y juegos de manera segura.
+                    </p>
+                </div>
+
+                <div class="hero-info-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Rol</span>
+                        <span class="detail-value">UI/UX Design & Frontend</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Año</span>
+                        <span class="detail-value">2026</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Stack</span>
+                        <span class="detail-value">Figma, HTML</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Tipo</span>
+                        <span class="detail-value">App, Landing Page</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="content-wrapper">
+            <section class="section-margin reveal">
+                <span class="section-header">01. Identidad & Privacidad</span>
+                
+                <div class="intro-text narrow-text">
+                     <p>En el hospital, el niño pierde parte de su identidad. Para empoderarlos de nuevo, creamos <span class="highlight">identidades secretas</span>.</p>
+                     <p>Los avatares no tienen género ni edad, permitiendo que cualquier niño se camufle en ellos sin exponer su foto real ni su realidad médica.</p>
+                </div>
+
+                <div class="buddies-grid">
+                    <div class="buddy-card">
+                        <div class="buddy-3d-wrapper">
+                            <model-viewer src="hospitalbuddies_img/bean.glb" auto-rotate rotation-per-second="45deg" camera-controls disable-zoom shadow-intensity="1"></model-viewer>
+                        </div>
+                        <span class="buddy-name">Bean</span>
+                        <span class="buddy-trait">Alegre</span>
+                    </div>
+                    <div class="buddy-card">
+                        <div class="buddy-3d-wrapper">
+                            <model-viewer src="hospitalbuddies_img/cube.glb" auto-rotate rotation-per-second="45deg" camera-controls disable-zoom shadow-intensity="1"></model-viewer>
+                        </div>
+                        <span class="buddy-name">Cube</span>
+                        <span class="buddy-trait">Serio</span>
+                    </div>
+                    <div class="buddy-card">
+                        <div class="buddy-3d-wrapper">
+                            <model-viewer src="hospitalbuddies_img/rabbit.glb" auto-rotate rotation-per-second="45deg" camera-controls disable-zoom shadow-intensity="1"></model-viewer>
+                        </div>
+                        <span class="buddy-name">Rabbit</span>
+                        <span class="buddy-trait">Enérgico</span>
+                    </div>
+                    <div class="buddy-card">
+                        <div class="buddy-3d-wrapper">
+                            <model-viewer src="hospitalbuddies_img/cloud.glb" auto-rotate rotation-per-second="45deg" camera-controls disable-zoom shadow-intensity="1"></model-viewer>
+                        </div>
+                        <span class="buddy-name">Cloud</span>
+                        <span class="buddy-trait">Soñador</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="content-wrapper">
+            <section class="section-margin reveal">
+                <span class="section-header">02. Design System</span>
+                
+                <div class="ds-grid">
+                    <div class="ds-block">
+                        <h3>Color Terapéutico</h3>
+                        <p style="color: var(--text-color); font-weight: 300; line-height: 1.6;">
+                            Base neutra para aportar calma. Alegría a través de acentos vibrantes, descartando tonos que generen alerta médica.
+                        </p>
+                        
+                        <div class="color-palette-grid">
+                            <div class="color-item"><div class="color-swatch c-1"></div><span class="color-hex">#FE903C</span></div>
+                            <div class="color-item"><div class="color-swatch c-2"></div><span class="color-hex">#FE8BAC</span></div>
+                            <div class="color-item"><div class="color-swatch c-3"></div><span class="color-hex">#00BA18</span></div>
+                            <div class="color-item"><div class="color-swatch c-4"></div><span class="color-hex">#009FFF</span></div>
+                            <div class="color-item"><div class="color-swatch c-5"></div><span class="color-hex">#3D3D3D</span></div>
+                        </div>
+                    </div>
+
+                    <div class="ds-block">
+                        <h3>Dualidad Tipográfica</h3>
+                        <p style="color: var(--text-color); font-weight: 300; line-height: 1.6; margin-bottom: 0;">
+                            Titulares rebeldes vs. cuerpo de texto de máxima legibilidad funcional.
+                        </p>
+                        
+                        <div class="type-preview">
+                            <div class="type-item">
+                                <span class="type-label">Títulos / SoopaFresh</span>
+                                <div class="type-title">HOSPITAL BUDDIES</div>
+                            </div>
+                            <div class="type-item">
+                                <span class="type-label">Cuerpo / Cocogoose</span>
+                                <div class="type-body">Diseñado para ser amable, redondeado y fácil de leer para niños cansados.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="scroll-container-outer reveal">
+            <div class="scroll-container-sticky">
+                
+                <div class="flow-header">
+                    <span class="gallery-label">03. App Flow: Interfaz Adaptable</span>
+                    
+                    <div class="color-selector">
+                        <div class="color-btn btn-orange active" data-color="naranja" title="Orange Theme"></div>
+                        <div class="color-btn btn-pink" data-color="rosa" title="Pink Theme"></div>
+                        <div class="color-btn btn-green" data-color="verde" title="Green Theme"></div>
+                        <div class="color-btn btn-blue" data-color="azul" title="Blue Theme"></div>
+                    </div>
+                </div>
+                
+                <div class="scroll-track" id="track">
+                    
+                    <div class="scroll-item">
+                        <img src="hospitalbuddies_img/cargando.png" alt="Cargando App">
+                        <span class="screen-caption">Inicio: Cargando</span>
+                    </div>
+
+                    <div class="scroll-item">
+                        <img src="hospitalbuddies_img/control_parental.png" alt="Control Parental">
+                        <span class="screen-caption">Control Parental</span>
+                    </div>
+
+                    <div class="scroll-item">
+                        <img src="hospitalbuddies_img/naranja/00_seleccion.png" data-filename="00_seleccion.png" class="flow-img" alt="Screen 0">
+                        <span class="screen-caption">0. Personalización</span>
+                    </div>
+                    
+                    <div class="scroll-item">
+                        <img src="hospitalbuddies_img/naranja/01_onboarding.png" data-filename="01_onboarding.png" class="flow-img" alt="Screen 1">
+                        <span class="screen-caption">1. Identidad Secreta</span>
+                    </div>
+                    
+                    <div class="scroll-item">
+                        <img src="hospitalbuddies_img/naranja/02_radar.png" data-filename="02_radar.png" class="flow-img" alt="Screen 2">
+                        <span class="screen-caption">2. El Sonar Vecinal</span>
+                    </div>
+
+                    <div class="scroll-item">
+                        <img src="hospitalbuddies_img/naranja/03_notification_receive.png" data-filename="03_notification_receive.png" class="flow-img" alt="Screen 3">
+                        <span class="screen-caption">Alerta: ¡Vecino saluda!</span>
+                    </div>
+
+                    <div class="scroll-item">
+                        <img src="hospitalbuddies_img/naranja/04_wave_options.png" data-filename="04_wave_options.png" class="flow-img" alt="Screen 4">
+                        <span class="screen-caption">Romper el hielo</span>
+                    </div>
+
+                    <div class="scroll-item">
+                        <img src="hospitalbuddies_img/naranja/05_wave_sent.png" data-filename="05_wave_sent.png" class="flow-img" alt="Screen 5">
+                        <span class="screen-caption">¡Toque enviado!</span>
+                    </div>
+
+                    <div class="scroll-item">
+                        <img src="hospitalbuddies_img/naranja/06_walkie.png" data-filename="06_walkie.png" class="flow-img" alt="Screen 6">
+                        <span class="screen-caption">3. Push-to-Talk</span>
+                    </div>
+
+                    <div class="scroll-item">
+                        <img src="hospitalbuddies_img/naranja/07_recording.png" data-filename="07_recording.png" class="flow-img" alt="Screen 7">
+                        <span class="screen-caption">Grabando mensaje</span>
+                    </div>
+
+                    <div class="scroll-item">
+                        <img src="hospitalbuddies_img/naranja/08_sending.png" data-filename="08_sending.png" class="flow-img" alt="Screen 8">
+                        <span class="screen-caption">Enviando...</span>
+                    </div>
+
+                    <div class="scroll-item">
+                        <img src="hospitalbuddies_img/naranja/09_sended.png" data-filename="09_sended.png" class="flow-img" alt="Screen 9">
+                        <span class="screen-caption">Mensaje Entregado</span>
+                    </div>
+
+                    <div class="scroll-item">
+                        <img src="hospitalbuddies_img/naranja/10_error.png" data-filename="10_error.png" class="flow-img" alt="Screen 10">
+                        <span class="screen-caption">Edge Case: Conexión</span>
+                    </div>
+
+                    <div class="scroll-item">
+                        <img src="hospitalbuddies_img/naranja/11_error_options.png" data-filename="11_error_options.png" class="flow-img" alt="Screen 11">
+                        <span class="screen-caption">Reintentar / Volver</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+            <section class="section-margin reveal">
+                <span class="section-header">04. Landing Pages</span>
+                
+                <div class="intro-text">
+                     <p>Diseño de la plataforma web informativa. Adaptada tanto para visualización en monitores como para dispositivos móviles, manteniendo la frescura de la marca.</p>
+                </div>
+
+                <div class="landings-grid">
+                    <div class="pdf-container pdf-desktop">
+                        <iframe src="hospitalbuddies_img/landing_desktop.pdf#view=FitH" class="pdf-frame" title="Landing Page Desktop"></iframe>
+                    </div>
+                    <div class="pdf-container pdf-mobile">
+                        <iframe src="hospitalbuddies_img/landing_mobile.pdf#view=FitH" class="pdf-frame" title="Landing Page Mobile"></iframe>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <nav class="project-nav reveal">
+            <a href="luma.html">← Previous Project</a>
+            <a href="dreamsync.html">Next Project →</a>
+        </nav>
+
+    </main>
+
+    <label class="apple-switch">
+        <input type="checkbox" id="theme-toggle">
+        <span class="slider"></span>
+    </label>
+
+    <script>
+        // --- LOGICA MODO OSCURO ---
+        const toggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const logo = document.getElementById('logo-img');
+
+        const lightLogo = "./logos/LOGO_ROJO.png";
+        const darkLogo = "./logos/bLOGO_ROJO.png";
+
+        function updateLogo(isDark) {
+            if(logo) logo.src = isDark ? darkLogo : lightLogo;
+        }
+
+        if(localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            toggle.checked = true;
+            updateLogo(true);
+        } else {
+            updateLogo(false);
+        }
+
+        toggle.addEventListener('change', () => {
+            if(toggle.checked) {
+                body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+                updateLogo(true);
+            } else {
+                body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+                updateLogo(false);
+            }
+        });
+
+        // --- ANIMACIÓN SCROLL REVEAL ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+
+        // --- LÓGICA SCROLL HORIZONTAL ---
+        const outer = document.querySelector('.scroll-container-outer');
+        const track = document.getElementById('track');
+
+        window.addEventListener('scroll', () => {
+            if(!outer || !track) return;
+            const offsetTop = outer.offsetTop;
+            const scrollY = window.scrollY;
+            const height = outer.offsetHeight;
+            const windowHeight = window.innerHeight;
+
+            let percentage = (scrollY - offsetTop) / (height - windowHeight);
+            percentage = Math.max(0, Math.min(1, percentage));
+
+            const trackWidth = track.scrollWidth;
+            const moveAmount = (trackWidth - window.innerWidth) * percentage;
+
+            if(window.innerWidth > 900) {
+                track.style.transform = `translateX(-${moveAmount}px)`;
+            } else {
+                track.style.transform = 'none';
+            }
+        });
+
+        // --- LÓGICA CAMBIO DE COLOR (APP FLOW) ---
+        const colorBtns = document.querySelectorAll('.color-btn');
+        const flowImages = document.querySelectorAll('.flow-img');
+
+        colorBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                colorBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const selectedColor = btn.getAttribute('data-color');
+                
+                flowImages.forEach(img => {
+                    img.style.opacity = 0.5; 
+                    
+                    setTimeout(() => {
+                        const filename = img.getAttribute('data-filename');
+                        // Si es rosa, coge las de la carpeta raíz. Si es otro color, va a la subcarpeta.
+                        if (selectedColor === 'rosa') {
+                            img.src = `hospitalbuddies_img/${filename}`;
+                        } else {
+                            img.src = `hospitalbuddies_img/${selectedColor}/${filename}`;
+                        }
+                        img.style.opacity = 1;
+                    }, 150);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

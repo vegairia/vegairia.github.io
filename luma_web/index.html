@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>luma | Inteligencia Biológica</title>
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sweetBlack: '#353334',
+                        deepLavender: '#9B7CBF',
+                        pastelMagenta: '#FEC0F9',
+                        blueChalk: '#F1E8FB',
+                        lumaLightBg: '#F9F9F9',
+                    },
+                    fontFamily: {
+                        serif: ['"Peachi"', 'serif'],
+                        sans: ['"degular"', 'sans-serif'],
+                    },
+                    animation: {
+                        marquee: 'marquee 15s linear infinite',
+                        wobble: 'wobble 5s ease-in-out infinite',
+                        'wobble-delayed': 'wobble 5s ease-in-out infinite 2.5s',
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulseSlow 8s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        },
+                        wobble: {
+                            '0%, 100%': { transform: 'rotate(-2deg) translateY(0)' },
+                            '50%': { transform: 'rotate(2deg) translateY(-8px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        pulseSlow: {
+                            '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+                            '50%': { opacity: '0.7', transform: 'scale(1.05)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .speech-bubble-left::after {
+            content: ''; position: absolute; left: 25px; bottom: -12px; width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-top: 15px solid #9B7CBF;
+        }
+        .speech-bubble-left-top::after {
+            content: ''; position: absolute; left: 25px; bottom: -12px; width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-top: 15px solid #a68bd1;
+        }
+        ::-webkit-scrollbar { width: 0px; }
+        .faq-content-inner { padding: 0 1.5rem 1.5rem 1.5rem; color: rgba(53, 51, 52, 0.7); font-family: 'degular', sans-serif; line-height: 1.625; }
+        @media (min-width: 768px) {
+            .faq-content-inner { padding: 0 2rem 1.5rem 2rem; }
+        }
+        body { overflow-x: hidden; width: 100%; position: relative; }
+
+        /* Clases específicas para la rueda de testimonios */
+        .testim-wheel-center {
+            position: absolute;
+            left: 50%;
+            bottom: -250px;
+            width: 0;
+            height: 0;
+            z-index: 10;
+        }
+        .testim-track {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 900px;
+            height: 900px;
+            border-radius: 50%;
+            border: 16px solid rgba(155, 124, 191, 0.15);
+            z-index: 0;
+        }
+        .testim-wrapper {
+            position: absolute;
+            bottom: 0;
+            left: -140px; 
+            width: 280px;
+            height: 450px; 
+            transform-origin: bottom center;
+        }
+
+        @media (min-width: 1024px) {
+            .testim-wheel-center {
+                bottom: -500px;
+            }
+            .testim-track {
+                width: 1700px;
+                height: 1700px;
+                border: 24px solid rgba(155, 124, 191, 0.15);
+            }
+            .testim-wrapper {
+                left: -175px; 
+                width: 350px;
+                height: 850px; 
+            }
+        }
+    </style>
+</head>
+<body class="bg-white text-sweetBlack font-sans antialiased selection:bg-pastelMagenta selection:text-sweetBlack overflow-x-hidden">
+
+    <nav id="sticky-nav" class="hidden md:block fixed top-6 left-1/2 -translate-x-1/2 z-[100] w-[95%] max-w-[1400px] opacity-0 pointer-events-none -translate-y-full transition-all duration-500 ease-in-out">
+        <div class="bg-white/95 backdrop-blur-md rounded-full px-8 py-3 shadow-lg shadow-deepLavender/10 border border-sweetBlack/5 flex items-center justify-between w-full">
+            <div class="hidden lg:flex items-center gap-8 flex-1">
+                <a href="#pilares" class="font-serif text-[17px] text-sweetBlack hover:text-deepLavender transition-colors">nosotras</a>
+                <a href="#trampa" class="font-serif text-[17px] text-sweetBlack hover:text-deepLavender transition-colors">la app</a>
+                <a href="#conoce-lumi" class="font-serif text-[17px] text-sweetBlack hover:text-deepLavender transition-colors">lumi</a>
+                <a href="#cta-final" class="font-serif text-[17px] text-sweetBlack hover:text-deepLavender transition-colors">contacto</a>
+            </div>
+            <div class="flex-shrink-0 flex justify-center lg:absolute lg:left-1/2 lg:-translate-x-1/2">
+                <a href="#" class="hover:scale-105 transition-transform flex items-center justify-center">
+                    <img src="imagenes_luma/logo_luma.png" alt="luma" class="h-8 md:h-9 w-auto object-contain">
+                </a>
+            </div>
+            <div class="flex-1 flex justify-end items-center gap-8">
+                <a href="#cta-final" class="bg-sweetBlack text-white font-sans text-[13px] font-bold px-6 py-2.5 rounded-full hover:bg-deepLavender hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 whitespace-nowrap">
+                    únete a la beta
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="max-w-[1440px] mx-auto px-6 md:px-8 lg:px-20 pt-6 md:pt-8" data-aos="fade-down" data-aos-duration="800">
+        <nav class="flex items-center justify-between pb-4 border-b border-sweetBlack/20 relative w-full">
+            <div class="hidden md:flex items-center gap-8 flex-1">
+                <a href="#pilares" class="font-serif text-lg text-sweetBlack hover:text-deepLavender transition-colors">nosotras</a>
+                <a href="#trampa" class="font-serif text-lg text-sweetBlack hover:text-deepLavender transition-colors">la app</a>
+                <a href="#conoce-lumi" class="font-serif text-lg text-sweetBlack hover:text-deepLavender transition-colors">lumi</a>
+                <a href="#cta-final" class="font-serif text-lg text-sweetBlack hover:text-deepLavender transition-colors">contacto</a>
+            </div>
+            <div class="flex-shrink-0 flex justify-start md:justify-center md:absolute md:left-1/2 md:-translate-x-1/2">
+                <a href="#" class="hover:scale-105 transition-transform flex items-center justify-center">
+                    <img src="imagenes_luma/logo_luma.png" alt="luma" class="h-8 md:h-12 w-auto object-contain">
+                </a>
+            </div>
+            <div class="flex-1 flex justify-end">
+                <a href="#cta-final" class="bg-deepLavender text-white font-sans text-xs md:text-sm font-medium px-5 py-2 md:px-6 md:py-2.5 rounded-full hover:bg-sweetBlack hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 whitespace-nowrap">
+                    únete a nosotras
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-20 py-8">
+        <div class="bg-blueChalk rounded-[2.5rem] md:rounded-[3.5rem] p-6 md:p-10 lg:p-14 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 overflow-visible mb-16" data-aos="zoom-in-up" data-aos-duration="1000">
+            
+            <div class="w-full lg:w-1/2 pr-0 lg:pr-4 text-left flex flex-col items-start" data-aos="fade-right" data-aos-delay="200">
+                <h1 class="font-serif text-4xl md:text-5xl lg:text-[4rem] font-bold text-sweetBlack leading-[1.1] mb-4 md:mb-6">
+                    Tu biología no es <br class="hidden md:block">
+                    un caos, <span class="italic text-deepLavender">es un patrón</span>
+                </h1>
+                <p class="font-sans text-sweetBlack/90 text-base md:text-lg leading-relaxed mb-6 md:mb-8 max-w-[95%]">
+                    <span class="italic">luma</span> arroja luz sobre tus 28 días. Transformamos tu ciclo menstrual de un obstáculo impredecible a una herramienta de control estratégico para tu trabajo, tu entreno y tu descanso.
+                </p>
+                <div class="hidden lg:block w-full">
+                    <a href="#conoce-lumi" class="inline-block bg-deepLavender text-white hover:bg-sweetBlack font-sans font-bold px-8 py-4 rounded-full transition-all duration-300 shadow-md shadow-deepLavender/30 hover:shadow-xl hover:-translate-y-1">
+                        Alíate con tu ciclo
+                    </a>
+                </div>
+            </div>
+            
+            <div class="w-full lg:w-1/2 flex justify-center lg:justify-end relative mt-6 lg:mt-0" data-aos="fade-left" data-aos-delay="400">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] md:w-[400px] md:h-[400px] bg-pastelMagenta/40 rounded-full blur-[60px] md:blur-[80px] animate-pulse-slow z-0 pointer-events-none"></div>
+
+                <div class="relative group cursor-pointer w-full max-w-[260px] md:max-w-[420px]">
+                    <div class="w-full aspect-square bg-deepLavender rounded-full relative flex items-center justify-center shadow-inner transition-transform duration-500 hover:scale-[1.02] animate-float z-10 overflow-hidden">
+                        <img src="imagenes_luma/HOLA_LUMI.png" alt="Ilustración de Lumi" class="w-full h-full object-cover relative z-10 rounded-full">
+                    </div>
+                    
+                    <div class="absolute -top-4 -right-2 md:-top-8 md:-right-10 z-20 opacity-0 invisible translate-y-4 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 ease-out pointer-events-none transform scale-[0.8] md:scale-100 origin-bottom-left">
+                        <div class="bg-pastelMagenta text-sweetBlack font-serif font-bold text-lg md:text-xl px-6 py-3 md:px-8 md:py-4 rounded-2xl rounded-bl-sm shadow-xl shadow-pastelMagenta/20 relative">
+                            ¡Hola, soy Lumi!
+                            <div class="absolute -bottom-3 left-4 md:left-6 w-0 h-0 border-t-[10px] border-t-pastelMagenta border-r-[10px] border-r-transparent md:border-t-[14px] md:border-r-[14px]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full flex lg:hidden mt-4" data-aos="fade-up" data-aos-delay="500">
+                <a href="#conoce-lumi" class="inline-block bg-deepLavender text-white hover:bg-sweetBlack font-sans font-bold px-6 py-3.5 rounded-full transition-all duration-300 shadow-md shadow-deepLavender/30 hover:shadow-xl w-full text-center">
+                    Alíate con tu ciclo
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <section id="trampa" class="bg-blueChalk relative w-full overflow-hidden pb-20 md:pb-32">
+        
+        <div class="bg-pastelMagenta py-2 md:py-3 overflow-hidden flex whitespace-nowrap w-full mb-12 md:mb-24 relative z-20 shadow-sm">
+            <div class="animate-marquee flex items-center shrink-0 min-w-full justify-around">
+                <span class="mx-4 text-xs md:text-sm font-bold italic text-sweetBlack/90">Únete a la lista de espera. Plazas limitadas para la Beta</span><span class="mx-4 text-lg md:text-xl text-sweetBlack/90">*</span>
+                <span class="mx-4 text-xs md:text-sm font-bold italic text-sweetBlack/90">Únete a la lista de espera. Plazas limitadas para la Beta</span><span class="mx-4 text-lg md:text-xl text-sweetBlack/90">*</span>
+            </div>
+            <div class="animate-marquee flex items-center shrink-0 min-w-full justify-around" aria-hidden="true">
+                <span class="mx-4 text-xs md:text-sm font-bold italic text-sweetBlack/90">Únete a la lista de espera. Plazas limitadas para la Beta</span><span class="mx-4 text-lg md:text-xl text-sweetBlack/90">*</span>
+                <span class="mx-4 text-xs md:text-sm font-bold italic text-sweetBlack/90">Únete a la lista de espera. Plazas limitadas para la Beta</span><span class="mx-4 text-lg md:text-xl text-sweetBlack/90">*</span>
+            </div>
+        </div>
+        
+        <div class="max-w-[1440px] mx-auto px-6 md:px-8 lg:px-20 relative z-10 pt-10 md:pt-16">
+            
+            <div class="block lg:hidden w-full mb-8" data-aos="fade-right">
+                <svg viewBox="0 0 500 120" class="w-full max-w-[400px] h-auto overflow-visible">
+                    <path id="curve-mobile-title" d="M10,100 Q250,10 490,100" fill="transparent" />
+                    <text width="500">
+                        <textPath xlink:href="#curve-mobile-title" startOffset="0%" text-anchor="start" class="font-serif text-4xl font-bold fill-sweetBlack uppercase">
+                            La trampa de la linealidad
+                        </textPath>
+                    </text>
+                </svg>
+            </div>
+
+            <div class="relative w-full max-w-6xl mx-auto">
+                
+                <img src="imagenes_luma/TITULO.png" alt="La Trampa de la Linealidad" 
+                     class="hidden lg:block absolute -top-24 -right-16 w-[800px] max-w-none h-auto object-contain z-0 pointer-events-none" 
+                     data-aos="fade-left" data-aos-duration="1200">
+
+                <div class="flex flex-col lg:flex-row gap-10 md:gap-16 lg:gap-20 justify-between items-start w-full relative z-10 lg:pt-32">
+                    
+                    <div class="flex flex-col gap-6 md:gap-8 w-full lg:w-1/2 items-start lg:items-end">
+                        <div data-aos="zoom-in-right" class="animate-wobble bg-[#a68bd1] text-white font-sans font-bold text-base md:text-lg px-6 py-4 md:px-8 md:py-6 rounded-[1.5rem] md:rounded-[2rem] rounded-bl-sm relative w-full max-w-[340px] lg:self-end lg:mr-10 speech-bubble-left-top shadow-xl shadow-sweetBlack/5">
+                            ¿Te castigas por no tener la misma energía cada semana?
+                        </div>
+                        <div data-aos="zoom-in-right" data-aos-delay="150" class="animate-wobble-delayed bg-deepLavender text-white font-sans font-bold text-base md:text-lg px-6 py-4 md:px-8 md:py-6 rounded-[1.5rem] md:rounded-[2rem] rounded-bl-sm relative w-full max-w-[340px] self-start lg:-ml-6 speech-bubble-left shadow-xl shadow-sweetBlack/5">
+                            ¿Sientes que tu cuerpo boicotea tu agenda?
+                        </div>
+                    </div>
+
+                    <div class="w-full lg:w-1/2 flex flex-col gap-4 md:gap-6 text-left lg:pr-10" data-aos="fade-up" data-aos-delay="200">
+                        <p class="font-sans text-sweetBlack/90 text-base md:text-lg leading-relaxed font-medium">
+                            El mundo te exige funcionar igual las 24 horas, pero tu cuerpo tiene memoria y ritmo propios.
+                        </p>
+                        <p class="font-sans text-sweetBlack/90 text-base md:text-lg leading-relaxed font-medium">
+                            Esa "inconsistencia" no es un fallo, es tu naturaleza. <span class="italic font-bold">luma</span> valida tu cansancio y celebra tu energía. Aquí, parar no es fracasar; es parte de la estrategia. Deja de vivir a oscuras. Empieza a escucharte.
+                        </p>
+                        <div class="mt-4 md:mt-6 w-full text-center lg:text-left">
+                            <a href="#conoce-lumi" class="bg-sweetBlack hover:bg-deepLavender text-white font-sans font-medium text-sm md:text-base px-8 py-3 md:px-10 md:py-4 rounded-full transition-all duration-300 inline-block shadow-md hover:shadow-xl hover:-translate-y-1 w-full sm:w-auto">
+                                Descubrir <span class="italic">luma</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="conoce-lumi" class="bg-white relative w-full py-20 md:py-32 overflow-hidden">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-8 lg:px-20 flex flex-col lg:flex-row items-center lg:items-start justify-between gap-12 lg:gap-16">
+            
+            <div class="w-full lg:w-[35%] shrink-0 relative z-20 text-left" data-aos="fade-right">
+                <h2 class="font-serif text-5xl md:text-6xl lg:text-7xl font-bold text-sweetBlack mb-1 md:mb-2">Conoce a</h2>
+                <h2 class="font-serif text-5xl md:text-6xl lg:text-7xl font-bold italic text-deepLavender mb-6 md:mb-8">Lumi</h2>
+                <hr class="border-t-[1.5px] border-sweetBlack/20 w-1/3 lg:w-full mb-6 md:mb-10">
+                <p class="font-sans text-sweetBlack/90 text-base md:text-lg leading-relaxed mb-6">Ella transforma tus datos hormonales en un mapa visual que te indica dónde estás, cómo te sientes y qué estrategia aplicar hoy.</p>
+                <p class="font-sans text-sweetBlack/90 text-base md:text-lg leading-relaxed">Tu biología es un viaje continuo guiada por la sabiduría de Lumi —un elefante que nunca olvida tu historial—, sabrás al instante en qué territorio te encuentras y cómo operarlo:</p>
+                
+                <div class="lg:hidden w-full max-w-[260px] md:max-w-[320px] mx-auto mt-10 relative">
+                    <div class="absolute inset-0 bg-deepLavender/10 rounded-full scale-[1.15] blur-xl animate-pulse-slow"></div>
+                    <div class="bg-blueChalk rounded-full p-6 md:p-8 relative z-10 shadow-inner">
+                        <img src="imagenes_luma/FASES_LUMI.png" alt="Fases del ciclo de Lumi" class="w-full h-auto object-contain animate-[float_8s_ease-in-out_infinite]">
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-[65%] flex flex-col lg:flex-row justify-center lg:justify-start lg:pl-16 relative" id="lumi-interactive-area" data-aos="zoom-in">
+                
+                <div class="hidden lg:flex relative w-[450px] h-[450px] items-center justify-center shrink-0 mx-auto lg:mx-0">
+                    <div class="absolute w-[125%] h-[125%] border-[1.5px] border-deepLavender/60 rounded-full z-0 pointer-events-none">
+                        <div class="absolute inset-0 z-30 pointer-events-auto">
+                            <div class="curve-item absolute transition-all duration-700 ease-out transform -translate-x-1/2 -translate-y-1/2 cursor-pointer" data-index="0">
+                                <div class="w-12 h-12 bg-pastelMagenta rounded-full z-30 transition-transform shadow-md shadow-pastelMagenta/30 relative phase-dot hover:scale-125"></div>
+                                <div class="absolute left-full top-1/2 -translate-y-1/2 ml-6 w-[280px]">
+                                    <h3 class="font-serif text-4xl text-sweetBlack transition-colors duration-300 phase-title">El refugio</h3>
+                                    <div class="overflow-hidden max-h-0 opacity-0 transition-all duration-500 ease-in-out phase-content">
+                                        <p class="font-sans font-bold text-sweetBlack mb-1">Fase 1 (Menstrual)</p>
+                                        <p class="font-sans text-sweetBlack/80">El descanso no es rendición.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="curve-item absolute transition-all duration-700 ease-out transform -translate-x-1/2 -translate-y-1/2 cursor-pointer" data-index="1">
+                                <div class="w-12 h-12 bg-pastelMagenta rounded-full z-30 transition-transform shadow-md shadow-pastelMagenta/30 relative phase-dot hover:scale-125"></div>
+                                <div class="absolute left-full top-1/2 -translate-y-1/2 ml-6 w-[280px]">
+                                    <h3 class="font-serif text-4xl text-sweetBlack transition-colors duration-300 phase-title">La Sabana</h3>
+                                    <div class="overflow-hidden max-h-0 opacity-0 transition-all duration-500 ease-in-out phase-content">
+                                        <p class="font-sans font-bold text-sweetBlack mb-1">Fase 2 (Folicular)</p>
+                                        <p class="font-sans text-sweetBlack/80">Es momento de planificar,<br>proponer y comenzar.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="curve-item absolute transition-all duration-700 ease-out transform -translate-x-1/2 -translate-y-1/2 cursor-pointer" data-index="2">
+                                <div class="w-12 h-12 bg-pastelMagenta rounded-full z-30 transition-transform shadow-md shadow-pastelMagenta/30 relative phase-dot hover:scale-125"></div>
+                                <div class="absolute left-full top-1/2 -translate-y-1/2 ml-6 w-[280px]">
+                                    <h3 class="font-serif text-4xl text-sweetBlack transition-colors duration-300 phase-title">El Oasis</h3>
+                                    <div class="overflow-hidden max-h-0 opacity-0 transition-all duration-500 ease-in-out phase-content">
+                                        <p class="font-sans font-bold text-sweetBlack mb-1">Fase 3 (Ovulatoria)</p>
+                                        <p class="font-sans text-sweetBlack/80">Tu energía está en la cima.<br>Lidera, conecta y actúa.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="curve-item absolute transition-all duration-700 ease-out transform -translate-x-1/2 -translate-y-1/2 cursor-pointer" data-index="3">
+                                <div class="w-12 h-12 bg-pastelMagenta rounded-full z-30 transition-transform shadow-md shadow-pastelMagenta/30 relative phase-dot hover:scale-125"></div>
+                                <div class="absolute left-full top-1/2 -translate-y-1/2 ml-6 w-[280px]">
+                                    <h3 class="font-serif text-4xl text-sweetBlack transition-colors duration-300 phase-title">La meseta</h3>
+                                    <div class="overflow-hidden max-h-0 opacity-0 transition-all duration-500 ease-in-out phase-content">
+                                        <p class="font-sans font-bold text-sweetBlack mb-1">Fase 4 (Lútea)</p>
+                                        <p class="font-sans text-sweetBlack/80">Tu intuición se agudiza.<br>Prepara el terreno.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full h-full bg-deepLavender rounded-full relative z-10 flex items-center justify-center shadow-inner overflow-hidden">
+                        <img id="img-fase-default" src="imagenes_luma/FASES_LUMI.png" alt="Fases del ciclo de Lumi" class="absolute w-full h-full object-contain p-12 transition-all duration-500 ease-out z-20 opacity-100 scale-100">
+                        <img id="img-fase-0" src="imagenes_luma/lacueva.png" alt="El refugio" class="absolute w-full h-full object-cover p-0 transition-all duration-500 ease-out z-20 opacity-0 scale-95">
+                        <img id="img-fase-1" src="imagenes_luma/lasabana.png" alt="La Sabana" class="absolute w-full h-full object-cover p-0 transition-all duration-500 ease-out z-20 opacity-0 scale-95">
+                        <img id="img-fase-2" src="imagenes_luma/eloasis.png" alt="El Oasis" class="absolute w-full h-full object-cover p-0 transition-all duration-500 ease-out z-20 opacity-0 scale-95">
+                        <img id="img-fase-3" src="imagenes_luma/lameseta.png" alt="La meseta" class="absolute w-full h-full object-cover p-0 transition-all duration-500 ease-out z-20 opacity-0 scale-95">
+                    </div>
+                </div>
+                
+                <div class="grid lg:hidden grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mt-8 w-full text-left">
+                    <div class="bg-lumaLightBg rounded-[2rem] p-6 md:p-8 border border-sweetBlack/5 shadow-sm">
+                        <div class="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center text-deepLavender font-serif text-xl md:text-2xl mb-4 shadow-sm">1</div>
+                        <h3 class="font-serif text-2xl md:text-3xl text-sweetBlack mb-1">El refugio</h3>
+                        <p class="font-sans text-[10px] md:text-xs font-bold tracking-widest text-deepLavender uppercase mb-3">Menstrual</p>
+                        <p class="font-sans text-sweetBlack/80 text-sm md:text-base leading-relaxed">El descanso no es rendición. Es el momento de recuperar energía para el nuevo ciclo que comienza.</p>
+                    </div>
+
+                    <div class="bg-lumaLightBg rounded-[2rem] p-6 md:p-8 border border-sweetBlack/5 shadow-sm">
+                        <div class="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center text-deepLavender font-serif text-xl md:text-2xl mb-4 shadow-sm">2</div>
+                        <h3 class="font-serif text-2xl md:text-3xl text-sweetBlack mb-1">La Sabana</h3>
+                        <p class="font-sans text-[10px] md:text-xs font-bold tracking-widest text-deepLavender uppercase mb-3">Folicular</p>
+                        <p class="font-sans text-sweetBlack/80 text-sm md:text-base leading-relaxed">Es momento de abrirse al mundo. Planifica, propón ideas y comienza nuevos proyectos con claridad.</p>
+                    </div>
+
+                    <div class="bg-lumaLightBg rounded-[2rem] p-6 md:p-8 border border-sweetBlack/5 shadow-sm">
+                        <div class="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center text-deepLavender font-serif text-xl md:text-2xl mb-4 shadow-sm">3</div>
+                        <h3 class="font-serif text-2xl md:text-3xl text-sweetBlack mb-1">El Oasis</h3>
+                        <p class="font-sans text-[10px] md:text-xs font-bold tracking-widest text-deepLavender uppercase mb-3">Ovulatoria</p>
+                        <p class="font-sans text-sweetBlack/80 text-sm md:text-base leading-relaxed">Tu energía está en su punto máximo. Aprovecha para liderar, conectar socialmente y actuar.</p>
+                    </div>
+
+                    <div class="bg-lumaLightBg rounded-[2rem] p-6 md:p-8 border border-sweetBlack/5 shadow-sm">
+                        <div class="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center text-deepLavender font-serif text-xl md:text-2xl mb-4 shadow-sm">4</div>
+                        <h3 class="font-serif text-2xl md:text-3xl text-sweetBlack mb-1">La meseta</h3>
+                        <p class="font-sans text-[10px] md:text-xs font-bold tracking-widest text-deepLavender uppercase mb-3">Lútea</p>
+                        <p class="font-sans text-sweetBlack/80 text-sm md:text-base leading-relaxed">Tu intuición se agudiza y buscas el orden. Es el momento ideal para preparar el terreno y cerrar tareas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="la-app-preview" class="bg-lumaLightBg relative w-full py-12 md:py-16 overflow-hidden flex items-center min-h-[90vh]">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-8 lg:px-20 flex flex-col lg:flex-row items-center gap-8 lg:gap-12 w-full">
+            
+            <div class="w-full lg:w-[45%] z-20 text-left" data-aos="fade-right">
+                
+                <div class="flex items-center justify-start gap-2 mb-3 md:mb-4">
+                    <div class="flex text-pastelMagenta">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <span class="font-sans text-xs font-bold text-sweetBlack/80">Miles de mujeres ya nos esperan</span>
+                </div>
+
+                <h2 class="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-sweetBlack leading-[1.1] mb-3 md:mb-4">
+                    Somos <span class="italic">luma</span>, tu app de gestión vital <span class="italic text-deepLavender font-medium">inteligente</span>.
+                </h2>
+                
+                <p class="font-sans text-sweetBlack/70 text-sm md:text-base leading-relaxed mb-5 lg:max-w-md">
+                    Sustituimos el caos y la incertidumbre por claridad. La primera aplicación que conecta tus datos biológicos con tu agenda diaria para optimizar tu tiempo.
+                </p>
+
+                <div class="flex flex-col gap-3 mb-6 w-full lg:max-w-full">
+                    <div class="flex items-center gap-3 p-3 md:p-4 rounded-2xl bg-white border border-sweetBlack/5 shadow-sm hover:shadow-md transition-all duration-300">
+                        <div class="w-10 h-10 md:w-12 md:h-12 shrink-0 rounded-full overflow-hidden flex items-center justify-center bg-[#FDF0FB]">
+                            <img src="imagenes_luma/icono_bienestar.png" alt="Bienestar" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex flex-col text-left">
+                            <h4 class="font-sans font-bold text-sm md:text-base text-sweetBlack mb-0.5">Bienestar</h4>
+                            <p class="font-sans text-xs text-sweetBlack/70 leading-snug">Para mujeres que buscan equilibrio diario escuchando y validando las necesidades naturales de tu cuerpo.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 md:p-4 rounded-2xl bg-white border border-sweetBlack/5 shadow-sm hover:shadow-md transition-all duration-300">
+                        <div class="w-10 h-10 md:w-12 md:h-12 shrink-0 rounded-full overflow-hidden flex items-center justify-center bg-[#a68bd1]">
+                            <img src="imagenes_luma/icono_entrenamiento.png" alt="Entrenamiento" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex flex-col text-left">
+                            <h4 class="font-sans font-bold text-sm md:text-base text-sweetBlack mb-0.5">Entrenamiento</h4>
+                            <p class="font-sans text-xs text-sweetBlack/70 leading-snug">Para mujeres que buscan optimizar su rendimiento físico convirtiendo tu ciclo biológico en tu mejor estrategia de entrenamiento.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hidden lg:flex flex-col items-start gap-4">
+                    <div class="flex flex-wrap justify-start gap-3">
+                        <button class="bg-sweetBlack text-white hover:bg-deepLavender transition-colors px-4 py-2.5 rounded-xl flex items-center gap-2 w-fit shadow-md opacity-90 cursor-not-allowed">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.84 2.15-1.74 3.32-2.53 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                            <div class="text-left">
+                                <div class="text-[8px] leading-tight opacity-80">Próximamente en</div>
+                                <div class="text-xs font-bold leading-tight font-sans">App Store</div>
+                            </div>
+                        </button>
+                        <button class="bg-sweetBlack text-white hover:bg-deepLavender transition-colors px-4 py-2.5 rounded-xl flex items-center gap-2 w-fit shadow-md opacity-90 cursor-not-allowed">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M3.1 3.5c-.2.2-.3.6-.3 1.1v14.8c0 .5.1.9.3 1.1l.1.1 8.3-8.3v-.3L3.2 3.4l-.1.1z" fill="#00f0ff"/><path d="M15.4 15.8L11.5 12v-.1l3.9-3.9.1.1 4.6 2.6c1.3.7 1.3 1.9 0 2.6l-4.6 2.6-.1-.1z" fill="#ffdf00"/><path d="M15.5 15.7l-4 3.9-8.4 4.6c-.4.2-.9.2-1.3-.1l9.7-8.4z" fill="#ff3333"/><path d="M15.5 8.3L1.8-.1C2.2-.4 2.7-.4 3.1-.2l8.4 4.6 4 3.9z" fill="#00eb3b"/></svg>
+                            <div class="text-left">
+                                <div class="text-[8px] leading-tight opacity-80">Próximamente en</div>
+                                <div class="text-xs font-bold leading-tight font-sans">Google Play</div>
+                            </div>
+                        </button>
+                    </div>
+                    <a href="#cta-final" class="bg-deepLavender text-white hover:bg-sweetBlack font-sans text-sm font-bold px-6 py-3 rounded-full transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1 animate-float-delayed whitespace-nowrap w-auto">
+                        Únete a la lista de espera
+                    </a>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-[55%] flex justify-center items-center mt-4 lg:mt-0" data-aos="fade-left">
+                <img src="imagenes_luma/esquema_luma.png" alt="Esquema del funcionamiento de la app luma" class="w-full max-h-[60vh] lg:max-h-[75vh] w-auto object-contain rounded-2xl md:rounded-3xl shadow-sm">
+            </div>
+
+            <div class="w-full flex lg:hidden flex-col items-start gap-4 mt-4" data-aos="fade-up">
+                <div class="flex flex-col sm:flex-row flex-wrap justify-start gap-3 w-full">
+                    <button class="flex-1 bg-sweetBlack text-white hover:bg-deepLavender transition-colors px-4 py-2.5 rounded-xl flex items-center justify-center gap-3 shadow-md opacity-90 cursor-not-allowed">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.84 2.15-1.74 3.32-2.53 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                        <div class="text-left">
+                            <div class="text-[8px] leading-tight opacity-80">Próximamente en</div>
+                            <div class="text-xs font-bold leading-tight font-sans">App Store</div>
+                        </div>
+                    </button>
+                    <button class="flex-1 bg-sweetBlack text-white hover:bg-deepLavender transition-colors px-4 py-2.5 rounded-xl flex items-center justify-center gap-3 shadow-md opacity-90 cursor-not-allowed">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M3.1 3.5c-.2.2-.3.6-.3 1.1v14.8c0 .5.1.9.3 1.1l.1.1 8.3-8.3v-.3L3.2 3.4l-.1.1z" fill="#00f0ff"/><path d="M15.4 15.8L11.5 12v-.1l3.9-3.9.1.1 4.6 2.6c1.3.7 1.3 1.9 0 2.6l-4.6 2.6-.1-.1z" fill="#ffdf00"/><path d="M15.5 15.7l-4 3.9-8.4 4.6c-.4.2-.9.2-1.3-.1l9.7-8.4z" fill="#ff3333"/><path d="M15.5 8.3L1.8-.1C2.2-.4 2.7-.4 3.1-.2l8.4 4.6 4 3.9z" fill="#00eb3b"/></svg>
+                        <div class="text-left">
+                            <div class="text-[8px] leading-tight opacity-80">Próximamente en</div>
+                            <div class="text-xs font-bold leading-tight font-sans">Google Play</div>
+                        </div>
+                    </button>
+                </div>
+                
+                <a href="#cta-final" class="bg-deepLavender text-white hover:bg-sweetBlack font-sans text-sm font-bold px-6 py-3 rounded-full transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1 w-full text-center">
+                    Únete a la lista de espera
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="rigor-cientifico" class="bg-white relative w-full py-16 md:py-24 overflow-hidden z-10 shadow-sm border-b border-sweetBlack/5">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-8 lg:px-20 flex flex-col items-center">
+            
+            <div data-aos="fade-down" class="inline-flex items-center justify-center bg-blueChalk text-deepLavender font-sans text-xs font-bold tracking-wider px-4 py-1.5 md:px-5 md:py-2 rounded-full mb-4 md:mb-6 shadow-sm">
+                Ciencia aplicada
+            </div>
+            
+            <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-4 text-sweetBlack" data-aos="zoom-in">
+                El rigor científico detrás de <span class="italic text-deepLavender">luma</span>
+            </h2>
+            
+            <p class="font-sans text-sweetBlack/70 text-base md:text-lg mb-10 md:mb-16 text-center max-w-3xl leading-relaxed" data-aos="fade-up">
+                No solo seguimos tu ciclo; validamos tu biología. Desarrollada bajo la premisa de que el ciclo menstrual es el <strong class="text-sweetBlack">"Quinto Signo Vital"</strong>, un indicador fundamental de tu salud sistémica, metabólica y endocrina.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-5xl text-left">
+                
+                <div class="bg-lumaLightBg rounded-[2rem] p-6 md:p-8 shadow-sm border border-sweetBlack/5 hover:border-pastelMagenta/40 transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 bg-blueChalk rounded-full flex items-center justify-center text-deepLavender font-serif text-lg font-bold">1</div>
+                        <h3 class="font-serif text-xl md:text-2xl text-sweetBlack leading-tight">El respaldo de la evidencia global</h3>
+                    </div>
+                    <p class="font-sans text-sm md:text-base text-sweetBlack/80 leading-relaxed mb-4">
+                        Nuestro algoritmo y protocolos están alineados con las directrices de los organismos más prestigiosos:
+                    </p>
+                    <ul class="font-sans text-xs md:text-sm text-sweetBlack/70 space-y-3">
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 text-deepLavender shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                            <span><strong class="text-sweetBlack">FIGO:</strong> Criterios de normalidad y variabilidad para detectar anomalías.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 text-deepLavender shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                            <span><strong class="text-sweetBlack">ACOG:</strong> Protocolos clínicos para monitorización y alertas de salud.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 text-deepLavender shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                            <span><strong class="text-sweetBlack">OMS:</strong> Recomendaciones sobre prevención y salud reproductiva.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-lumaLightBg rounded-[2rem] p-6 md:p-8 shadow-sm border border-sweetBlack/5 hover:border-pastelMagenta/40 transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 bg-blueChalk rounded-full flex items-center justify-center text-deepLavender font-serif text-lg font-bold">2</div>
+                        <h3 class="font-serif text-xl md:text-2xl text-sweetBlack leading-tight">Los 4 ecosistemas</h3>
+                    </div>
+                    <p class="font-sans text-sm md:text-base text-sweetBlack/80 leading-relaxed mb-4">
+                        Traducimos cambios hormonales reales en una experiencia humana comprensible:
+                    </p>
+                    <ul class="font-sans text-xs md:text-sm text-sweetBlack/70 space-y-3">
+                        <li class="flex items-start gap-2">
+                            <div class="w-2 h-2 rounded-full bg-pastelMagenta mt-1.5 shrink-0"></div>
+                            <span><strong>La Cueva:</strong> Monitoreo de inflamación y hierro. Prioriza recuperación.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <div class="w-2 h-2 rounded-full bg-pastelMagenta mt-1.5 shrink-0"></div>
+                            <span><strong>La Sabana:</strong> Pico de estradiol, máxima plasticidad cognitiva y eficiencia.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <div class="w-2 h-2 rounded-full bg-pastelMagenta mt-1.5 shrink-0"></div>
+                            <span><strong>El Oasis:</strong> Ventana de fertilidad, TBC y moco cervical.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <div class="w-2 h-2 rounded-full bg-pastelMagenta mt-1.5 shrink-0"></div>
+                            <span><strong>La Meseta:</strong> Progesterona, termorregulación y sensibilidad a la insulina.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-lumaLightBg rounded-[2rem] p-6 md:p-8 shadow-sm border border-sweetBlack/5 hover:border-pastelMagenta/40 transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 bg-blueChalk rounded-full flex items-center justify-center text-deepLavender font-serif text-lg font-bold">3</div>
+                        <h3 class="font-serif text-xl md:text-2xl text-sweetBlack leading-tight">Medicina de precisión</h3>
+                    </div>
+                    <p class="font-sans text-sm md:text-base text-sweetBlack/80 leading-relaxed mb-3">
+                        Rechazamos las soluciones genéricas. Nos basamos en las últimas investigaciones en <strong class="text-sweetBlack">Medicina Deportiva Femenina y Endocrinología Nutricional</strong>.
+                    </p>
+                    <p class="font-sans text-sm md:text-base text-sweetBlack/80 leading-relaxed">
+                        Adaptamos la carga física y nutricional a tus fluctuaciones para que alcances tu máximo rendimiento sin comprometer tu salud hormonal (evitando el riesgo de déficit energético o RED-S).
+                    </p>
+                </div>
+
+                <div class="bg-lumaLightBg rounded-[2rem] p-6 md:p-8 shadow-sm border border-sweetBlack/5 hover:border-pastelMagenta/40 transition-all duration-300" data-aos="fade-up" data-aos-delay="400">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 bg-blueChalk rounded-full flex items-center justify-center text-deepLavender font-serif text-lg font-bold">4</div>
+                        <h3 class="font-serif text-xl md:text-2xl text-sweetBlack leading-tight">Ética y autoridad compasiva</h3>
+                    </div>
+                    <p class="font-sans text-sm md:text-base text-sweetBlack/80 leading-relaxed mb-3">
+                        Tu información biológica es tuya. Operamos bajo estrictos protocolos de privacidad y encriptación. Eres la única dueña de tu historial clínico.
+                    </p>
+                    <p class="font-sans text-sm md:text-base text-sweetBlack/80 leading-relaxed">
+                        Lumi utiliza el modelo de <strong class="text-sweetBlack">Autoridad Compasiva</strong>: entregamos hallazgos validados con un lenguaje empático que reduce el estrés y fomenta el autocuidado.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-12 w-full max-w-4xl bg-blueChalk/50 border border-deepLavender/20 rounded-2xl p-4 md:p-6 text-center" data-aos="fade-in" data-aos-delay="500">
+                <p class="font-sans text-sweetBlack/60 text-xs leading-relaxed italic">
+                    <span class="font-bold text-deepLavender">* Importante:</span> <span class="italic font-bold text-sweetBlack/70">luma</span> es una herramienta de apoyo y educación biológica. No sustituye el diagnóstico médico profesional, sino que empodera a la mujer para que llegue a su consulta con datos precisos y una voz propia.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="pilares" class="bg-blueChalk relative w-full py-20 md:py-32 -mt-[4rem] pt-[8rem] z-0">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-8 lg:px-20">
+            <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-10 md:mb-16 text-sweetBlack" data-aos="fade-up">Nuestros pilares core</h2>
+            
+            <div class="flex flex-col md:grid md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto text-left">
+                
+                <div data-aos="fade-up" data-aos-delay="0" class="bg-white hover:bg-sweetBlack rounded-[2rem] md:rounded-[2.5rem] p-6 shadow-sm transition-all duration-500 group cursor-pointer flex flex-col justify-center border border-white hover:border-transparent hover:-translate-y-2">
+                    <span class="font-sans text-[10px] md:text-xs font-bold tracking-[0.15em] text-deepLavender group-hover:text-pastelMagenta uppercase mb-3 block transition-colors duration-300">Control</span>
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 shrink-0 bg-blueChalk group-hover:bg-white/10 rounded-xl flex items-center justify-center transition-colors duration-300">
+                            <svg class="w-5 h-5 text-deepLavender group-hover:text-pastelMagenta transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-sweetBlack group-hover:text-white transition-colors duration-300 leading-tight">Soberanía sobre tu tiempo.</h3>
+                    </div>
+                    <p class="font-sans text-sweetBlack/70 group-hover:text-white/80 leading-relaxed transition-colors duration-300 text-sm">Recupera el mando. Anticipa tus picos de rendimiento y planifica tus reuniones importantes o entrenos de fuerza cuando tu biología juega a tu favor.</p>
+                </div>
+                
+                <div data-aos="fade-up" data-aos-delay="150" class="bg-white hover:bg-sweetBlack rounded-[2rem] md:rounded-[2.5rem] p-6 shadow-sm transition-all duration-500 group cursor-pointer flex flex-col justify-center border border-white hover:border-transparent hover:-translate-y-2">
+                    <span class="font-sans text-[10px] md:text-xs font-bold tracking-[0.15em] text-deepLavender group-hover:text-pastelMagenta uppercase mb-3 block transition-colors duration-300">Comodidad</span>
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 shrink-0 bg-blueChalk group-hover:bg-white/10 rounded-xl flex items-center justify-center transition-colors duration-300">
+                            <svg class="w-5 h-5 text-deepLavender group-hover:text-pastelMagenta transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-sweetBlack group-hover:text-white transition-colors duration-300 leading-tight">Validación radical del descanso.</h3>
+                    </div>
+                    <p class="font-sans text-sweetBlack/70 group-hover:text-white/80 leading-relaxed transition-colors duration-300 text-sm">Si el sistema detecta fatiga, el plan se adapta. Sin culpa. Creamos un espacio seguro donde la comodidad es la base de tu salud a largo plazo.</p>
+                </div>
+                
+                <div data-aos="fade-up" data-aos-delay="300" class="bg-white hover:bg-sweetBlack rounded-[2rem] md:rounded-[2.5rem] p-6 shadow-sm transition-all duration-500 group cursor-pointer flex flex-col justify-center border border-white hover:border-transparent hover:-translate-y-2">
+                    <span class="font-sans text-[10px] md:text-xs font-bold tracking-[0.15em] text-deepLavender group-hover:text-pastelMagenta uppercase mb-3 block transition-colors duration-300">Confianza</span>
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 shrink-0 bg-blueChalk group-hover:bg-white/10 rounded-xl flex items-center justify-center transition-colors duration-300">
+                            <svg class="w-5 h-5 text-deepLavender group-hover:text-pastelMagenta transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-sweetBlack group-hover:text-white transition-colors duration-300 leading-tight">Rigor científico, calidez humana.</h3>
+                    </div>
+                    <p class="font-sans text-sweetBlack/70 group-hover:text-white/80 leading-relaxed transition-colors duration-300 text-sm">Tus datos son sagrados. Te ofrecemos un entorno privado y recomendaciones basadas en evidencia clínica, traducidas con empatía.</p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonios" class="bg-white relative w-full overflow-hidden min-h-[750px] lg:min-h-[950px] rounded-t-[3rem] md:rounded-t-[4rem] -mt-[4rem] z-20 shadow-[0_-10px_40px_rgba(0,0,0,0.02)] pt-24 md:pt-32">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-8 lg:px-20 relative z-10">
+            
+            <div class="flex flex-col items-center text-center mb-12 md:mb-20">
+                <div data-aos="fade-down" class="inline-flex items-center justify-center bg-blueChalk text-deepLavender font-sans text-xs font-bold tracking-wider px-4 py-1.5 md:px-5 md:py-2 rounded-full mb-4 md:mb-6 shadow-sm">
+                    Comunidad luma
+                </div>
+                <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-sweetBlack" data-aos="zoom-in">
+                    Haciendo las paces con <br class="hidden md:block">
+                    <span class="italic text-deepLavender">su biología</span>
+                </h2>
+            </div>
+            
+        </div>
+
+        <div class="testim-wheel-center">
+            
+            <div class="testim-track"></div>
+
+            <div id="testim-wheel" class="absolute left-0 top-0 w-0 h-0 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
+                
+                <div class="testim-wrapper z-30 hover:z-50 group cursor-pointer transform rotate-[-60deg] lg:rotate-[-32deg]">
+                    <div class="w-full h-full transition-transform duration-300 ease-out group-hover:-translate-y-4 md:group-hover:-translate-y-8">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 bg-pastelMagenta group-hover:bg-deepLavender transition-colors rounded-full border-[3px] border-white shadow-md z-20"></div>
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-[100%] w-1 h-6 md:h-8 bg-blueChalk group-hover:bg-deepLavender/50 transition-colors z-10"></div>
+                        <div class="absolute top-[-24px] md:top-[-32px] left-0 w-full -translate-y-[100%] bg-white/95 backdrop-blur shadow-[0_0_20px_rgba(155,124,191,0.15)] group-hover:shadow-[0_10px_40px_rgba(155,124,191,0.3)] border-2 border-deepLavender/20 group-hover:border-deepLavender/50 transition-all duration-300 p-5 md:p-6 rounded-[1.5rem] md:rounded-[2rem] z-30 flex flex-col">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-8 h-8 md:w-10 md:h-10 bg-sweetBlack rounded-full flex items-center justify-center text-white font-bold font-sans text-sm">L</div>
+                                <div class="text-left">
+                                    <h4 class="font-sans font-bold text-sweetBlack text-xs md:text-sm leading-tight">Lucía M.</h4>
+                                    <p class="font-sans text-[9px] md:text-[10px] text-sweetBlack/60 uppercase tracking-wider mt-0.5">Bienestar / Entreno</p>
+                                </div>
+                            </div>
+                            <p class="font-sans text-sweetBlack/80 text-xs md:text-sm leading-relaxed italic mb-3 flex-grow text-left">
+                                "La comunidad de luma me da muchísima fuerza. Ver que no estoy sola en esto lo cambia absolutamente todo."
+                            </p>
+                            <div class="flex gap-1 text-pastelMagenta justify-center mt-auto">
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testim-wrapper z-30 hover:z-50 group cursor-pointer transform rotate-[-30deg] lg:rotate-[-16deg]">
+                    <div class="w-full h-full transition-transform duration-300 ease-out group-hover:-translate-y-4 md:group-hover:-translate-y-8">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 bg-pastelMagenta group-hover:bg-deepLavender transition-colors rounded-full border-[3px] border-white shadow-md z-20"></div>
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-[100%] w-1 h-6 md:h-8 bg-blueChalk group-hover:bg-deepLavender/50 transition-colors z-10"></div>
+                        <div class="absolute top-[-24px] md:top-[-32px] left-0 w-full -translate-y-[100%] bg-white/95 backdrop-blur shadow-[0_0_20px_rgba(155,124,191,0.15)] group-hover:shadow-[0_10px_40px_rgba(155,124,191,0.3)] border-2 border-deepLavender/20 group-hover:border-deepLavender/50 transition-all duration-300 p-5 md:p-6 rounded-[1.5rem] md:rounded-[2rem] z-30 flex flex-col">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-8 h-8 md:w-10 md:h-10 bg-[#a68bd1] rounded-full flex items-center justify-center text-white font-bold font-sans text-sm">A</div>
+                                <div class="text-left">
+                                    <h4 class="font-sans font-bold text-sweetBlack text-xs md:text-sm leading-tight">Andrea G.</h4>
+                                    <p class="font-sans text-[9px] md:text-[10px] text-sweetBlack/60 uppercase tracking-wider mt-0.5">Entrenamiento</p>
+                                </div>
+                            </div>
+                            <p class="font-sans text-sweetBlack/80 text-xs md:text-sm leading-relaxed italic mb-3 flex-grow text-left">
+                                "¡Sinergia perfecta! Adaptar mis entrenos con luma me da picos de energía que no sabía que tenía."
+                            </p>
+                            <div class="flex gap-1 text-pastelMagenta justify-center mt-auto">
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testim-wrapper z-30 hover:z-50 group cursor-pointer transform rotate-[0deg] lg:rotate-[0deg]">
+                    <div class="w-full h-full transition-transform duration-300 ease-out group-hover:-translate-y-4 md:group-hover:-translate-y-8">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 bg-pastelMagenta group-hover:bg-deepLavender transition-colors rounded-full border-[3px] border-white shadow-md z-20"></div>
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-[100%] w-1 h-6 md:h-8 bg-blueChalk group-hover:bg-deepLavender/50 transition-colors z-10"></div>
+                        <div class="absolute top-[-24px] md:top-[-32px] left-0 w-full -translate-y-[100%] bg-white/95 backdrop-blur shadow-[0_0_20px_rgba(155,124,191,0.15)] group-hover:shadow-[0_10px_40px_rgba(155,124,191,0.3)] border-2 border-deepLavender/20 group-hover:border-deepLavender/50 transition-all duration-300 p-5 md:p-6 rounded-[1.5rem] md:rounded-[2rem] z-30 flex flex-col">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-8 h-8 md:w-10 md:h-10 bg-deepLavender rounded-full flex items-center justify-center text-white font-bold font-sans text-sm">M</div>
+                                <div class="text-left">
+                                    <h4 class="font-sans font-bold text-sweetBlack text-xs md:text-sm leading-tight">Marta R.</h4>
+                                    <p class="font-sans text-[9px] md:text-[10px] text-sweetBlack/60 uppercase tracking-wider mt-0.5">Bienestar</p>
+                                </div>
+                            </div>
+                            <p class="font-sans text-sweetBlack/80 text-xs md:text-sm leading-relaxed italic mb-3 flex-grow text-left">
+                                "Dejar de castigarme por mi inconsistencia fue mi mayor descubrimiento. Lumi me guía a mi propio ritmo."
+                            </p>
+                            <div class="flex gap-1 text-pastelMagenta justify-center mt-auto">
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testim-wrapper z-30 hover:z-50 group cursor-pointer transform rotate-[30deg] lg:rotate-[16deg]">
+                    <div class="w-full h-full transition-transform duration-300 ease-out group-hover:-translate-y-4 md:group-hover:-translate-y-8">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 bg-pastelMagenta group-hover:bg-deepLavender transition-colors rounded-full border-[3px] border-white shadow-md z-20"></div>
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-[100%] w-1 h-6 md:h-8 bg-blueChalk group-hover:bg-deepLavender/50 transition-colors z-10"></div>
+                        <div class="absolute top-[-24px] md:top-[-32px] left-0 w-full -translate-y-[100%] bg-white/95 backdrop-blur shadow-[0_0_20px_rgba(155,124,191,0.15)] group-hover:shadow-[0_10px_40px_rgba(155,124,191,0.3)] border-2 border-deepLavender/20 group-hover:border-deepLavender/50 transition-all duration-300 p-5 md:p-6 rounded-[1.5rem] md:rounded-[2rem] z-30 flex flex-col">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-8 h-8 md:w-10 md:h-10 bg-blueChalk rounded-full flex items-center justify-center text-deepLavender font-bold font-sans text-sm">C</div>
+                                <div class="text-left">
+                                    <h4 class="font-sans font-bold text-sweetBlack text-xs md:text-sm leading-tight">Claudia P.</h4>
+                                    <p class="font-sans text-[9px] md:text-[10px] text-sweetBlack/60 uppercase tracking-wider mt-0.5">Bienestar</p>
+                                </div>
+                            </div>
+                            <p class="font-sans text-sweetBlack/80 text-xs md:text-sm leading-relaxed italic mb-3 flex-grow text-left">
+                                "El Prado es mi paz diaria. Ver mi estado biológico reflejado en la naturaleza es precioso."
+                            </p>
+                            <div class="flex gap-1 text-pastelMagenta justify-center mt-auto">
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testim-wrapper z-30 hover:z-50 group cursor-pointer transform rotate-[60deg] lg:rotate-[32deg]">
+                    <div class="w-full h-full transition-transform duration-300 ease-out group-hover:-translate-y-4 md:group-hover:-translate-y-8">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 bg-pastelMagenta group-hover:bg-deepLavender transition-colors rounded-full border-[3px] border-white shadow-md z-20"></div>
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-[100%] w-1 h-6 md:h-8 bg-blueChalk group-hover:bg-deepLavender/50 transition-colors z-10"></div>
+                        <div class="absolute top-[-24px] md:top-[-32px] left-0 w-full -translate-y-[100%] bg-white/95 backdrop-blur shadow-[0_0_20px_rgba(155,124,191,0.15)] group-hover:shadow-[0_10px_40px_rgba(155,124,191,0.3)] border-2 border-deepLavender/20 group-hover:border-deepLavender/50 transition-all duration-300 p-5 md:p-6 rounded-[1.5rem] md:rounded-[2rem] z-30 flex flex-col">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-8 h-8 md:w-10 md:h-10 bg-[#FDF0FB] rounded-full flex items-center justify-center text-deepLavender font-bold font-sans text-sm">E</div>
+                                <div class="text-left">
+                                    <h4 class="font-sans font-bold text-sweetBlack text-xs md:text-sm leading-tight">Elena S.</h4>
+                                    <p class="font-sans text-[9px] md:text-[10px] text-sweetBlack/60 uppercase tracking-wider mt-0.5">Bienestar</p>
+                                </div>
+                            </div>
+                            <p class="font-sans text-sweetBlack/80 text-xs md:text-sm leading-relaxed italic mb-3 flex-grow text-left">
+                                "Validar mi descanso con Lumi me quitó la culpa de encima. 'La Cueva' es mi momento de recarga."
+                            </p>
+                            <div class="flex gap-1 text-pastelMagenta justify-center mt-auto">
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3 h-3 md:w-4 md:h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="absolute bottom-10 md:bottom-20 left-1/2 -translate-x-1/2 z-40 flex items-center gap-8 md:gap-16">
+                <button id="testim-prev" class="flex items-center gap-2 md:gap-3 text-sweetBlack font-sans font-bold text-sm md:text-base hover:text-deepLavender transition-colors cursor-pointer group">
+                    <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-blueChalk text-deepLavender flex items-center justify-center group-hover:scale-105 group-hover:bg-[#6a5b82] group-hover:text-white transition-all shadow-sm">
+                        <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                    </div>
+                    anterior
+                </button>
+                <button id="testim-next" class="flex items-center gap-2 md:gap-3 text-sweetBlack font-sans font-bold text-sm md:text-base hover:text-deepLavender transition-colors cursor-pointer group">
+                    siguiente
+                    <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-blueChalk text-deepLavender flex items-center justify-center group-hover:scale-105 group-hover:bg-[#6a5b82] group-hover:text-white transition-all shadow-sm">
+                        <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                    </div>
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="bg-lumaLightBg relative w-full pt-20 md:pt-32 pb-24 md:pb-32 rounded-t-[3rem] md:rounded-t-[4rem] -mt-[4rem] z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.02)]">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-8 lg:px-20 flex flex-col items-center text-left">
+            
+            <div data-aos="fade-down" class="inline-flex items-center justify-center bg-white border border-deepLavender/20 text-deepLavender font-sans text-xs font-bold tracking-wider px-4 py-1.5 md:px-5 md:py-2 rounded-full mb-4 md:mb-6 shadow-sm">
+                ¿Tienes dudas?
+            </div>
+            
+            <h2 data-aos="zoom-in" class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-4 text-sweetBlack">
+                Preguntas frecuentes
+            </h2>
+            
+            <p data-aos="fade-up" class="font-sans text-sweetBlack/70 text-base md:text-lg mb-8 md:mb-12 text-center max-w-lg">
+                Resolvemos tus inquietudes para que empieces a aliarte con tu ciclo con total confianza.
+            </p>
+
+            <div data-aos="fade-up" data-aos-delay="100" class="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 md:mb-12 bg-white/50 p-2 rounded-2xl md:rounded-full border border-white" id="faq-filters">
+                <button class="filter-btn active bg-sweetBlack text-white font-sans font-bold text-xs md:text-sm px-4 py-2 md:px-6 md:py-2.5 rounded-full transition-colors cursor-pointer shadow-md" data-filter="general">General</button>
+                <button class="filter-btn bg-transparent text-sweetBlack hover:bg-white font-sans font-bold text-xs md:text-sm px-4 py-2 md:px-6 md:py-2.5 rounded-full transition-colors cursor-pointer" data-filter="privacidad">Privacidad</button>
+                <button class="filter-btn bg-transparent text-sweetBlack hover:bg-white font-sans font-bold text-xs md:text-sm px-4 py-2 md:px-6 md:py-2.5 rounded-full transition-colors cursor-pointer" data-filter="uso">Uso</button>
+                <button class="filter-btn bg-transparent text-sweetBlack hover:bg-white font-sans font-bold text-xs md:text-sm px-4 py-2 md:px-6 md:py-2.5 rounded-full transition-colors cursor-pointer" data-filter="experiencia">Experiencia</button>
+            </div>
+
+            <div class="w-full max-w-3xl flex flex-col gap-4 md:gap-5" id="faq-container">
+                <div data-aos="fade-up" data-aos-delay="200" class="faq-item bg-white rounded-[1.5rem] md:rounded-[2rem] shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md border border-white hover:-translate-y-1" data-category="general">
+                    <button class="faq-toggle w-full px-6 py-5 md:px-8 md:py-6 flex justify-between items-center text-left focus:outline-none cursor-pointer group">
+                        <span class="font-serif text-lg md:text-xl font-bold text-sweetBlack group-hover:text-deepLavender transition-colors pr-4">¿Qué es <span class="italic">luma</span> y cómo funciona?</span>
+                        <div class="w-8 h-8 md:w-10 md:h-10 bg-blueChalk group-hover:bg-pastelMagenta/30 rounded-full flex items-center justify-center shrink-0 transition-colors">
+                            <svg class="w-4 h-4 md:w-5 md:h-5 text-deepLavender transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </div>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="faq-content-inner text-sm md:text-base"><span class="italic">luma</span> es una aplicación de salud femenina que utiliza inteligencia artificial para analizar tu ciclo menstrual. Funciona registrando datos básicos como la fecha de tu última menstruación, síntomas diarios y estado de ánimo. Nuestro algoritmo aprende de tus patrones únicos para ofrecerte recomendaciones personalizadas.</div>
+                    </div>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="300" class="faq-item bg-white rounded-[1.5rem] md:rounded-[2rem] shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md border border-white hover:-translate-y-1" data-category="general">
+                    <button class="faq-toggle w-full px-6 py-5 md:px-8 md:py-6 flex justify-between items-center text-left focus:outline-none cursor-pointer group">
+                        <span class="font-serif text-lg md:text-xl font-bold text-sweetBlack group-hover:text-deepLavender transition-colors pr-4">¿Es <span class="italic">luma</span> gratuita?</span>
+                        <div class="w-8 h-8 md:w-10 md:h-10 bg-blueChalk group-hover:bg-pastelMagenta/30 rounded-full flex items-center justify-center shrink-0 transition-colors">
+                            <svg class="w-4 h-4 md:w-5 md:h-5 text-deepLavender transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </div>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="faq-content-inner text-sm md:text-base">Ofrecemos una versión gratuita con funcionalidades básicas para el seguimiento de tu ciclo. Para acceder a análisis predictivos avanzados y planes personalizados integrados en tu agenda, disponemos de una suscripción Premium.</div>
+                    </div>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="400" class="faq-item bg-white rounded-[1.5rem] md:rounded-[2rem] shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md border border-white hover:-translate-y-1" data-category="general">
+                    <button class="faq-toggle w-full px-6 py-5 md:px-8 md:py-6 flex justify-between items-center text-left focus:outline-none cursor-pointer group">
+                        <span class="font-serif text-lg md:text-xl font-bold text-sweetBlack group-hover:text-deepLavender transition-colors pr-4">¿En qué dispositivos está disponible?</span>
+                        <div class="w-8 h-8 md:w-10 md:h-10 bg-blueChalk group-hover:bg-pastelMagenta/30 rounded-full flex items-center justify-center shrink-0 transition-colors">
+                            <svg class="w-4 h-4 md:w-5 md:h-5 text-deepLavender transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </div>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="faq-content-inner text-sm md:text-base">Actualmente, <span class="italic">luma</span> está en fase Beta cerrada. En su lanzamiento oficial estará disponible tanto para dispositivos iOS (iPhone) como Android.</div>
+                    </div>
+                </div>
+
+                <div class="faq-item hidden bg-white rounded-[1.5rem] md:rounded-[2rem] shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md border border-white hover:-translate-y-1" data-category="privacidad">
+                    <button class="faq-toggle w-full px-6 py-5 md:px-8 md:py-6 flex justify-between items-center text-left focus:outline-none cursor-pointer group"><span class="font-serif text-lg md:text-xl font-bold text-sweetBlack group-hover:text-deepLavender transition-colors pr-4">¿Cómo protege <span class="italic">luma</span> mis datos personales?</span><div class="w-8 h-8 md:w-10 md:h-10 bg-blueChalk group-hover:bg-pastelMagenta/30 rounded-full flex items-center justify-center shrink-0 transition-colors"><svg class="w-4 h-4 md:w-5 md:h-5 text-deepLavender transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></div></button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out"><div class="faq-content-inner text-sm md:text-base">Tus datos son sagrados. Utilizamos encriptación de extremo a extremo y nunca vendemos tu información de salud a terceros. Cumplimos estrictamente con la normativa europea RGPD y te otorgamos el control total sobre tus registros en todo momento.</div></div>
+                </div>
+                <div class="faq-item hidden bg-white rounded-[1.5rem] md:rounded-[2rem] shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md border border-white hover:-translate-y-1" data-category="uso">
+                    <button class="faq-toggle w-full px-6 py-5 md:px-8 md:py-6 flex justify-between items-center text-left focus:outline-none cursor-pointer group"><span class="font-serif text-lg md:text-xl font-bold text-sweetBlack group-hover:text-deepLavender transition-colors pr-4">¿Tengo que registrar mis datos todos los días?</span><div class="w-8 h-8 md:w-10 md:h-10 bg-blueChalk group-hover:bg-pastelMagenta/30 rounded-full flex items-center justify-center shrink-0 transition-colors"><svg class="w-4 h-4 md:w-5 md:h-5 text-deepLavender transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></div></button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out"><div class="faq-content-inner text-sm md:text-base">No es obligatorio. Sabemos que la vida es rápida, por eso diseñamos el <strong>Check-in de Bienestar</strong>, una notificación rápida que te permite registrar tu estado de energía en segundos sin navegar por menús. Cuantos más datos registres, más precisas serán las recomendaciones de Lumi.</div></div>
+                </div>
+                <div class="faq-item hidden bg-white rounded-[1.5rem] md:rounded-[2rem] shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md border border-white hover:-translate-y-1" data-category="uso">
+                    <button class="faq-toggle w-full px-6 py-5 md:px-8 md:py-6 flex justify-between items-center text-left focus:outline-none cursor-pointer group"><span class="font-serif text-lg md:text-xl font-bold text-sweetBlack group-hover:text-deepLavender transition-colors pr-4">¿Es <span class="italic">luma</span> útil si tengo un ciclo irregular?</span><div class="w-8 h-8 md:w-10 md:h-10 bg-blueChalk group-hover:bg-pastelMagenta/30 rounded-full flex items-center justify-center shrink-0 transition-colors"><svg class="w-4 h-4 md:w-5 md:h-5 text-deepLavender transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></div></button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out"><div class="faq-content-inner text-sm md:text-base">¡Sí! De hecho, nuestro algoritmo está diseñado para adaptarse y aprender de ciclos irregulares, ayudándote a encontrar patrones invisibles a simple vista y gestionando la incertidumbre con mayor eficacia.</div></div>
+                </div>
+                <div class="faq-item hidden bg-white rounded-[1.5rem] md:rounded-[2rem] shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md border border-white hover:-translate-y-1" data-category="experiencia">
+                    <button class="faq-toggle w-full px-6 py-5 md:px-8 py-6 flex justify-between items-center text-left focus:outline-none cursor-pointer group"><span class="font-serif text-lg md:text-xl font-bold text-sweetBlack group-hover:text-deepLavender transition-colors pr-4">¿Qué significa elegir el camino de "Bienestar" o "Entrenamiento"?</span><div class="w-8 h-8 md:w-10 md:h-10 bg-blueChalk group-hover:bg-pastelMagenta/30 rounded-full flex items-center justify-center shrink-0 transition-colors"><svg class="w-4 h-4 md:w-5 md:h-5 text-deepLavender transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></div></button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out"><div class="faq-content-inner text-sm md:text-base">Tu ciclo no se vive igual si eres una deportista buscando su pico de rendimiento, que si buscas reducir el estrés. Al elegir un camino, <span class="italic">luma</span> adapta su algoritmo: el perfil de Entrenamiento prioriza alertas de rendimiento y adaptación de carga física, mientras que el perfil de Bienestar se enfoca en gestión de estrés, nutrición y validación del descanso.</div></div>
+                </div>
+                <div class="faq-item hidden bg-white rounded-[1.5rem] md:rounded-[2rem] shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md border border-white hover:-translate-y-1" data-category="experiencia">
+                    <button class="faq-toggle w-full px-6 py-5 md:px-8 py-6 flex justify-between items-center text-left focus:outline-none cursor-pointer group"><span class="font-serif text-lg md:text-xl font-bold text-sweetBlack group-hover:text-deepLavender transition-colors pr-4">¿Por qué las fases se llaman como ecosistemas naturales?</span><div class="w-8 h-8 md:w-10 md:h-10 bg-blueChalk group-hover:bg-pastelMagenta/30 rounded-full flex items-center justify-center shrink-0 transition-colors"><svg class="w-4 h-4 md:w-5 md:h-5 text-deepLavender transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></div></button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out"><div class="faq-content-inner text-sm md:text-base">Porque tu cuerpo no es una máquina lineal, es naturaleza. En lugar de términos médicos fríos, usamos metáforas como "El Refugio" (menstruación) o "La Sabana" (fase folicular) para ayudarte a visualizar tus necesidades y reconciliarte con tu ciclo sin sentir culpa al descansar.</div></div>
+                </div>
+                <div class="faq-item hidden bg-white rounded-[1.5rem] md:rounded-[2rem] shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md border border-white hover:-translate-y-1" data-category="experiencia">
+                    <button class="faq-toggle w-full px-6 py-5 md:px-8 py-6 flex justify-between items-center text-left focus:outline-none cursor-pointer group"><span class="font-serif text-lg md:text-xl font-bold text-sweetBlack group-hover:text-deepLavender transition-colors pr-4">¿Cómo funciona la Comunidad en <span class="italic">luma</span>?</span><div class="w-8 h-8 md:w-10 md:h-10 bg-blueChalk group-hover:bg-pastelMagenta/30 rounded-full flex items-center justify-center shrink-0 transition-colors"><svg class="w-4 h-4 md:w-5 md:h-5 text-deepLavender transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></div></button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out"><div class="faq-content-inner text-sm md:text-base">Sabemos que el apoyo social aumenta la motivación. En el módulo de Comunidad puedes ver en qué ecosistema están tus amigas, celebrar sus rachas de autoconocimiento y descubrir estrategias de bienestar que a ellas les están funcionando. Todo en un entorno seguro y validante.</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta-final" class="bg-white relative w-full py-20 md:py-24 overflow-hidden rounded-t-[3rem] md:rounded-t-[4rem] z-40 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] -mt-[4rem]">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-8 lg:px-20 flex flex-col items-center text-center z-10 relative">
+
+            <div class="w-20 h-20 md:w-28 md:h-28 bg-blueChalk rounded-full flex items-center justify-center mb-6 md:mb-8 p-3 shadow-sm" data-aos="fade-down">
+                <img src="imagenes_luma/ZEN_LUMI.png" alt="Zen Lumi" class="w-full h-full object-contain">
+            </div>
+
+            <h2 class="font-serif text-4xl md:text-5xl lg:text-7xl font-bold text-sweetBlack mb-4 md:mb-6 leading-tight" data-aos="fade-up">
+                Haz las paces con tu ritmo
+            </h2>
+            <p class="font-sans text-sweetBlack/80 text-base md:text-xl max-w-2xl mb-8 md:mb-12 leading-relaxed px-2 md:px-0" data-aos="fade-up" data-aos-delay="100">
+                Sé de las primeras en experimentar una nueva forma de entender tu cuerpo. Sin caos, solo patrones.
+            </p>
+
+            <form id="subscribe-form" class="w-full max-w-xl flex flex-col sm:flex-row gap-3 md:gap-4 px-2 md:px-0" data-aos="zoom-in" data-aos-delay="200">
+                <input type="email" placeholder="tu@email.com" required class="flex-1 bg-lumaLightBg border border-sweetBlack/10 rounded-full px-6 py-3 md:px-8 md:py-4 font-sans text-sweetBlack focus:outline-none focus:border-deepLavender transition-colors shadow-sm hover:shadow-md text-sm md:text-base">
+                <button type="submit" class="bg-deepLavender hover:bg-sweetBlack text-white font-sans font-bold px-8 py-3 md:px-10 md:py-4 rounded-full transition-all duration-300 whitespace-nowrap shadow-md shadow-deepLavender/20 hover:shadow-xl hover:-translate-y-1 text-sm md:text-base">
+                    Quiero acceso
+                </button>
+            </form>
+            
+            <p class="font-sans text-sweetBlack/60 text-[10px] md:text-xs mt-4 md:mt-6 px-6 text-center" data-aos="fade-up" data-aos-delay="300">
+                Al registrarte, aceptas nuestra política de privacidad. Sin spam, solo amor.
+            </p>
+
+            <p id="form-success" class="hidden text-deepLavender font-sans font-bold mt-6 md:mt-8 bg-deepLavender/10 px-6 py-3 md:px-8 md:py-4 rounded-full animate-[fadeIn_0.5s_ease-out] text-sm md:text-base text-center mx-4">
+                ¡Gracias por unirte! Pronto tendrás noticias nuestras.
+            </p>
+        </div>
+    </section>
+
+    <footer class="bg-sweetBlack text-white pt-12 pb-4 md:pb-2 rounded-t-[2.5rem] md:rounded-t-[3rem] relative z-50">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-8 lg:px-20 text-left">
+            <div class="flex flex-col lg:flex-row justify-between gap-10 md:gap-12 mb-8 md:mb-2">
+                <div class="w-full lg:w-1/3">
+                    <h3 class="font-sans text-lg md:text-xl font-medium leading-snug mb-4 md:mb-6">
+                        Tecnología femenina diseñada para entender, no para controlar.
+                    </h3>
+                    <a href="mailto:info@luma.es" class="font-sans text-white/80 hover:text-pastelMagenta transition-colors block mb-6 text-sm md:text-base">info@luma.es</a>
+                    <div class="flex gap-4">
+                        <a href="#" class="text-white hover:text-pastelMagenta transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.85-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                        <a href="#" class="text-white hover:text-pastelMagenta transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+                        <a href="#" class="text-white hover:text-pastelMagenta transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3 8h-1.35c-.538 0-.65.221-.65.778v1.222h2l-.209 2h-1.791v7h-3v-7h-2v-2h2v-2.308c0-1.769.931-2.692 3.029-2.692h1.971v3z"/></svg></a>
+                    </div>
+                </div>
+                <div class="w-full lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 md:gap-6 text-left">
+                    <div>
+                        <h4 class="font-sans font-bold text-xs tracking-wider uppercase mb-3 text-white/50">NOSOTRAS</h4>
+                        <ul class="flex flex-col gap-2 font-sans text-sm text-white/80">
+                            <li><a href="#pilares" class="hover:text-white transition-colors">nuestra misión</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">equipo</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">trabaja con nosotras</a></li>
+                            <li><a href="#cta-final" class="hover:text-white transition-colors">contacto</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-sans font-bold text-xs tracking-wider uppercase mb-3 text-white/50">LA APP</h4>
+                        <ul class="flex flex-col gap-2 font-sans text-sm text-white/80">
+                            <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+                            <li><a href="#trampa" class="hover:text-white transition-colors">características</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">atención al cliente</a></li>
+                            <li><a href="#conoce-lumi" class="hover:text-white transition-colors">lumi</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-sans font-bold text-xs tracking-wider uppercase mb-3 text-white/50">LEGAL</h4>
+                        <ul class="flex flex-col gap-2 font-sans text-sm text-white/80">
+                            <li><a href="#" class="hover:text-white transition-colors">política de privacidad</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">política de cookies</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">aviso legal</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col items-start justify-between gap-2 pt-0 relative overflow-hidden mt-6 md:mt-0">
+                <h2 class="font-serif text-[6rem] md:text-[13rem] leading-[0.85] mb-0 md:mb-2 font-bold text-blueChalk/90 select-none text-left pointer-events-none transform translate-y-2 md:-translate-y-6 italic -ml-2 md:-ml-6">
+                    luma
+                </h2>
+                <p class="font-sans text-white/50 text-[10px] md:text-xs mb-4 md:mb-6 shrink-0 relative z-10 text-left">
+                    © <span class="italic">luma</span> 2026. Todos los derechos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            AOS.init({
+                once: true,
+                duration: 800,
+                offset: 50,
+                easing: 'ease-out-cubic'
+            });
+
+            // Sticky Nav
+            const stickyNav = document.getElementById('sticky-nav');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 400) {
+                    if (stickyNav) {
+                        stickyNav.classList.remove('opacity-0', '-translate-y-full', 'pointer-events-none');
+                        stickyNav.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+                    }
+                } else {
+                    if (stickyNav) {
+                        stickyNav.classList.add('opacity-0', '-translate-y-full', 'pointer-events-none');
+                        stickyNav.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+                    }
+                }
+            });
+
+            // Rueda interactiva "Conoce a Lumi"
+            const curveItems = document.querySelectorAll('.curve-item');
+            const curveArea = document.getElementById('lumi-interactive-area');
+            const imgFaseDefault = document.getElementById('img-fase-default');
+            const imgFases = [
+                document.getElementById('img-fase-0'),
+                document.getElementById('img-fase-1'),
+                document.getElementById('img-fase-2'),
+                document.getElementById('img-fase-3')
+            ];
+            
+            const angleStates = { 
+                default: [-18, -6, 6, 18], 
+                hover0:  [-24, 16, 28, 40], 
+                hover1:  [-36, -6, 24, 36], 
+                hover2:  [-36, -24, 6, 36], 
+                hover3:  [-40, -28, -16, 24] 
+            };
+            
+            function updatePositions(state) {
+                if(window.innerWidth >= 1024) {
+                    const angles = angleStates[state] || angleStates['default'];
+                    curveItems.forEach((item, index) => {
+                        const angle = angles[index]; const rad = angle * (Math.PI / 180);
+                        item.style.left = `${50 + 50 * Math.cos(rad)}%`; item.style.top = `${50 + 50 * Math.sin(rad)}%`;
+                    });
+                }
+            }
+            
+            updatePositions('default');
+            window.addEventListener('resize', () => updatePositions('default'));
+
+            curveItems.forEach((item, index) => {
+                item.addEventListener('mouseenter', () => {
+                    if(window.innerWidth >= 1024) {
+                        curveItems.forEach(i => {
+                            const content = i.querySelector('.phase-content');
+                            const dot = i.querySelector('.phase-dot');
+                            const title = i.querySelector('.phase-title');
+                            content.style.maxHeight = '0'; content.style.opacity = '0'; content.style.paddingTop = '0';
+                            dot.classList.remove('scale-110'); title.classList.remove('text-deepLavender');
+                        });
+                        
+                        const content = item.querySelector('.phase-content');
+                        const dot = item.querySelector('.phase-dot');
+                        const title = item.querySelector('.phase-title');
+                        content.style.maxHeight = '160px'; content.style.opacity = '1'; content.style.paddingTop = '0.5rem';
+                        dot.classList.add('scale-110'); title.classList.add('text-deepLavender');
+                        
+                        updatePositions(`hover${index}`);
+
+                        if(imgFaseDefault) {
+                            imgFaseDefault.classList.replace('opacity-100', 'opacity-0');
+                            imgFaseDefault.classList.replace('scale-100', 'scale-95');
+                        }
+                        imgFases.forEach((img, i) => {
+                            if(img) {
+                                if(i === index) {
+                                    img.classList.replace('opacity-0', 'opacity-100');
+                                    img.classList.replace('scale-95', 'scale-100');
+                                } else {
+                                    img.classList.replace('opacity-100', 'opacity-0');
+                                    img.classList.replace('scale-100', 'scale-95');
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+
+            if(curveArea) {
+                curveArea.addEventListener('mouseleave', () => {
+                    if(window.innerWidth >= 1024) {
+                        curveItems.forEach(i => {
+                            const content = i.querySelector('.phase-content');
+                            const dot = i.querySelector('.phase-dot');
+                            const title = i.querySelector('.phase-title');
+                            content.style.maxHeight = '0'; content.style.opacity = '0'; content.style.paddingTop = '0';
+                            dot.classList.remove('scale-110'); title.classList.remove('text-deepLavender');
+                        });
+                        updatePositions('default');
+
+                        imgFases.forEach(img => {
+                            if(img) {
+                                img.classList.replace('opacity-100', 'opacity-0');
+                                img.classList.replace('scale-100', 'scale-95');
+                            }
+                        });
+                        if(imgFaseDefault) {
+                            imgFaseDefault.classList.replace('opacity-0', 'opacity-100');
+                            imgFaseDefault.classList.replace('scale-95', 'scale-100');
+                        }
+                    }
+                });
+            }
+
+            // Rueda de Testimonios
+            let testimAngle = 0;
+            const testimStep = 30;
+            const maxTestimAngle = 60; 
+            const minTestimAngle = -60; 
+            const testimWheel = document.getElementById('testim-wheel');
+            const btnPrev = document.getElementById('testim-prev');
+            const btnNext = document.getElementById('testim-next');
+
+            if(btnPrev && btnNext && testimWheel) {
+                btnPrev.addEventListener('click', () => {
+                    if (testimAngle < maxTestimAngle) {
+                        testimAngle += testimStep;
+                        testimWheel.style.transform = `rotate(${testimAngle}deg)`;
+                    }
+                });
+
+                btnNext.addEventListener('click', () => {
+                    if (testimAngle > minTestimAngle) {
+                        testimAngle -= testimStep;
+                        testimWheel.style.transform = `rotate(${testimAngle}deg)`;
+                    }
+                });
+            }
+
+            // FAQ Filtros
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const faqItems = document.querySelectorAll('.faq-item');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => { 
+                        b.classList.remove('bg-sweetBlack', 'text-white', 'shadow-md'); 
+                        b.classList.add('bg-transparent', 'text-sweetBlack'); 
+                    });
+                    btn.classList.remove('bg-transparent', 'text-sweetBlack'); 
+                    btn.classList.add('bg-sweetBlack', 'text-white', 'shadow-md');
+                    
+                    faqItems.forEach(item => {
+                        const isMatch = item.getAttribute('data-category') === btn.getAttribute('data-filter');
+                        item.classList.toggle('hidden', !isMatch);
+                        if(isMatch) {
+                            item.classList.remove('animate-[fadeIn_0.5s_ease-out]');
+                            void item.offsetWidth; 
+                            item.classList.add('animate-[fadeIn_0.5s_ease-out]');
+                        }
+                    });
+                });
+            });
+
+            document.querySelectorAll('.faq-toggle').forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const content = toggle.nextElementSibling; const icon = toggle.querySelector('svg');
+                    document.querySelectorAll('.faq-content').forEach(c => {
+                        if (c !== content) {
+                            c.style.maxHeight = null;
+                            c.previousElementSibling.querySelector('svg').classList.remove('rotate-180');
+                        }
+                    });
+                    if (content.style.maxHeight) { 
+                        content.style.maxHeight = null; icon.classList.remove('rotate-180'); 
+                    } else { 
+                        content.style.maxHeight = content.scrollHeight + "px"; icon.classList.add('rotate-180'); 
+                    }
+                });
+            });
+
+            // Formulario CTA
+            const subscribeForm = document.getElementById('subscribe-form');
+            const formSuccess = document.getElementById('form-success');
+
+            if (subscribeForm && formSuccess) {
+                subscribeForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const emailInput = subscribeForm.querySelector('input[type="email"]');
+                    if (emailInput.value) {
+                        subscribeForm.classList.add('hidden');
+                        formSuccess.classList.remove('hidden');
+                    }
+                });
+            }
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Àgora Consultors | Gestoria Integral a Andorra</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #0f4c81; 
+            --dark-blue: #0a3356;
+            --grey-bg: #e3e5e8;      
+            --text-main: #333333;
+            --text-light: #666666;
+            --white: #ffffff;
+            --border-color: #0f4c81;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        a { text-decoration: none; transition: all 0.3s ease; }
+        
+        /* --- HEADER --- */
+        .top-header { background-color: var(--white); padding: 15px 0; }
+        .top-header .container { display: flex; justify-content: space-between; align-items: center; }
+        
+        .contact-info { display: flex; gap: 25px; font-size: 0.9rem; color: var(--text-light); font-weight: 500; }
+        .contact-item { display: flex; align-items: center; gap: 8px; }
+        .contact-item i { color: var(--primary-blue); font-size: 1.1rem; }
+
+        .logo-container img { max-height: 70px; display: block; }
+
+        /* --- NAV --- */
+        .main-nav {
+            background-color: var(--primary-blue);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .main-nav ul { display: flex; list-style: none; margin: 0; padding: 0; }
+        .main-nav li { margin-right: 20px; }
+        .main-nav a {
+            display: block; color: var(--white); padding: 18px 20px;
+            font-family: 'Montserrat', sans-serif; font-weight: 600;
+            text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.5px;
+            border-bottom: 3px solid transparent;
+        }
+        .main-nav a:hover, .main-nav a.active {
+            background-color: rgba(255,255,255,0.1); border-bottom-color: var(--white);
+        }
+
+        /* --- HERO --- */
+        .hero {
+            position: relative; height: 65vh; min-height: 500px;
+            display: flex; align-items: center;
+            background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover; background-position: center;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, rgba(15, 76, 129, 0.85) 0%, rgba(15, 76, 129, 0.5) 100%); z-index: 1;
+        }
+        .hero-content { position: relative; z-index: 2; max-width: 650px; color: var(--white); }
+        .hero-title {
+            font-family: 'Montserrat', sans-serif; font-size: 3.5rem; font-weight: 900;
+            text-transform: uppercase; line-height: 1.1; margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+        .hero-subtitle {
+            font-size: 1.25rem; font-weight: 300; margin-bottom: 30px;
+            border-left: 4px solid var(--white); padding-left: 20px;
+        }
+        .hero-btn {
+            display: inline-block; padding: 15px 35px; background-color: var(--white);
+            color: var(--primary-blue); font-weight: 700; text-transform: uppercase;
+            border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* --- QUI SOM (Vertical Image Fix) --- */
+        .qui-som { padding: 100px 0; background-color: var(--white); }
+        .qs-grid {
+            display: flex; /* Usamos flex para igualar alturas */
+            gap: 60px;
+            align-items: stretch; /* Estira los hijos al mismo alto */
+        }
+        .qs-image-wrapper {
+            flex: 1; position: relative;
+        }
+        .qs-image-wrapper img {
+            width: 100%; height: 100%; /* Ocupa todo el alto */
+            object-fit: cover; /* Recorta si sobra */
+            border-radius: 8px; box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        .qs-image-wrapper::before {
+            content: ''; position: absolute; top: -20px; left: -20px;
+            width: 100px; height: 100px; background-color: var(--primary-blue);
+            z-index: -1; border-radius: 8px;
+        }
+        .qs-content { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .qs-label {
+            font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 1rem;
+            color: #000; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;
+        }
+        .qs-title {
+            font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 3rem;
+            color: var(--primary-blue); line-height: 1.1; margin-bottom: 30px;
+        }
+
+        /* --- SERVICIOS (Fondo Blanco) --- */
+        .services-split {
+            background-color: var(--white); /* CAMBIO: Fondo blanco */
+            padding: 80px 0;
+        }
+        .services-intro { margin-bottom: 50px; max-width: 800px; }
+        .services-intro h2 {
+            font-family: 'Montserrat', sans-serif; font-size: 2rem;
+            color: var(--primary-blue); font-weight: 700; margin-bottom: 15px;
+        }
+        .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .split-card { display: flex; gap: 25px; align-items: flex-start; }
+        .split-image { width: 45%; flex-shrink: 0; }
+        .split-image img {
+            width: 100%; height: 100%; min-height: 350px;
+            object-fit: cover; display: block; border-radius: 4px;
+        }
+        .split-content { padding-top: 10px; }
+        .cat-label {
+            font-size: 0.85rem; text-transform: uppercase; font-weight: 700;
+            color: #000; margin-bottom: 10px; display: block; letter-spacing: 1px;
+        }
+        .card-title {
+            font-family: 'Montserrat', sans-serif; font-size: 1.4rem;
+            color: var(--primary-blue); font-weight: 800; line-height: 1.2; margin-bottom: 15px;
+        }
+        .read-more-link {
+            display: inline-flex; align-items: center; gap: 10px;
+            color: var(--primary-blue); font-weight: 700; font-size: 1rem; margin-top: 5px;
+        }
+
+        /* --- BLUE FEATURES (Carousel Effect) --- */
+        .blue-features {
+            background-color: var(--primary-blue); color: var(--white);
+            padding: 80px 0; overflow: hidden; /* Para contener el scrollbar oculto si se desea */
+        }
+        .features-grid-layout {
+            display: grid; grid-template-columns: 1fr 2fr; gap: 50px;
+            align-items: center; /* Centrar verticalmente */
+        }
+        .features-text-content h2 {
+            font-family: 'Montserrat', sans-serif; font-size: 2.2rem;
+            font-weight: 700; line-height: 1.2; margin-bottom: 25px;
+        }
+        .features-text-content p {
+            font-size: 1rem; font-weight: 300; line-height: 1.6;
+            margin-bottom: 35px; opacity: 0.9;
+        }
+        .btn-pill-white {
+            background-color: var(--white); color: var(--primary-blue);
+            padding: 12px 30px; border-radius: 50px; font-weight: 700;
+            text-transform: uppercase; font-size: 0.9rem; display: inline-flex;
+            align-items: center; gap: 10px; transition: all 0.3s;
+        }
+        
+        /* Carrusel Container */
+        .features-carousel-container {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 20px; /* Espacio para scrollbar si aparece */
+            scroll-behavior: smooth;
+            width: 100%;
+        }
+        /* Ocultar barra scroll estéticamente */
+        .features-carousel-container::-webkit-scrollbar { height: 6px; }
+        .features-carousel-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 10px; }
+        .features-carousel-container::-webkit-scrollbar-track { background: transparent; }
+
+        .feature-card {
+            background: var(--white); color: #333; border-radius: 2px;
+            min-width: 40%; /* Ajuste para ver 2.5 tarjetas (100% / 2.5 = 40%) */
+            flex-shrink: 0;
+            display: flex; flex-direction: column; position: relative;
+        }
+        .card-img-top { width: 100%; height: 150px; object-fit: cover; }
+        .card-icon-overlay {
+            width: 50px; height: 50px; background-color: var(--primary-blue);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            position: absolute; bottom: -25px; left: 20px;
+            border: 3px solid var(--white); color: var(--white); font-size: 1.2rem; z-index: 10;
+        }
+        .card-body {
+            padding: 35px 20px 20px 20px; flex-grow: 1; display: flex; flex-direction: column;
+        }
+        .card-body h4 {
+            font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 0.9rem;
+            text-transform: uppercase; margin-bottom: 10px; color: #000;
+        }
+        .card-body p {
+            font-size: 0.85rem; color: #666; line-height: 1.5; margin-bottom: 20px;
+        }
+        .card-link { font-size: 0.85rem; color: var(--primary-blue); font-weight: 600; }
+        
+        .pagination-dots { display: flex; justify-content: center; gap: 10px; margin-top: 10px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--white); }
+        .dot.active { background: var(--white); }
+
+        /* --- PER QUÈ ESCOLLIR (Updated Images & Title) --- */
+        .why-choose-us { padding: 80px 0; background-color: var(--white); }
+        .wcu-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1.2fr; gap: 0; }
+        .wcu-item {
+            display: flex; flex-direction: column; align-items: center;
+            text-align: center; padding: 0 20px;
+            border-right: 1px solid var(--border-color);
+        }
+        .wcu-item:last-child {
+            border-right: none; align-items: flex-end; text-align: right; padding-left: 40px;
+        }
+        
+        /* Título en AZUL */
+        .wcu-title {
+            font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.9rem;
+            text-transform: uppercase; 
+            color: var(--primary-blue); /* CAMBIO: Azul */
+            margin-bottom: 25px; min-height: 40px; display: flex; align-items: flex-end;
+        }
+        
+        /* Iconos PNG personalizados */
+        .wcu-custom-icon {
+            height: 120px; width: auto; /* Mantiene proporción */
+            object-fit: contain; margin-bottom: 20px;
+            display: block;
+        }
+
+        .wcu-text { font-size: 0.9rem; color: #333; max-width: 200px; line-height: 1.4; }
+        
+        /* Título CTA partido */
+        .wcu-cta-title {
+            color: var(--primary-blue); font-family: 'Montserrat', sans-serif;
+            font-weight: 800; font-size: 1.8rem; line-height: 1.2;
+            text-transform: uppercase; margin-bottom: 10px;
+            white-space: pre-line; /* Permite saltos de línea */
+        }
+        .wcu-cta-subtitle { font-size: 1rem; color: #333; margin-bottom: 30px; }
+        .btn-pill-blue {
+            background-color: var(--primary-blue); color: var(--white);
+            padding: 12px 30px; border-radius: 50px; font-weight: 600;
+            font-size: 1rem; display: inline-flex; align-items: center; gap: 10px;
+        }
+
+        /* --- TESTIMONIOS (Updated Quote & No Shadow) --- */
+        .testimonials-section { padding: 80px 0; background-color: var(--white); }
+        .testimonials-header { text-align: center; margin-bottom: 60px; }
+        .testimonials-header h2 {
+            font-family: 'Montserrat', sans-serif; font-size: 2rem; font-weight: 800;
+            color: var(--primary-blue); text-transform: uppercase; margin-bottom: 15px;
+        }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        
+        .testi-card {
+            background-color: var(--primary-blue); color: var(--white);
+            padding: 0 25px 25px 25px; position: relative; margin-top: 40px;
+            min-height: 350px; display: flex; flex-direction: column;
+            border-radius: 4px;
+            /* SIN SOMBRA (eliminada box-shadow) */
+        }
+        .testi-img-wrapper {
+            width: 80px; height: 80px; margin-top: -40px; margin-bottom: 15px; position: relative;
+        }
+        .testi-img {
+            width: 100%; height: 100%; object-fit: cover;
+            border-radius: 12px; border: 3px solid var(--white);
+        }
+        .testi-name h4 {
+            font-family: 'Montserrat', sans-serif; font-weight: 700;
+            text-transform: uppercase; font-size: 1rem; margin-bottom: 2px;
+        }
+        .testi-name span { font-size: 0.85rem; opacity: 0.8; font-weight: 300; }
+        .testi-text {
+            margin-top: 20px; font-size: 0.9rem; line-height: 1.5; font-weight: 300; flex-grow: 1;
+        }
+        
+        /* Imagen de comillas 3D */
+        .quote-img-3d {
+            position: absolute;
+            bottom: -20px; /* Se sale por abajo */
+            right: -20px;  /* Se sale por la derecha */
+            width: 80px;   /* Tamaño grande */
+            height: auto;
+            z-index: 10;
+        }
+
+        /* --- NOTICIAS & FOOTER --- */
+        .news-section {
+            background-color: var(--primary-blue); padding: 60px 0 100px 0;
+            color: var(--white); text-align: center; position: relative;
+        }
+        .news-section h2 {
+            font-family: 'Montserrat', sans-serif; font-size: 1.8rem;
+            font-weight: 800; text-transform: uppercase; margin-bottom: 40px;
+        }
+        .news-container {
+            display: flex; align-items: center; justify-content: center;
+            gap: 30px; max-width: 900px; margin: 0 auto;
+        }
+        .news-content { display: flex; align-items: center; text-align: left; gap: 30px; }
+        .news-img { width: 350px; height: 250px; object-fit: cover; border-radius: 4px; }
+        .news-text h3 {
+            font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.8rem;
+            line-height: 1.1; margin-bottom: 20px; text-transform: uppercase;
+        }
+        .news-link { color: var(--white); font-weight: 700; font-size: 1rem; }
+        .triangle-separator {
+            position: absolute; bottom: -39px; left: 50%; transform: translateX(-50%);
+            width: 0; height: 0; border-left: 60px solid transparent;
+            border-right: 60px solid transparent; border-top: 40px solid var(--primary-blue); z-index: 10;
+        }
+
+        /* Footer */
+        .main-footer { background-color: var(--white); padding: 80px 0 30px 0; color: #333; font-size: 0.9rem; }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px; }
+        .footer-col h4 {
+            color: var(--primary-blue); font-family: 'Montserrat', sans-serif;
+            font-weight: 800; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 25px;
+        }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col a { color: #333; }
+        .footer-socials { display: flex; justify-content: flex-end; gap: 20px; margin-top: 20px; }
+        .footer-social-icon { font-size: 1.8rem; color: var(--primary-blue); }
+
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .qs-grid { flex-direction: column; }
+            .split-grid { grid-template-columns: 1fr; }
+            .features-grid-layout { grid-template-columns: 1fr; }
+            .wcu-grid { grid-template-columns: 1fr; gap: 40px; }
+            .wcu-item { border-right: none; border-bottom: 1px solid #ddd; padding-bottom: 30px; }
+            .testimonials-grid { grid-template-columns: 1fr 1fr; }
+            .news-content { flex-direction: column; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-header">
+        <div class="container">
+            <div class="contact-info">
+                <div class="contact-item"><i class="fas fa-phone-alt"></i><span>+376 840 303</span></div>
+                <div class="contact-item"><i class="fas fa-envelope"></i><span>agoraconsultors@ago.ad</span></div>
+                <div class="contact-item"><i class="fas fa-clock"></i><span>09-18h | Div: 09-14h</span></div>
+            </div>
+            <div class="logo-container">
+                <img src="agora/logo_azul.PNG" alt="Agora Consultors Logo">
+            </div>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <ul>
+                <li><a href="#" class="active">INICI</a></li>
+                <li><a href="#">QUI SOM?</a></li>
+                <li><a href="#">SERVEIS</a></li>
+                <li><a href="#">BLOG</a></li>
+                <li><a href="#">CONTACTE</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container hero-content">
+            <h1 class="hero-title">Àgora Consultors</h1>
+            <div class="hero-subtitle">
+                Tant si ets una empresa com un particular, t'alliberem de les gestions administratives. 
+                Servei integral i personalitzat a Andorra.
+            </div>
+            <a href="#" class="hero-btn">Contacta'ns ara</a>
+        </div>
+    </section>
+
+    <section class="qui-som">
+        <div class="container qs-grid">
+            <div class="qs-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Equip Àgora">
+            </div>
+            <div class="qs-content">
+                <span class="qs-label">Qui som?</span>
+                <h2 class="qs-title">20 ANYS D'EXPERIÈNCIA</h2>
+                <div class="qs-text">
+                    <p>Agora Consultors és la teva gestoria. Som una gestoria de serveis integrals ubicada en ple centre d'Andorra la Vella. Comptem amb un equip d'experts comptables, fiscals, laborals i financers.</p>
+                    <p>Assessorem les empreses i els particulars en el seu desenvolupament, facilitant tots els tràmits administratius, financers i legals. Garantim un servei integral i personalitzat a Andorra amb les millors prestacions.</p>
+                    <a href="#" style="color: var(--primary-blue); font-weight: 700; margin-top: 15px; display:inline-block;">Més sobre nosaltres <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services-split">
+        <div class="container">
+            <div class="services-intro">
+                <h2>Àgora Consultors és la teva gestoria</h2>
+                <p>Gestoria i consultoria ubicada en ple centre d’Andorra la Vella. Comptem amb un equip d’experts comptables, fiscals, laborals i financers que assessoren a particulars i empreses, oferint-los un servei integral.</p>
+            </div>
+            <div class="split-grid">
+                <div class="split-card">
+                    <div class="split-image"><img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Particulars"></div>
+                    <div class="split-content">
+                        <span class="cat-label">PARTICULARS</span>
+                        <h3 class="card-title">Necessites ajuda amb algun tràmit?</h3>
+                        <p>A Àgora Consultors ens adaptem a les teves necessitats per oferir-te l'assessorament i la gestió personal-familiar més adaptada a cada situació.</p>
+                        <a href="#" class="read-more-link">Segueix llegint <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="split-card">
+                    <div class="split-image"><img src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Empreses"></div>
+                    <div class="split-content">
+                        <span class="cat-label">EMPRESES</span>
+                        <h3 class="card-title">Treballem tant amb emprenedors?</h3>
+                        <p>A Àgora Consultors ens adaptem a les teves necessitats per oferir-te l'assessorament i la gestió empresarial més adaptada a cada situació.</p>
+                        <a href="#" class="read-more-link">Segueix llegint <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="blue-features">
+        <div class="container">
+            <div class="features-grid-layout">
+                <div class="features-text-content">
+                    <h2>Tant si ets una empresa com un particular</h2>
+                    <p>Oferim solucions adaptades tant a particulars com a empreses, amb un ampli ventall de serveis. Treballem perquè cada client trobi l'assessorament que millor s'ajusta a la seva situació.</p>
+                    <a href="#" class="btn-pill-white">LOREM IPSUM <i class="fas fa-arrow-right"></i></a>
+                    <div class="pagination-dots">
+                        <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+                    </div>
+                </div>
+                
+                <div class="features-carousel-container">
+                    <div class="feature-card">
+                        <div style="position:relative;">
+                            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Comptabilitat" class="card-img-top">
+                            <div class="card-icon-overlay"><i class="fas fa-chart-bar"></i></div>
+                        </div>
+                        <div class="card-body">
+                            <h4>COMPTABILITAT</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+                            <a href="#" class="card-link">Més informació</a>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div style="position:relative;">
+                            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Fiscalitat" class="card-img-top">
+                            <div class="card-icon-overlay"><i class="fas fa-chart-bar"></i></div>
+                        </div>
+                        <div class="card-body">
+                            <h4>FISCALITAT</h4>
+                            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+                            <a href="#" class="card-link">Més informació</a>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div style="position:relative;">
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Laboral" class="card-img-top">
+                            <div class="card-icon-overlay"><i class="fas fa-chart-bar"></i></div>
+                        </div>
+                        <div class="card-body">
+                            <h4>LABORAL</h4>
+                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p>
+                            <a href="#" class="card-link">Més informació</a>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div style="position:relative;">
+                            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Comptabilitat" class="card-img-top">
+                            <div class="card-icon-overlay"><i class="fas fa-chart-bar"></i></div>
+                        </div>
+                        <div class="card-body">
+                            <h4>EXTRA</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+                            <a href="#" class="card-link">Més informació</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="why-choose-us">
+        <div class="container">
+            <div class="wcu-grid">
+                <div class="wcu-item">
+                    <h3 class="wcu-title">ENS ADAPTEM A TU</h3>
+                    <img src="agora/ENSADAPTEM.png" alt="Ens Adaptem" class="wcu-custom-icon">
+                    <p class="wcu-text">Som Un Equip Resolutiu, Ràpid I Accessible Per A Qualsevol Client</p>
+                </div>
+                <div class="wcu-item">
+                    <h3 class="wcu-title">ESPECIALISTES EN PYMES</h3>
+                    <img src="agora/ESPECIALISTES.png" alt="Pymes" class="wcu-custom-icon">
+                    <p class="wcu-text">T'oferim Proximitat, Un Valor Essencial Per A PYMES</p>
+                </div>
+                <div class="wcu-item">
+                    <h3 class="wcu-title">SERVEI INTEGRAL</h3>
+                    <img src="agora/SERVEI.png" alt="Integral" class="wcu-custom-icon">
+                    <p class="wcu-text">Som Un Equip Resolutiu, Ràpid I Accessible Per A Qualsevol Client</p>
+                </div>
+                <div class="wcu-item">
+                    <h2 class="wcu-cta-title">PER QUÈ ESCOLLIR<br>ÀGORA CONSULTORS?</h2>
+                    <p class="wcu-cta-subtitle">Perquè sabem que cada client és únic</p>
+                    <a href="#" class="btn-pill-blue"><i class="fas fa-arrow-left"></i> Lorem Ipsum</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="testimonials-header">
+                <h2>EL QUE OPINEN ELS NOSTRES CLIENTS</h2>
+                <p>La satisfacció dels qui confien en nosaltres és la millor garantia de la qualitat del nostre servei.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testi-card">
+                    <div class="testi-img-wrapper"><img src="https://images.unsplash.com/photo-1590086782957-93c06ef21604?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Client" class="testi-img"></div>
+                    <div class="testi-name"><h4>LOREM IPSUM</h4><span>lorem ipsum</span></div>
+                    <div class="testi-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</div>
+                    <img src="agora/Group 14.png" class="quote-img-3d" alt="Quotes">
+                </div>
+                <div class="testi-card">
+                    <div class="testi-img-wrapper"><img src="https://images.unsplash.com/photo-1590086782957-93c06ef21604?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Client" class="testi-img"></div>
+                    <div class="testi-name"><h4>LOREM IPSUM</h4><span>lorem ipsum</span></div>
+                    <div class="testi-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</div>
+                    <img src="agora/Group 14.png" class="quote-img-3d" alt="Quotes">
+                </div>
+                <div class="testi-card">
+                    <div class="testi-img-wrapper"><img src="https://images.unsplash.com/photo-1590086782957-93c06ef21604?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Client" class="testi-img"></div>
+                    <div class="testi-name"><h4>LOREM IPSUM</h4><span>lorem ipsum</span></div>
+                    <div class="testi-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</div>
+                    <img src="agora/Group 14.png" class="quote-img-3d" alt="Quotes">
+                </div>
+                <div class="testi-card">
+                    <div class="testi-img-wrapper"><img src="https://images.unsplash.com/photo-1590086782957-93c06ef21604?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Client" class="testi-img"></div>
+                    <div class="testi-name"><h4>LOREM IPSUM</h4><span>lorem ipsum</span></div>
+                    <div class="testi-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</div>
+                    <img src="agora/Group 14.png" class="quote-img-3d" alt="Quotes">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="news-section">
+        <div class="container">
+            <h2>NOTÍCIES</h2>
+            <div class="news-container">
+                <i class="fas fa-chevron-left fa-2x"></i>
+                <div class="news-content">
+                    <img src="https://images.unsplash.com/photo-1580519542036-c47de6196ba5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Euros" class="news-img">
+                    <div class="news-text">
+                        <h3>NOU AUGMENT SALARI PEL 2019</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <a href="#" class="news-link">Segueix llegint <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right fa-2x"></i>
+            </div>
+        </div>
+        <div class="triangle-separator"></div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-logo-area">
+                <img src="agora/logo_azul.PNG" alt="Logo Footer">
+                <p class="footer-desc">Gestoria i consultoria al centre d’Andorra la Vella amb experts que ofereixen assessorament integral.</p>
+                <a href="#" class="btn-pill-blue" style="font-size:0.9rem; padding: 10px 20px;">Contactan's <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="footer-col">
+                <h4>NOSALTRES</h4>
+                <ul><li><a href="#">Qui som?</a></li><li><a href="#">Horaris</a></li><li><span>+376 840 303</span></li></ul>
+            </div>
+            <div class="footer-col">
+                <h4>SERVEIS</h4>
+                <ul><li><a href="#">Particulars</a></li><li><a href="#">Empreses</a></li><li><a href="#">Inversions</a></li></ul>
+            </div>
+            <div class="footer-col">
+                <h4>ÀREA LEGAL</h4>
+                <ul><li><a href="#">Avís legal</a></li><li><a href="#">Política de cookies</a></li></ul>
+            </div>
+        </div>
+        <div class="container footer-socials">
+            <a href="#" class="footer-social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="footer-social-icon"><i class="fab fa-facebook-f"></i></a>
+        </div>
+    </footer>
+
+</body>
+</html>

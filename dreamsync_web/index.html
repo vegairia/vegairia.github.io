@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DREAMSYNC | Arquitectura Onírica</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="ambient-background" id="ambient-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+    
+    <div class="tech-grid-overlay"></div>
+
+    <nav class="navbar">
+        <div class="logo">DREAMSYNC</div>
+        <div class="nav-links">
+            <a href="#tech">Tecnología</a>
+            <a href="#cortex">Cortex AI</a>
+            <a href="#protocol">Protocolo</a>
+            <a href="#contact" class="btn-beta">Unirse a la Beta</a>
+        </div>
+    </nav>
+
+    <header class="hero-container">
+        <div class="content-wrapper">
+            <div class="hero-text reveal">
+                <div class="pill-label">v.2.0 BETA ACCESS</div>
+                <p class="brand-subtitle">DREAMSYNC</p>
+                <h1>El Único Lugar Donde la Mente <br> <span class="gradient-text animated-gradient">se Convierte en Película</span></h1>
+                <p class="hero-desc">Graba, revive y analiza tus paisajes oníricos con fidelidad 8K neuronal.</p>
+            </div>
+
+            <div class="hero-image-block reveal delay-200 glow-border">
+                <img src="fotos/ola.png" alt="DreamSync Hero" class="main-img">
+                
+                <div class="tech-badge top-right">● LIVE SIGNAL</div>
+                <div class="tech-badge bottom-left">SYNC: 98%</div>
+
+                <div class="floating-card glass-panel">
+                    <div class="floating-text">
+                        <h3>Descubre la Ciencia Detrás de la Fantasía</h3>
+                        <p>DreamSync es el puente tecnológico para registrar tus memorias oníricas cuando duermes.</p>
+                    </div>
+                    <button class="arrow-icon">↗</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="stats-section reveal">
+        <div class="content-wrapper">
+            <div class="stats-grid">
+                <div class="stat-box glass-panel">
+                    <span class="stat-number gradient-text animated-gradient">
+                        <span class="counter" data-target="40">0</span>%
+                    </span>
+                    <p class="stat-label">Más de nitidez onírica</p>
+                </div>
+                <div class="stat-box glass-panel">
+                    <span class="stat-number gradient-text animated-gradient">
+                        <span class="counter" data-target="6">0</span> años
+                    </span>
+                    <p class="stat-label">De investigación</p>
+                </div>
+                <div class="stat-box glass-panel">
+                    <span class="stat-number gradient-text animated-gradient">
+                        +<span class="counter" data-target="10">0</span>k
+                    </span>
+                    <p class="stat-label">Visualizaciones generadas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tech" class="tech-section">
+        <div class="content-wrapper">
+            <div class="tech-layout">
+                <div class="tech-info reveal">
+                    <h2>El Laboratorio de Cine <br> Oculto en tu Cerebro</h2>
+                    <p>
+                        DreamSync traduce el complejo lenguaje de tu subconsciente. Utilizamos una Interfaz
+                        Cerebro-Computadora (BCI) de última generación para registrar la actividad
+                        neuronal durante la fase REM y la convertimos en una experiencia visual
+                        coherente.
+                    </p>
+                    <a href="#" class="btn-tech">Ver nuestra Visión Técnica</a>
+                </div>
+                <div class="tech-image-container reveal delay-200 glow-border">
+                    <img src="fotos/cerebro.png" alt="Cerebro BCI" class="main-img" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="tech-badge top-left">BCI SENSOR ACTIVE</div>
+                    <div class="tech-badge bottom-right">DATA STREAMING...</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cortex" class="cortex-section">
+        <div class="content-wrapper">
+            <div class="cortex-layout-stack">
+                <div class="cortex-text-full reveal">
+                    <h2>Cortex AI: Tu Asistente <br><span class="gradient-text animated-gradient">Onírico Personal</span></h2>
+                    <p>Imagina una interfaz conversacional que tenga las claves para interpretar lo que viste al despertar.</p>
+                    <ul class="cortex-list">
+                        <li>01. Análisis de patrones recurrentes.</li>
+                        <li>02. Interpretación psicológica profunda.</li>
+                        <li>03. Archivo digital de tus sueños.</li>
+                    </ul>
+                </div>
+                
+                <div class="cortex-img-wide chat-ui-container reveal delay-200 glass-panel">
+                    <div class="tech-badge top-right">AI CONNECTED</div>
+                    
+                    <div class="chat-header">
+                        <div class="dots-group">
+                            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                        </div>
+                        <span class="chat-title">Cortex Neural Link v2.4</span>
+                    </div>
+                    <div class="chat-body">
+                        <div class="msg ai">
+                            <p>He detectado un patrón de vuelo en tu fase REM a las 03:45 AM. ¿Quieres visualizarlo?</p>
+                        </div>
+                        <div class="msg user">
+                            <p>Sí, muéstrame la reconstrucción.</p>
+                        </div>
+                        <div class="msg ai processing">
+                            <p>Generando renderizado neural... [||||||||||] 100%</p>
+                            <div class="render-preview"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cortex-btn-container reveal delay-400">
+                    <a href="#contact" class="btn-beta">Regístrate en la Beta Avanzada</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits-section">
+        <div class="content-wrapper">
+            <div class="section-header-left reveal">
+                <h2>La Relevancia de <span class="gradient-text animated-gradient">Ver el</span> <br> <span class="gradient-text animated-gradient">Interior</span> de la Noche</h2>
+                <p>Cada noche, tu mente produce una obra de arte y significado que el 90% de las veces se pierde al despertar.</p>
+            </div>
+            
+            <div class="cards-container">
+                <div class="info-card vertical-card split-1 reveal delay-100">
+                    <div class="card-img-top">
+                        <img src="fotos/creatividad.png" alt="Creatividad" class="card-image">
+                        <div class="tech-badge bottom-left">Modo Creativo</div>
+                    </div>
+                    <div class="card-body">
+                        <h3>Creatividad</h3>
+                        <h4 class="animated-gradient-text">Inspírate como nunca</h4>
+                        <p>Descubre patrones, emociones y narrativas que tu cerebro genera sin filtros.</p>
+                    </div>
+                </div>
+                <div class="info-card vertical-card split-2 reveal delay-300">
+                    <div class="card-img-top">
+                        <img src="fotos/autoconocimiento.png" alt="Autoconocimiento" class="card-image">
+                        <div class="tech-badge bottom-left">Análisis Profundo</div>
+                    </div>
+                    <div class="card-body">
+                        <h3>Autoconocimiento</h3>
+                        <h4 class="animated-gradient-text">Entiende tu mente</h4>
+                        <p>Descubre patrones, emociones y narrativas que tu cerebro genera sin filtros.</p>
+                    </div>
+                </div>
+                <div class="info-card vertical-card split-3 reveal delay-500">
+                    <div class="card-img-top">
+                        <img src="fotos/memoria.png" alt="Memoria" class="card-image">
+                        <div class="tech-badge bottom-left">Archivo 001</div>
+                    </div>
+                    <div class="card-body">
+                        <h3>Memoria y reflexión</h3>
+                        <h4 class="animated-gradient-text">Descifra lo que tu cerebro quiere decir</h4>
+                        <p>Revive detalles que olvidarías al despertar, y dale sentido a tus experiencias oníricas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="protocol" class="protocol-section">
+        <div class="container-fluid">
+            <div class="protocol-layout">
+                <h2 class="protocol-title reveal">El Protocolo <br> <span class="gradient-text animated-gradient">Onírico</span></h2>
+                
+                <div class="timeline-line"></div>
+
+                <div class="steps-container">
+                    <div class="step-row reveal delay-100">
+                        <div class="step-header">
+                            <div class="num-wrapper">
+                                <span class="step-num gradient-text animated-gradient">01</span>
+                            </div>
+                            <h4 class="step-title gradient-text animated-gradient">El ritual<br>de Colocación</h4>
+                        </div>
+                        <div class="step-desc">
+                            <p>Un diseño minimalista para una noche de máximo confort. El headset entra en modo "Escucha".</p>
+                        </div>
+                    </div>
+                    <div class="step-row reveal delay-200">
+                        <div class="step-header">
+                            <div class="num-wrapper">
+                                <span class="step-num gradient-text animated-gradient">02</span>
+                            </div>
+                            <h4 class="step-title gradient-text animated-gradient">El Viaje<br>Sucede</h4>
+                        </div>
+                        <div class="step-desc">
+                            <p>Mientras tu cerebro teje narrativas, el dispositivo mapea los patrones eléctricos asociados a la imaginería.</p>
+                        </div>
+                    </div>
+                    <div class="step-row reveal delay-300">
+                        <div class="step-header">
+                            <div class="num-wrapper">
+                                <span class="step-num gradient-text animated-gradient">03</span>
+                            </div>
+                            <h4 class="step-title gradient-text animated-gradient">La creación<br>visual</h4>
+                        </div>
+                        <div class="step-desc">
+                            <p>Nuestro motor de IA Generativa interpreta los datos y los convierte en un video onírico en tu app.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="protocol-footer reveal">
+                <h3>Simplemente <span class="gradient-text animated-gradient">Duerme</span></h3>
+                <h3>Despierta con <span class="gradient-text animated-gradient">Pruebas</span></h3>
+            </div>
+        </div>
+    </section>
+
+    <section class="dare-section reveal">
+        <div class="content-wrapper">
+            <div class="dare-card-hologram">
+                <div class="corner top-left"></div>
+                <div class="corner top-right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="corner bottom-right"></div>
+                
+                <div class="dare-inner-content">
+                    <span class="pill-label">ACCESO RESTRINGIDO</span>
+                    <h2>¿Te atreves a ver lo<br><span class="text-glow">que sueñas?</span></h2>
+                    <p class="dare-text">
+                        Artistas, psicólogos, cineastas, curiosos...<br>
+                        DreamSync es para quienes no temen mirar dentro de sí mismos.
+                    </p>
+                    <a href="#contact" class="btn-white glow-effect big-btn">Quiero ser Beta</a>
+                    <div class="dare-footer">
+                        <p class="dare-small">(Cupos limitados. Acceso anticipado + feedback directo con el equipo de DreamSync Labs.)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="faq-section">
+        <div class="content-wrapper">
+            <div class="faq-header reveal">
+                <h2>Tenemos Las <span class="gradient-text animated-gradient">Respuestas</span> <br> A Tus <span class="gradient-text animated-gradient">Preguntas</span></h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item reveal delay-100">
+                    <div class="faq-question">
+                        <h4>¿Es seguro?</h4>
+                        <button class="faq-btn">↓</button>
+                    </div>
+                    <div class="faq-answer"><p>Absolutamente. DreamSync utiliza tecnología EEG no invasiva.</p></div>
+                </div>
+                <div class="faq-item reveal delay-200">
+                    <div class="faq-question">
+                        <h4>¿Veré mis sueños exactamente como ocurren?</h4>
+                        <button class="faq-btn">↓</button>
+                    </div>
+                    <div class="faq-answer"><p>Nuestra tecnología alcanza un 85-90% de fidelidad emocional y visual.</p></div>
+                </div>
+                <div class="faq-item reveal delay-300">
+                    <div class="faq-question">
+                        <h4>¿Necesito experiencia técnica?</h4>
+                        <button class="faq-btn">↓</button>
+                    </div>
+                    <div class="faq-answer"><p>No. El sistema es "Plug & Sleep".</p></div>
+                </div>
+                <div class="faq-item reveal delay-400">
+                    <div class="faq-question">
+                        <h4>¿Cuándo estará disponible la versión final?</h4>
+                        <button class="faq-btn">↓</button>
+                    </div>
+                    <div class="faq-answer"><p>Prevemos el lanzamiento de la versión comercial (V1.0) para finales de 2024.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="content-wrapper">
+            <div class="contact-grid">
+                
+                <div class="contact-text reveal">
+                    <span class="terminal-prefix">> INICIANDO SISTEMA...</span>
+                    <h2>Tu Mente Espera.<br>¿Te Atreves a Entrar<br>en el <span class="gradient-text">Archivo</span>?</h2>
+                    <p>La fase Beta no es solo un acceso anticipado; es la oportunidad de moldear el futuro de la exploración mental.</p>
+                </div>
+
+                <div class="contact-form-box reveal delay-200 terminal-box">
+                    <div class="terminal-header">
+                        <span class="term-dot red"></span>
+                        <span class="term-dot yellow"></span>
+                        <span class="term-title">USER_REGISTRATION.exe</span>
+                    </div>
+                    
+                    <form action="#">
+                        <div class="input-group-line">
+                            <input type="text" required>
+                            <label>Nombre de Sujeto</label>
+                            <span class="focus-line"></span>
+                        </div>
+                        <div class="input-group-line">
+                            <input type="email" required>
+                            <label>Correo Electrónico</label>
+                            <span class="focus-line"></span>
+                        </div>
+                        
+                        <div class="input-group-line">
+                            <input type="tel" required>
+                            <label>Frecuencia (Teléfono)</label>
+                            <span class="focus-line"></span>
+                        </div>
+                        
+                        <div class="input-group-line">
+                            <textarea rows="2" required></textarea>
+                            <label>Propósito del enlace...</label>
+                            <span class="focus-line"></span>
+                        </div>
+                        <button type="submit" class="btn-submit terminal-btn">INICIAR SINCRONIZACIÓN</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="content-wrapper center-content">
+            <div class="big-logo reveal">
+                DREAM<span class="gradient-text animated-gradient">SYNC</span>
+            </div>
+            <div class="footer-nav">
+                <a href="#">Sobre Nosotros</a>
+                <a href="#">Info Beta</a>
+                <a href="#">Términos y Condiciones</a>
+                <a href="#">Política de Privacidad</a>
+            </div>
+            <div class="social-icons">
+                <a href="#" class="social-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <a href="#" class="social-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                </a>
+                <a href="#" class="social-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v6.16c0 2.52-1.12 4.84-2.9 6.24-1.72 1.35-3.96 1.91-6.1 1.57-2.15-.35-4.13-1.6-5.32-3.35-1.18-1.75-1.43-4.04-.66-6.03.77-1.99 2.52-3.46 4.62-3.87.69-.13 1.4-.16 2.1-.08v4.1c-.32-.08-.66-.11-.99-.06-1.02.16-1.89.87-2.18 1.86-.31 1.05.14 2.17 1.01 2.87.88.7 2.13.71 3.02.04.88-.66 1.42-1.77 1.39-2.88v-14.66z"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

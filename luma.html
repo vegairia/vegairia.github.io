@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iria Vega | Luma</title>
+    
+    <style>
+        /* --- VARIABLES --- */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1a1a1a;
+            --accent-color: #666;
+            --line-color: #e0e0e0;
+            --project-color: #9B7CBF; /* LAVENDER DE LUMA */
+            --specific-red: #CD2424; /* ROJO CORPORATIVO (para menú) */
+            
+            /* TIPOGRAFÍA ÚNICA (HELVETICA NEUE) */
+            --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --font-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+            /* Switch Variables */
+            --switch-bg-off: #e9e9ea;
+            --switch-bg-on: #ffffff;
+            --switch-knob-off: #ffffff;
+            --switch-knob-on: #000000;
+        }
+
+        body.dark-mode {
+            --bg-color: #050505;
+            --text-color: #f0f0f0;
+            --accent-color: #aaa;
+            --line-color: #333;
+            --switch-bg-off: #3a3a3c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden; 
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { text-decoration: none; color: inherit; transition: opacity 0.3s; }
+        ul { list-style: none; }
+
+        /* --- ANIMACIONES SCROLL REVEAL --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- HEADER --- */
+        header {
+            display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+            padding: 1.5rem 3rem; position: fixed; top: 0; width: 100%; z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px);
+            text-transform: uppercase; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px;
+            font-family: var(--font-main);
+        }
+        body.dark-mode header { background-color: rgba(10, 10, 10, 0.8); }
+        
+        .nav-left { justify-self: start; }
+        .nav-left a:hover { color: var(--specific-red); opacity: 1; }
+
+        /* LOGO IMAGEN */
+        .logo-container { justify-self: center; }
+        .logo-img { height: 40px; width: auto; display: block; transition: opacity 0.3s ease; }
+        .logo-dark { display: none; } 
+        body.dark-mode .logo-light { display: none; } 
+        body.dark-mode .logo-dark { display: block; }
+
+        .nav-right { justify-self: end; }
+        .nav-right ul { display: flex; gap: 2rem; align-items: center; }
+        .nav-right a:hover { opacity: 0.6; }
+
+        /* --- PROJECT HERO --- */
+        .project-hero {
+            padding: 160px 5% 80px 5%; 
+            max-width: 1400px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+        }
+
+        .hero-left-image {
+            width: 100%; height: auto; background: transparent; 
+            max-width: 85%; justify-self: center; 
+        }
+        .main-image { 
+            width: 100%; height: auto; display: block; 
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15)); 
+        }
+
+        .hero-right-content { display: flex; flex-direction: column; justify-content: center; }
+
+        .wip-badge {
+            display: inline-block;
+            background-color: var(--project-color);
+            color: white;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
+            width: fit-content;
+            letter-spacing: 1px;
+        }
+
+        .project-title {
+            font-family: var(--font-display); font-size: clamp(3rem, 5vw, 6rem); font-weight: 900;
+            text-transform: uppercase; line-height: 0.9; margin-bottom: 1rem;
+            color: var(--project-color); letter-spacing: -1px;
+        }
+
+        .project-subtitle {
+            font-family: var(--font-display); font-size: 1.1rem; font-weight: 300; margin-bottom: 3rem;
+            color: var(--accent-color); text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        /* ACTUALIZACIÓN: GRID CON 3 COLUMNAS PARA INCLUIR "EQUIPO" */
+        .hero-info-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem;
+            font-family: var(--font-display); font-size: 0.85rem; padding-top: 2rem; border-top: 1px solid var(--line-color);
+        }
+        .detail-item { display: flex; flex-direction: column; gap: 0.5rem; }
+        .detail-label { color: var(--accent-color); text-transform: uppercase; font-size: 0.75rem; font-weight: 300; }
+        .detail-value { font-weight: 700; text-transform: uppercase; }
+
+        .hero-description p { font-size: 1.1rem; line-height: 1.6; font-weight: 300; margin-bottom: 1.5rem;}
+        .highlight { color: var(--project-color); font-weight: 700; font-family: var(--font-display); }
+
+        /* --- COMMON SECTION STYLES --- */
+        .content-wrapper { max-width: 1000px; margin: 0 auto; padding: 0 5%; }
+        .section-margin { margin-bottom: 8rem; }
+        
+        .section-header {
+            font-family: var(--font-display); color: var(--text-color); text-transform: uppercase;
+            margin-bottom: 2rem; font-size: 1rem; font-weight: 300; display: block;
+            border-bottom: 1px solid var(--line-color); padding-bottom: 1rem; letter-spacing: 1px;
+        }
+
+        /* --- TWO COL GRID (TEXT / PROFILES) --- */
+        .split-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+        }
+        .text-block p { font-size: 1.1rem; line-height: 1.6; font-weight: 300; margin-bottom: 1.5rem; color: var(--text-color); }
+        
+        .profile-card {
+            border-left: 2px solid var(--project-color);
+            padding-left: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .profile-card h3 { font-size: 1.2rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.5rem; color: var(--text-color); }
+        .profile-card p { font-size: 1rem; font-weight: 300; color: var(--accent-color); }
+
+        /* --- BIG USP QUOTE --- */
+        .usp-quote {
+            padding: 4rem 0; text-align: center; margin: 4rem 0;
+        }
+        .usp-quote h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 900; line-height: 1.1;
+            color: var(--project-color); text-transform: uppercase; letter-spacing: -1px;
+        }
+
+        /* --- DESIGN SYSTEM GRID --- */
+        .ds-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+        .ds-block h3 { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-color); text-transform: uppercase; }
+        
+        .color-palette-flex { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+        .color-item { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+        .color-swatch { 
+            width: 65px; height: 85px; border-radius: 10px; 
+            box-shadow: 0 8px 16px rgba(0,0,0,0.06); transition: transform 0.3s ease; 
+        }
+        .color-item:hover .color-swatch { transform: translateY(-3px); }
+        .color-hex { font-size: 0.75rem; color: var(--accent-color); text-transform: uppercase; font-weight: 600;}
+
+        /* Paleta Luma */
+        .c-1 { background: #9B7CBF; }
+        .c-2 { background: #F1E8FB; border: 1px solid #e0e0e0;}
+        .c-3 { background: #F2F2F2; border: 1px solid #e0e0e0;}
+        .c-4 { background: #FEC0F9; }
+        .c-5 { background: #353334; }
+
+        .type-preview { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1.2rem; }
+        .type-item { display: flex; flex-direction: column; gap: 0.2rem; }
+        
+        /* Simulación de Peachi con una fuente Serif del sistema para el portfolio */
+        .type-title { font-size: 3rem; font-weight: 700; line-height: 1.1; font-family: 'Georgia', serif; color: var(--text-color); }
+        .type-body { font-size: 1.1rem; line-height: 1.5; color: var(--text-color); font-weight: 300;}
+        .type-label { font-size: 0.7rem; color: var(--accent-color); text-transform: uppercase; letter-spacing: 1px; font-weight: 700;}
+
+        /* --- MASCOT & LOGO SECION --- */
+        .img-text-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 6rem;
+        }
+        .img-text-grid.reverse { direction: rtl; }
+        .img-text-grid.reverse > * { direction: ltr; }
+
+        .section-img { width: 100%; height: auto; border-radius: 8px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .section-img.no-shadow { box-shadow: none; filter: drop-shadow(0 15px 20px rgba(0,0,0,0.1)); }
+
+        .concept-text h3 { font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem; text-transform: uppercase; color: var(--project-color); }
+        .concept-text p { font-size: 1.1rem; font-weight: 300; line-height: 1.6; margin-bottom: 1rem; }
+        .concept-text ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+        .concept-text li { font-size: 1rem; font-weight: 300; margin-bottom: 0.8rem; list-style-type: disc; color: var(--accent-color);}
+        .concept-text li strong { color: var(--text-color); font-weight: 700; }
+
+        /* --- BROWSER MOCKUP --- */
+        .browser-mockup {
+            width: 95%; 
+            max-width: 1300px; 
+            height: 75vh;
+            min-height: 600px;
+            margin: 0 auto;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+            border: 1px solid var(--line-color);
+            background: #fff;
+            display: flex; flex-direction: column;
+        }
+
+        .browser-header {
+            height: 40px; background: #f1f1f1; border-bottom: 1px solid #ddd;
+            display: flex; align-items: center; padding: 0 15px; gap: 8px;
+        }
+        body.dark-mode .browser-header { background: #222; border-color: #333; }
+        
+        .browser-dot { width: 10px; height: 10px; border-radius: 50%; background: #ccc; }
+        .b-red { background: #ff5f56; } .b-yellow { background: #ffbd2e; } .b-green { background: #27c93f; }
+        
+        .browser-address {
+            margin-left: 15px; flex: 1; background: #fff; height: 24px; border-radius: 4px;
+            font-weight: 300; font-size: 0.7rem; color: #888; display: flex; align-items: center; padding-left: 10px;
+        }
+        body.dark-mode .browser-address { background: #333; color: #aaa; }
+
+        .website-frame { width: 100%; flex: 1; border: none; background: var(--bg-color); }
+
+
+        /* --- FOOTER NAV --- */
+        .project-nav {
+            display: flex; justify-content: space-between; padding: 4rem 5%;
+            border-top: 1px solid var(--line-color); text-transform: uppercase; font-weight: 300; font-size: 1rem;
+            position: relative; z-index: 10; background-color: var(--bg-color);
+        }
+        .project-nav a:hover { color: var(--project-color); text-decoration: underline; }
+
+        /* --- SWITCH --- */
+        .apple-switch { position: fixed; bottom: 30px; right: 30px; z-index: 1000; display: inline-block; width: 50px; height: 30px; }
+        .apple-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--switch-bg-off); transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 2px; bottom: 2px; background-color: var(--switch-knob-off); transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--switch-bg-on); }
+        input:checked + .slider:before { transform: translateX(20px); background-color: var(--switch-knob-on); }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .project-hero { grid-template-columns: 1fr; padding-top: 120px; gap: 2rem; max-width: 90%; }
+            .hero-left-image { max-width: 90%; }
+            .project-title { font-size: 15vw; }
+            .hero-info-grid { grid-template-columns: 1fr 1fr; } /* Vuelve a 2 columnas en móvil */
+            .split-grid, .ds-grid, .img-text-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .img-text-grid.reverse { direction: ltr; }
+            .color-palette-flex { justify-content: center; gap: 0.8rem; }
+            .browser-mockup { height: 450px; width: 100%; border-radius: 0;}
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-left"><a href="index.html#contact">Contact</a></div>
+        
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="logos/LOGO_ROJO.png" alt="Logo Iria Vega" class="logo-img logo-light">
+                <img src="logos/bLOGO_ROJO.png" alt="Logo Iria Vega" class="logo-img logo-dark">
+            </a>
+        </div>
+
+        <nav class="nav-right">
+            <ul>
+                <li><a href="about.html">About Me</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        
+        <section class="project-hero reveal">
+            <div class="hero-left-image">
+                <img src="luma_img/portada.png" alt="Luma App Cover" class="main-image">
+            </div>
+            
+            <div class="hero-right-content">
+                <span class="wip-badge">Work in Progress</span>
+                <h1 class="project-title">Luma</h1>
+                <p class="project-subtitle">App de Inteligencia Biológica / TFM Máster UX/UI</p>
+
+                <div class="hero-description">
+                    <p>
+                        El mundo está diseñado de forma lineal, pero la biología femenina es cíclica. Mientras otras apps actúan como calendarios fríos, <span class="highlight">LUMA</span> traduce los cambios hormonales en una experiencia humana, comprensible y accionable.
+                    </p>
+                </div>
+
+                <div class="hero-info-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Rol</span>
+                        <span class="detail-value">UI/UX Design</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Equipo</span>
+                        <span class="detail-value">Proyecto Grupal</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Año</span>
+                        <span class="detail-value">2026</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Tipo</span>
+                        <span class="detail-value">App, Landing Page</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Objetivo</span>
+                        <span class="detail-value">Lead Generation</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="content-wrapper">
+            <section class="section-margin reveal">
+                <span class="section-header">Contexto y Perfiles</span>
+                
+                <div class="split-grid">
+                    <div class="text-block">
+                        <p>
+                            Luma es un ecosistema digital de inteligencia biológica que traduce los datos del ciclo menstrual en estrategias operativas diarias para el trabajo, el descanso y el entrenamiento, utilizando una interfaz empática con un avatar dinámico.
+                        </p>
+                        <p>
+                            El objetivo de negocio principal para la landing page es la Validación de Demanda: conseguir que la usuaria se registre en la "Lista de Espera" para confirmar la necesidad real de gestionar los 28 días más allá de un simple calendario.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <div class="profile-card">
+                            <h3>Marta (La desconectada funcional)</h3>
+                            <p>Necesita validación emocional, permiso para descansar y "hacks" rápidos para no cancelar su vida por el dolor.</p>
+                        </div>
+                        <div class="profile-card" style="border-color: #353334;">
+                            <h3 style="color: #353334;">Andrea (La optimizadora)</h3>
+                            <p>Busca rendimiento, datos y rigor científico para adaptar sus entrenos a sus picos de energía.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="reveal usp-quote">
+                <h2>"Tu biología no es un caos, es un patrón. Luma es la primera herramienta que transforma tu ciclo en una ventaja estratégica."</h2>
+            </section>
+
+            <section class="section-margin reveal">
+                <span class="section-header">Design System</span>
+                
+                <div class="ds-grid">
+                    <div class="ds-block">
+                        <h3>Paleta de Color</h3>
+                        <p style="color: var(--text-color); font-weight: 300; line-height: 1.6;">
+                            El diseño se aleja del rosa tradicional. <span class="highlight">Deep Lavender</span> transmite calma y autocuidado. Los tonos claros reducen la fatiga visual, y el gris casi negro mantiene la armonía sin la dureza del negro puro.
+                        </p>
+                        
+                        <div class="color-palette-flex">
+                            <div class="color-item"><div class="color-swatch c-1"></div><span class="color-hex">#9B7CBF</span></div>
+                            <div class="color-item"><div class="color-swatch c-4"></div><span class="color-hex">#FEC0F9</span></div>                            
+                            <div class="color-item"><div class="color-swatch c-2"></div><span class="color-hex">#F1E8FB</span></div>
+                            <div class="color-item"><div class="color-swatch c-3"></div><span class="color-hex">#F2F2F2</span></div>
+                        </div>
+                    </div>
+
+                    <div class="ds-block">
+                        <h3>Tipografía</h3>
+                        <p style="color: var(--text-color); font-weight: 300; line-height: 1.6; margin-bottom: 0;">
+                            Un equilibrio entre modernidad y cercanía. Serifas cálidas para los títulos y una tipografía funcional, clara y geométrica para los datos.
+                        </p>
+                        
+                        <div class="type-preview">
+                            <div class="type-item">
+                                <span class="type-label">Títulos / Peachi (Serif)</span>
+                                <div class="type-title">Hola, Marta.</div>
+                            </div>
+                            <div class="type-item">
+                                <span class="type-label">Cuerpo / Degular (Sans)</span>
+                                <div class="type-body">Aporta contraste visual. Su geometría limpia y alta legibilidad la hacen fundamental para textos largos, aportando precisión frente a la emoción de los títulos.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-margin reveal">
+                <div class="img-text-grid">
+                    <img src="luma_img/lumi.png" alt="Mascota Lumi" class="section-img no-shadow">
+                    <div class="concept-text">
+                        <h3>Lumi, la mascota compañera</h3>
+                        <p>El elemento más diferencial de la app es Lumi. Se seleccionó la figura del elefante debido a su simbolismo, funcionando como un guía que humaniza el producto y acompaña a la usuaria durante todos sus ciclos.</p>
+                        <p>El sistema visual se compone de una biblioteca de estados que reaccionan a los datos introducidos. El estilo técnico emplea trazos suaves sin ángulos rectos, acompañados de sombras coloreadas y degradados sutiles que se integran orgánicamente en la interfaz.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-margin reveal">
+                <div class="img-text-grid reverse">
+                    <img src="luma_img/logo_concept.png" alt="Concepto Logotipo Luma" class="section-img no-shadow">
+                    <div class="concept-text">
+                        <h3>Concepto del Logotipo</h3>
+                        <p>El diseño del logotipo utiliza la interacción directa entre la ilustración y la tipografía para contar una historia de liberación y aceptación de los ciclos:</p>
+                        <ul>
+                            <li><strong>Lumi, el agente de cambio:</strong> Representa la fuerza interior empujando la estructura.</li>
+                            <li><strong>La "l" como linealidad impuesta:</strong> La representación gráfica de las expectativas de la sociedad: una línea recta, vertical y rígida.</li>
+                            <li><strong>Rompiendo el molde:</strong> Al inclinar la "l", Lumi demuestra que la estructura debe ceder ante la naturaleza.</li>
+                            <li><strong>La fluidez cíclica:</strong> Tras vencer la barrera, "uma" fluye con formas suaves y curvas, evocando las fases biológicas.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div> 
+
+        <section class="section-margin reveal">
+            <div class="content-wrapper" style="margin-bottom: 3rem;">
+                <span class="section-header">Landing Page (WIP)</span>
+            </div>
+            
+            <div class="browser-mockup">
+                <div class="browser-header">
+                    <div class="browser-dot b-red"></div>
+                    <div class="browser-dot b-yellow"></div>
+                    <div class="browser-dot b-green"></div>
+                    <div class="browser-address">https://luma-app.com</div>
+                </div>
+                <iframe src="luma_web/index.html" class="website-frame" title="Luma Landing Page WIP"></iframe>
+            </div>
+        </section>
+
+        <nav class="project-nav reveal">
+            <a href="index.html">← Back to Index</a>
+            <a href="hospitalbuddies.html">Next Project →</a>
+        </nav>
+
+    </main>
+
+    <label class="apple-switch">
+        <input type="checkbox" id="theme-toggle">
+        <span class="slider"></span>
+    </label>
+
+    <script>
+        // --- LOGICA MODO OSCURO ---
+        const toggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const logo = document.getElementById('logo-img');
+
+        const lightLogo = "./logos/LOGO_ROJO.png";
+        const darkLogo = "./logos/bLOGO_ROJO.png";
+
+        function updateLogo(isDark) {
+            if(logo) logo.src = isDark ? darkLogo : lightLogo;
+        }
+
+        if(localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            toggle.checked = true;
+            updateLogo(true);
+        } else {
+            updateLogo(false);
+        }
+
+        toggle.addEventListener('change', () => {
+            if(toggle.checked) {
+                body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+                updateLogo(true);
+            } else {
+                body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+                updateLogo(false);
+            }
+        });
+
+        // --- SCROLL ANIMATION ---
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

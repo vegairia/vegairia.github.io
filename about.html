@@ -440,10 +440,21 @@
         }
 
         @media (max-width: 768px) {
-            header { padding: 1rem; grid-template-columns: 1fr; gap: 1rem; justify-items: center; }
-            .nav-left, .nav-right, .logo-container { justify-self: center; }
+            header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 1rem 1.2rem;
+                font-size: 0.7rem;
+                letter-spacing: 0.5px;
+            }
+            .nav-left { display: none; }
+            .nav-right ul { gap: 1rem; }
+            .logo-img { height: 32px; }
+
+            main { padding-top: 100px; }
             .bio-container { grid-template-columns: 1fr; gap: 2rem; }
-            .bio-image-wrapper { height: 400px; }
+            .bio-image-wrapper { height: 350px; }
             .resume-section { grid-template-columns: 1fr; }
             .skills-grid { grid-template-columns: 1fr; }
             .contact-panel { grid-template-columns: 1fr; gap: 2rem; }
@@ -451,10 +462,23 @@
         }
 
         @media (max-width: 480px) {
-            .bio-image-wrapper { height: 300px; }
+            header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0.8rem 1rem;
+                font-size: 0.6rem;
+                letter-spacing: 0.3px;
+            }
+            .nav-left { display: none; }
+            .logo-img { height: 26px; }
+            .nav-right ul { gap: 0.7rem; }
+            main { padding-top: 70px; width: 95%; padding-bottom: 40px; }
+            .bio-image-wrapper { height: 280px; }
             .bio-text h1 { font-size: 2.5rem; }
-            .cp-left h2 { font-size: 2rem; }
-            main { padding-top: 120px; width: 95%; }
+            .bio-text p { font-size: 1rem; }
+            .cp-left h2 { font-size: 1.8rem; }
+            .bio-container { margin-bottom: 3rem; gap: 1.5rem; }
         }
     </style>
 </head>

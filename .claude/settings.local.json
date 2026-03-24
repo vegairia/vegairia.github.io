@@ -7,7 +7,8 @@
       "Bash(grep -n \"@media\" /c/Users/vegag/Documents/GitHub/vega.github.io/*.html)",
       "Bash(xargs grep:*)",
       "Bash(wc -l /c/Users/vegag/Documents/GitHub/vega.github.io/*.html)",
-      "Bash(grep -h \"https://\\\\|googleapis\\\\|unpkg\\\\|cdn\" /c/Users/vegag/Documents/GitHub/vega.github.io/*.html)"
+      "Bash(grep -h \"https://\\\\|googleapis\\\\|unpkg\\\\|cdn\" /c/Users/vegag/Documents/GitHub/vega.github.io/*.html)",
+      "mcp__Claude_Preview__preview_start"
     ]
   }
 }

@@ -95,12 +95,14 @@
 
         .nav-right { justify-self: end; }
         
-        .nav-right ul { 
-            display: flex; 
-            gap: 2rem; 
-            align-items: center; 
-            list-style: none; 
+        .nav-right ul {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
         }
+        .lang-toggle-btn { background: none; border: none; color: inherit; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; padding: 0; font-family: var(--font-main); transition: opacity 0.3s; }
+        .lang-toggle-btn:hover { opacity: 0.6; }
 
         /* LOGO CENTRADO Y DINÁMICO */
         .logo-container { justify-self: center; }
@@ -381,7 +383,7 @@
 <body>
 
     <header>
-        <div class="nav-left"><a href="index.html#contact">Contact</a></div>
+        <div class="nav-left"><a href="index.html#contact" data-i18n="nav.contact">Contacto</a></div>
         
         <div class="logo-container">
             <a href="index.html">
@@ -392,9 +394,10 @@
 
         <nav class="nav-right">
             <ul>
-                <li><a href="about.html">About Me</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="about.html" data-i18n="nav.about">Sobre mí</a></li>
+                <li><a href="gallery.html" data-i18n="nav.gallery">Galería</a></li>
+                <li><a href="index.html#projects" data-i18n="nav.projects">Proyectos</a></li>
+                <li><button class="lang-toggle-btn" id="lang-btn">ES</button></li>
             </ul>
         </nav>
     </header>
@@ -408,33 +411,33 @@
             
             <div class="hero-right-content">
                 <h1 class="project-title">The Meat Printer</h1>
-                <p class="project-subtitle">Product Design / Arduino & Dystopian Concept</p>
+                <p class="project-subtitle" data-i18n="mp.subtitle">Product Design / Arduino & Dystopian Concept</p>
 
                 <div class="hero-description">
-                    <p>
-                        Diseño de una máquina interactiva, basada en <span class="highlight">Arduino</span>, para un futuro distópico donde la contaminación ha eliminado los recursos alimenticios tradicionales. 
+                    <p data-i18n-html="mp.desc1">
+                        Diseño de una máquina interactiva, basada en <span class="highlight">Arduino</span>, para un futuro distópico donde la contaminación ha eliminado los recursos alimenticios tradicionales.
                     </p>
-                    <p>
+                    <p data-i18n="mp.desc2">
                         En este contexto, la humanidad recurre a soluciones innovadoras como la carne impresa en 3D, cultivada a partir de células animales.
                     </p>
                 </div>
 
                 <div class="hero-info-grid">
                     <div class="detail-item">
-                        <span class="detail-label">Rol</span>
+                        <span class="detail-label" data-i18n="detail.role">Rol</span>
                         <span class="detail-value">Product Design & Concept</span>
                     </div>
                     <div class="detail-item">
-                        <span class="detail-label">Año</span>
+                        <span class="detail-label" data-i18n="detail.year">Año</span>
                         <span class="detail-value">2024</span>
                     </div>
                     <div class="detail-item">
-                        <span class="detail-label">Herramientas</span>
+                        <span class="detail-label" data-i18n="detail.tools">Herramientas</span>
                         <span class="detail-value">Arduino, 3D Print, Concept Art</span>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">Keywords</span>
-                        <span class="detail-value">Contaminación, Alimentación, 3D</span>
+                        <span class="detail-value" data-i18n="mp.keywords">Contaminación, Alimentación, 3D</span>
                     </div>
                 </div>
             </div>
@@ -449,10 +452,10 @@
 
         <div class="content-wrapper">
             <section class="section-margin reveal">
-                <span class="section-header">Detalles del Prototipo</span>
-                
+                <span class="section-header" data-i18n="section.prototype">Detalles del Prototipo</span>
+
                 <div class="product-intro">
-                     <p>Para enfrentar el aumento del analfabetismo en este futuro, la máquina utiliza una interfaz simplificada basada en un lenguaje de emoticonos y tres botones físicos, permitiendo a los usuarios generar tickets con la información nutricional esencial.</p>
+                     <p data-i18n="prototype.desc">Para enfrentar el aumento del analfabetismo en este futuro, la máquina utiliza una interfaz simplificada basada en un lenguaje de emoticonos y tres botones físicos, permitiendo a los usuarios generar tickets con la información nutricional esencial.</p>
                 </div>
 
                 <div class="product-grid">
@@ -476,33 +479,33 @@
             </div>
             
             <div class="hero-right-content">
-                <h1 class="project-title">What's Happening</h1>
-                <p class="project-subtitle">La adaptación al videojuego (Unity)</p>
+                <h1 class="project-title">What’s Happening</h1>
+                <p class="project-subtitle" data-i18n="wh.subtitle">La adaptación al videojuego (Unity)</p>
 
                 <div class="hero-description">
-                    <p>
+                    <p data-i18n-html="wh.desc1">
                         <span class="highlight">What’s happening</span> es un videojuego desarrollado en Unity e ilustrado por mí, ambientado en este mismo universo distópico.
                     </p>
-                    <p>
+                    <p data-i18n="wh.desc2">
                         Los jugadores exploran sociedades analfabetas que sobreviven a la falta de alimento gracias a las máquinas centrales capaces de imprimir carne.
                     </p>
                 </div>
 
                 <div class="hero-info-grid">
                     <div class="detail-item">
-                        <span class="detail-label">Rol</span>
-                        <span class="detail-value">Diseño Visual & Ilustración</span>
+                        <span class="detail-label" data-i18n="detail.role">Rol</span>
+                        <span class="detail-value" data-i18n="wh.role.value">Diseño Visual & Ilustración</span>
                     </div>
                     <div class="detail-item">
-                        <span class="detail-label">Año</span>
+                        <span class="detail-label" data-i18n="detail.year">Año</span>
                         <span class="detail-value">2024</span>
                     </div>
                     <div class="detail-item">
-                        <span class="detail-label">Herramientas</span>
+                        <span class="detail-label" data-i18n="detail.tools">Herramientas</span>
                         <span class="detail-value">Unity, Procreate, C#</span>
                     </div>
                     <div class="detail-item">
-                        <span class="detail-label">Proyecto</span>
+                        <span class="detail-label" data-i18n="detail.project">Proyecto</span>
                         <span class="detail-value">Elisava TFG</span>
                     </div>
                 </div>
@@ -528,8 +531,8 @@
         </div>
 
         <nav class="project-nav">
-            <a href="memorymaze.html">← Previous Project</a>
-            <a href="#">Next Project →</a>
+            <a href="memorymaze.html" data-i18n="nav.prev">← Proyecto Anterior</a>
+            <a href="#" data-i18n="nav.next">Proyecto Siguiente →</a>
         </nav>
 
     </main>
@@ -649,6 +652,55 @@
             if (e.key === 'ArrowRight') showNext();
             if (e.key === 'ArrowLeft') showPrev();
         });
+
+        // --- LANGUAGE SYSTEM ---
+        const translations = {
+            es: {
+                'nav.contact':'Contacto','nav.about':'Sobre mí','nav.gallery':'Galería','nav.projects':'Proyectos',
+                'mp.subtitle':'Product Design / Arduino & Dystopian Concept',
+                'mp.desc1':'Diseño de una máquina interactiva, basada en <span class="highlight">Arduino</span>, para un futuro distópico donde la contaminación ha eliminado los recursos alimenticios tradicionales.',
+                'mp.desc2':'En este contexto, la humanidad recurre a soluciones innovadoras como la carne impresa en 3D, cultivada a partir de células animales.',
+                'detail.role':'Rol','detail.year':'Año','detail.tools':'Herramientas','detail.project':'Proyecto',
+                'mp.keywords':'Contaminación, Alimentación, 3D',
+                'section.prototype':'Detalles del Prototipo',
+                'prototype.desc':'Para enfrentar el aumento del analfabetismo en este futuro, la máquina utiliza una interfaz simplificada basada en un lenguaje de emoticonos y tres botones físicos, permitiendo a los usuarios generar tickets con la información nutricional esencial.',
+                'wh.subtitle':'La adaptación al videojuego (Unity)',
+                'wh.desc1':'<span class="highlight">What\'s happening</span> es un videojuego desarrollado en Unity e ilustrado por mí, ambientado en este mismo universo distópico.',
+                'wh.desc2':'Los jugadores exploran sociedades analfabetas que sobreviven a la falta de alimento gracias a las máquinas centrales capaces de imprimir carne.',
+                'wh.role.value':'Diseño Visual & Ilustración',
+                'nav.prev':'← Proyecto Anterior','nav.next':'Proyecto Siguiente →',
+            },
+            en: {
+                'nav.contact':'Contact','nav.about':'About Me','nav.gallery':'Gallery','nav.projects':'Projects',
+                'mp.subtitle':'Product Design / Arduino & Dystopian Concept',
+                'mp.desc1':'Design of an interactive machine, based on <span class="highlight">Arduino</span>, for a dystopian future where pollution has eliminated traditional food resources.',
+                'mp.desc2':'In this context, humanity turns to innovative solutions such as 3D-printed meat, grown from animal cells.',
+                'detail.role':'Role','detail.year':'Year','detail.tools':'Tools','detail.project':'Project',
+                'mp.keywords':'Pollution, Food, 3D',
+                'section.prototype':'Prototype Details',
+                'prototype.desc':'To address the rise of illiteracy in this future, the machine uses a simplified interface based on an emoji language and three physical buttons, allowing users to generate tickets with essential nutritional information.',
+                'wh.subtitle':'The Video Game Adaptation (Unity)',
+                'wh.desc1':'<span class="highlight">What\'s happening</span> is a video game developed in Unity and illustrated by me, set in this same dystopian universe.',
+                'wh.desc2':'Players explore illiterate societies that survive food shortages thanks to central machines capable of printing meat.',
+                'wh.role.value':'Visual Design & Illustration',
+                'nav.prev':'← Previous Project','nav.next':'Next Project →',
+            }
+        };
+        function setLanguage(lang) {
+            const key = lang.toLowerCase();
+            const t = translations[key];
+            if (!t) return;
+            document.querySelectorAll('[data-i18n]').forEach(el => { if (t[el.dataset.i18n] !== undefined) el.textContent = t[el.dataset.i18n]; });
+            document.querySelectorAll('[data-i18n-html]').forEach(el => { if (t[el.dataset.i18nHtml] !== undefined) el.innerHTML = t[el.dataset.i18nHtml]; });
+            const langBtn = document.getElementById('lang-btn');
+            if (langBtn) langBtn.textContent = key === 'es' ? 'EN' : 'ES';
+            localStorage.setItem('userLang', key);
+        }
+        document.getElementById('lang-btn').addEventListener('click', () => {
+            const current = localStorage.getItem('userLang') || 'es';
+            setLanguage(current === 'es' ? 'en' : 'es');
+        });
+        setLanguage((localStorage.getItem('userLang') || 'es').toLowerCase());
     </script>
 </body>
 </html>

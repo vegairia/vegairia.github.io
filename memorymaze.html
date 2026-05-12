@@ -90,6 +90,8 @@
 
         .nav-right { justify-self: end; }
         .nav-right ul { display: flex; gap: 2rem; align-items: center; }
+        .lang-toggle-btn { background: none; border: none; color: inherit; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; padding: 0; font-family: var(--font-display); transition: opacity 0.3s; }
+        .lang-toggle-btn:hover { opacity: 0.6; }
 
         /* LOGO ESTILOS */
         .logo-container { justify-self: center; }
@@ -473,7 +475,7 @@
 <body>
 
     <header>
-        <div class="nav-left"><a href="index.html#contact">Contact</a></div>
+        <div class="nav-left"><a href="index.html#contact" data-i18n="nav.contact">Contacto</a></div>
         
         <div class="logo-container">
             <a href="index.html">
@@ -484,9 +486,10 @@
 
         <nav class="nav-right">
             <ul>
-                <li><a href="about.html">About Me</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="about.html" data-i18n="nav.about">Sobre mí</a></li>
+                <li><a href="gallery.html" data-i18n="nav.gallery">Galería</a></li>
+                <li><a href="index.html#projects" data-i18n="nav.projects">Proyectos</a></li>
+                <li><button class="lang-toggle-btn" id="lang-btn">ES</button></li>
             </ul>
         </nav>
     </header>
@@ -500,28 +503,28 @@
             
             <div class="hero-right-content">
                 <h1 class="project-title">Memory Maze</h1>
-                <p class="project-subtitle">Videojuego en Unity / Alzheimer</p>
+                <p class="project-subtitle" data-i18n="subtitle">Videojuego en Unity / Alzheimer</p>
 
                 <div class="hero-description">
-                    <p>
+                    <p data-i18n-html="hero.desc1">
                         <span class="highlight">Memory Maze</span> es un videojuego desarrollado en Unity e ilustrado por mí, inspirado en los procesos degenerativos del Alzheimer. El jugador encarna a una neurona que recorre los laberintos del cerebro, explorando recuerdos cada vez más difusos.
                     </p>
-                    <p>
+                    <p data-i18n="hero.desc2">
                         El objetivo es recuperar, antes de que el tiempo se agote, el nombre del nieto de la propietaria del cerebro.
                     </p>
                 </div>
 
                 <div class="hero-info-grid">
                     <div class="detail-item">
-                        <span class="detail-label">Rol</span>
-                        <span class="detail-value">Diseño Visual, Narrativa & Ilustración</span>
+                        <span class="detail-label" data-i18n="detail.role">Rol</span>
+                        <span class="detail-value" data-i18n="detail.role.value">Diseño Visual, Narrativa & Ilustración</span>
                     </div>
                     <div class="detail-item">
-                        <span class="detail-label">Año</span>
+                        <span class="detail-label" data-i18n="detail.year">Año</span>
                         <span class="detail-value">2022</span>
                     </div>
                     <div class="detail-item">
-                        <span class="detail-label">Herramientas</span>
+                        <span class="detail-label" data-i18n="detail.tools">Herramientas</span>
                         <span class="detail-value">Unity, Procreate</span>
                     </div>
                 </div>
@@ -537,13 +540,13 @@
 
         <div class="content-wrapper">
             <section class="levels-section levels-timeline reveal">
-                <span class="section-header">Las Fases del Olvido</span>
+                <span class="section-header" data-i18n="section.levels">Las Fases del Olvido</span>
 
                 <div class="level-row reveal">
                     <div class="level-text">
-                        <h3>Nivel 1 — Los primeros destellos</h3>
-                        <span class="level-subtitle">Lucidez Inicial</span>
-                        <p>Navegación sencilla, controles intuitivos y visibilidad clara. El jugador se mueve por un entorno luminoso que representa los recuerdos más recientes y accesibles. La mente aún es capaz de orientarse y conectar fragmentos de memoria.</p>
+                        <h3 data-i18n="level1.title">Nivel 1 — Los primeros destellos</h3>
+                        <span class="level-subtitle" data-i18n="level1.sub">Lucidez Inicial</span>
+                        <p data-i18n="level1.desc">Navegación sencilla, controles intuitivos y visibilidad clara. El jugador se mueve por un entorno luminoso que representa los recuerdos más recientes y accesibles. La mente aún es capaz de orientarse y conectar fragmentos de memoria.</p>
                     </div>
                     <div class="level-node-wrapper"><div class="level-node"></div></div>
                     <div class="level-img-container">
@@ -553,9 +556,9 @@
 
                 <div class="level-row reveal">
                     <div class="level-text">
-                        <h3>Nivel 2 — La confusión creciente</h3>
-                        <span class="level-subtitle">Desorientación Cognitiva</span>
-                        <p>Los controles se invierten y la navegación se vuelve desafiante, evocando el mareo. El entorno se torna más inestable y los caminos menos predecibles, simbolizando el avance de la enfermedad y la pérdida de referencias mentales.</p>
+                        <h3 data-i18n="level2.title">Nivel 2 — La confusión creciente</h3>
+                        <span class="level-subtitle" data-i18n="level2.sub">Desorientación Cognitiva</span>
+                        <p data-i18n="level2.desc">Los controles se invierten y la navegación se vuelve desafiante, evocando el mareo. El entorno se torna más inestable y los caminos menos predecibles, simbolizando el avance de la enfermedad y la pérdida de referencias mentales.</p>
                     </div>
                     <div class="level-node-wrapper"><div class="level-node"></div></div>
                     <div class="level-img-container">
@@ -565,9 +568,9 @@
 
                 <div class="level-row reveal">
                     <div class="level-text">
-                        <h3>Nivel 3 — El olvido</h3>
-                        <span class="level-subtitle">Colapso de la Memoria</span>
-                        <p>El movimiento se ralentiza drásticamente y los controles se vuelven caóticos. El entorno se cubre de niebla y sombras, reflejando la mente al borde del vacío. Un último intento de aferrarse a la identidad antes de que todo se disuelva.</p>
+                        <h3 data-i18n="level3.title">Nivel 3 — El olvido</h3>
+                        <span class="level-subtitle" data-i18n="level3.sub">Colapso de la Memoria</span>
+                        <p data-i18n="level3.desc">El movimiento se ralentiza drásticamente y los controles se vuelven caóticos. El entorno se cubre de niebla y sombras, reflejando la mente al borde del vacío. Un último intento de aferrarse a la identidad antes de que todo se disuelva.</p>
                     </div>
                     <div class="level-node-wrapper"><div class="level-node"></div></div>
                     <div class="level-img-container">
@@ -577,17 +580,17 @@
             </section>
 
             <section class="chars-section reveal">
-                <span class="section-header">Protagonistas y Símbolos</span>
-                
+                <span class="section-header" data-i18n="section.chars">Protagonistas y Símbolos</span>
+
                 <div class="chars-intro">
-                    <p>
+                    <p data-i18n-html="chars.intro">
                         <span class="highlight">Neura</span>, la neurona personificada, es la protagonista con la que nos desplazamos. La <span class="highlight">Abuela</span> es la dueña del cerebro por el que viajamos; sus recuerdos conforman el escenario emocional. El <span class="highlight">Nieto</span> representa el último vínculo con la realidad y el afecto perdido.
                     </p>
                 </div>
 
                 <div class="char-slider-wrapper">
                     <button class="slider-btn" id="slideLeft">←</button>
-                    
+
                     <div class="char-track-container" id="charContainer">
                         <div class="char-track">
                             <div class="char-card">
@@ -596,19 +599,19 @@
                             </div>
                             <div class="char-card">
                                 <img src="memorymaze_img/abuela.png" alt="Abuela" class="char-img">
-                                <span class="char-name">La Abuela</span>
+                                <span class="char-name" data-i18n="char.grandma">La Abuela</span>
                             </div>
                             <div class="char-card">
                                 <img src="memorymaze_img/nieto.png" alt="Nieto" class="char-img">
-                                <span class="char-name">El Nieto</span>
+                                <span class="char-name" data-i18n="char.grandson">El Nieto</span>
                             </div>
                             <div class="char-card">
                                 <img src="memorymaze_img/mochila.png" alt="Mochila" class="char-img">
-                                <span class="char-name">Inventario</span>
+                                <span class="char-name" data-i18n="char.inventory">Inventario</span>
                             </div>
                             <div class="char-card">
                                 <img src="memorymaze_img/monedas.png" alt="Monedas" class="char-img">
-                                <span class="char-name">Recuerdos</span>
+                                <span class="char-name" data-i18n="char.memories">Recuerdos</span>
                             </div>
                         </div>
                     </div>
@@ -620,7 +623,7 @@
 
         <div class="scroll-container-outer">
             <div class="scroll-container-sticky">
-                <span class="gallery-label">Galería del Entorno</span>
+                <span class="gallery-label" data-i18n="gallery.label">Galería del Entorno</span>
                 
                 <div class="scroll-track" id="track">
                     <div class="scroll-item"><img src="memorymaze_img/AZUL_5.png" alt="Entorno 1"></div>
@@ -636,7 +639,7 @@
         </div>
 
         <nav class="project-nav">
-            <a href="synthdata.html">← Previous Project</a>
+            <a href="synthdata.html" data-i18n="nav.prev">← Proyecto Anterior</a>
             <div></div> </nav>
 
     </main>
@@ -719,6 +722,65 @@
                 track.style.transform = 'none';
             }
         });
+
+        // --- LANGUAGE SYSTEM ---
+        const translations = {
+            es: {
+                'nav.contact':'Contacto','nav.about':'Sobre mí','nav.gallery':'Galería','nav.projects':'Proyectos',
+                'subtitle':'Videojuego en Unity / Alzheimer',
+                'hero.desc1':'<span class="highlight">Memory Maze</span> es un videojuego desarrollado en Unity e ilustrado por mí, inspirado en los procesos degenerativos del Alzheimer. El jugador encarna a una neurona que recorre los laberintos del cerebro, explorando recuerdos cada vez más difusos.',
+                'hero.desc2':'El objetivo es recuperar, antes de que el tiempo se agote, el nombre del nieto de la propietaria del cerebro.',
+                'detail.role':'Rol','detail.year':'Año','detail.tools':'Herramientas',
+                'detail.role.value':'Diseño Visual, Narrativa & Ilustración',
+                'section.levels':'Las Fases del Olvido',
+                'level1.title':'Nivel 1 — Los primeros destellos','level1.sub':'Lucidez Inicial',
+                'level1.desc':'Navegación sencilla, controles intuitivos y visibilidad clara. El jugador se mueve por un entorno luminoso que representa los recuerdos más recientes y accesibles. La mente aún es capaz de orientarse y conectar fragmentos de memoria.',
+                'level2.title':'Nivel 2 — La confusión creciente','level2.sub':'Desorientación Cognitiva',
+                'level2.desc':'Los controles se invierten y la navegación se vuelve desafiante, evocando el mareo. El entorno se torna más inestable y los caminos menos predecibles, simbolizando el avance de la enfermedad y la pérdida de referencias mentales.',
+                'level3.title':'Nivel 3 — El olvido','level3.sub':'Colapso de la Memoria',
+                'level3.desc':'El movimiento se ralentiza drásticamente y los controles se vuelven caóticos. El entorno se cubre de niebla y sombras, reflejando la mente al borde del vacío. Un último intento de aferrarse a la identidad antes de que todo se disuelva.',
+                'section.chars':'Protagonistas y Símbolos',
+                'chars.intro':'<span class="highlight">Neura</span>, la neurona personificada, es la protagonista con la que nos desplazamos. La <span class="highlight">Abuela</span> es la dueña del cerebro por el que viajamos; sus recuerdos conforman el escenario emocional. El <span class="highlight">Nieto</span> representa el último vínculo con la realidad y el afecto perdido.',
+                'char.grandma':'La Abuela','char.grandson':'El Nieto','char.inventory':'Inventario','char.memories':'Recuerdos',
+                'gallery.label':'Galería del Entorno',
+                'nav.prev':'← Proyecto Anterior',
+            },
+            en: {
+                'nav.contact':'Contact','nav.about':'About Me','nav.gallery':'Gallery','nav.projects':'Projects',
+                'subtitle':'Unity Videogame / Alzheimer',
+                'hero.desc1':'<span class="highlight">Memory Maze</span> is a video game developed in Unity and illustrated by me, inspired by the degenerative processes of Alzheimer\'s. The player embodies a neuron that traverses the labyrinths of the brain, exploring increasingly blurred memories.',
+                'hero.desc2':'The objective is to recover, before time runs out, the name of the grandson of the brain\'s owner.',
+                'detail.role':'Role','detail.year':'Year','detail.tools':'Tools',
+                'detail.role.value':'Visual Design, Narrative & Illustration',
+                'section.levels':'The Phases of Forgetting',
+                'level1.title':'Level 1 — The First Glimpses','level1.sub':'Initial Lucidity',
+                'level1.desc':'Simple navigation, intuitive controls and clear visibility. The player moves through a bright environment representing the most recent and accessible memories. The mind is still able to orientate itself and connect memory fragments.',
+                'level2.title':'Level 2 — The Growing Confusion','level2.sub':'Cognitive Disorientation',
+                'level2.desc':'Controls are inverted and navigation becomes challenging, evoking dizziness. The environment becomes more unstable and paths less predictable, symbolising the advance of the disease and the loss of mental references.',
+                'level3.title':'Level 3 — The Forgetting','level3.sub':'Memory Collapse',
+                'level3.desc':'Movement slows drastically and controls become chaotic. The environment is covered in fog and shadows, reflecting the mind on the edge of emptiness. A last attempt to cling to identity before everything dissolves.',
+                'section.chars':'Characters & Symbols',
+                'chars.intro':'<span class="highlight">Neura</span>, the personified neuron, is the protagonist we move with. The <span class="highlight">Grandmother</span> is the owner of the brain we travel through; her memories make up the emotional setting. The <span class="highlight">Grandson</span> represents the last link to reality and lost affection.',
+                'char.grandma':'The Grandmother','char.grandson':'The Grandson','char.inventory':'Inventory','char.memories':'Memories',
+                'gallery.label':'Environment Gallery',
+                'nav.prev':'← Previous Project',
+            }
+        };
+        function setLanguage(lang) {
+            const key = lang.toLowerCase();
+            const t = translations[key];
+            if (!t) return;
+            document.querySelectorAll('[data-i18n]').forEach(el => { if (t[el.dataset.i18n] !== undefined) el.textContent = t[el.dataset.i18n]; });
+            document.querySelectorAll('[data-i18n-html]').forEach(el => { if (t[el.dataset.i18nHtml] !== undefined) el.innerHTML = t[el.dataset.i18nHtml]; });
+            const langBtn = document.getElementById('lang-btn');
+            if (langBtn) langBtn.textContent = key === 'es' ? 'EN' : 'ES';
+            localStorage.setItem('userLang', key);
+        }
+        document.getElementById('lang-btn').addEventListener('click', () => {
+            const current = localStorage.getItem('userLang') || 'es';
+            setLanguage(current === 'es' ? 'en' : 'es');
+        });
+        setLanguage((localStorage.getItem('userLang') || 'es').toLowerCase());
     </script>
 </body>
 </html>

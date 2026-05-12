@@ -104,6 +104,8 @@
 
         .nav-right { justify-self: end; }
         .nav-right ul { display: flex; gap: 2rem; align-items: center; }
+        .lang-toggle-btn { background: none; border: none; color: inherit; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; padding: 0; font-family: var(--font-main); transition: opacity 0.3s; }
+        .lang-toggle-btn:hover { opacity: 0.6; }
 
 
         /* --- HERO --- */
@@ -313,8 +315,8 @@
 <body>
 
     <header>
-        <div class="nav-left"><a href="index.html#contact">Contact</a></div>
-        
+        <div class="nav-left"><a href="index.html#contact" data-i18n="nav.contact">Contacto</a></div>
+
         <div class="logo-container">
             <a href="index.html">
                 <img src="logos/LOGO_ROJO.png" alt="Logo Iria Vega" class="logo-img logo-light">
@@ -324,9 +326,10 @@
 
         <nav class="nav-right">
             <ul>
-                <li><a href="about.html">About Me</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="about.html" data-i18n="nav.about">Sobre mí</a></li>
+                <li><a href="gallery.html" data-i18n="nav.gallery">Galería</a></li>
+                <li><a href="index.html#projects" data-i18n="nav.projects">Proyectos</a></li>
+                <li><button class="lang-toggle-btn" id="lang-btn">ES</button></li>
             </ul>
         </nav>
     </header>
@@ -335,18 +338,18 @@
         
         <section class="project-hero">
             <h1 class="project-title reveal">DreamSync</h1>
-            <p class="project-subtitle reveal delay-100">Arquitectura Onírica / Web Design</p>
+            <p class="project-subtitle reveal delay-100" data-i18n="subtitle">Arquitectura Onírica / Web Design</p>
         </section>
 
         <div class="content-wrapper">
             <section class="info-grid reveal">
                 <div class="details-col">
                     <div class="detail-item">
-                        <span class="detail-label">Rol</span>
+                        <span class="detail-label" data-i18n="detail.role">Rol</span>
                         <span class="detail-value">UI/UX Design<br>Frontend Dev</span>
                     </div>
                     <div class="detail-item">
-                        <span class="detail-label">Año</span>
+                        <span class="detail-label" data-i18n="detail.year">Año</span>
                         <span class="detail-value">2026</span>
                     </div>
                     <div class="detail-item">
@@ -356,25 +359,25 @@
                 </div>
 
                 <div class="description-col">
-                    <p>
+                    <p data-i18n-html="hero.desc1">
                         <span class="highlight">DreamSync</span> es una plataforma conceptual que permite grabar, revivir y analizar sueños con fidelidad 8K neuronal. El diseño web busca reflejar esta tecnología futurista mediante una estética oscura, degradados ámbar y efectos de cristal (glassmorphism).
                     </p>
-                    <p>
+                    <p data-i18n="hero.desc2">
                         La interfaz guía al usuario desde el descubrimiento de la tecnología hasta la comprensión del protocolo de conexión neuronal, utilizando animaciones suaves y una narrativa visual inmersiva.
                     </p>
                 </div>
             </section>
 
             <section class="identity-section reveal">
-                <span class="section-header">Identidad Visual</span>
-                
+                <span class="section-header" data-i18n="section.identity">Identidad Visual</span>
+
                 <div class="style-guide-grid">
                     <div class="typography-preview reveal delay-100">
                         <h2>Helvetica Neue Bold</h2>
-                        <p>Tipografía principal para titulares. Limpia y rotunda.</p>
-                        
+                        <p data-i18n="typo.bold.desc">Tipografía principal para titulares. Limpia y rotunda.</p>
+
                         <h3>Helvetica Neue Light</h3>
-                        <p>Tipografía para el cuerpo de texto. Legibilidad máxima y contraste elegante.</p>
+                        <p data-i18n="typo.light.desc">Tipografía para el cuerpo de texto. Legibilidad máxima y contraste elegante.</p>
                     </div>
 
                     <div class="color-palette reveal delay-200">
@@ -403,8 +406,8 @@
         </section>
 
         <nav class="project-nav reveal">
-            <a href="hospitalbuddies.html">← Previous Project</a>
-            <a href="synthdata.html">Next Project →</a>
+            <a href="hospitalbuddies.html" data-i18n="nav.prev">← Proyecto Anterior</a>
+            <a href="synthdata.html" data-i18n="nav.next">Proyecto Siguiente →</a>
         </nav>
 
     </main>
@@ -451,6 +454,47 @@
         document.querySelectorAll('.reveal').forEach(el => {
             observer.observe(el);
         });
+
+        // --- LANGUAGE SYSTEM ---
+        const translations = {
+            es: {
+                'nav.contact':'Contacto','nav.about':'Sobre mí','nav.gallery':'Galería','nav.projects':'Proyectos',
+                'subtitle':'Arquitectura Onírica / Web Design',
+                'detail.role':'Rol','detail.year':'Año',
+                'hero.desc1':'<span class="highlight">DreamSync</span> es una plataforma conceptual que permite grabar, revivir y analizar sueños con fidelidad 8K neuronal. El diseño web busca reflejar esta tecnología futurista mediante una estética oscura, degradados ámbar y efectos de cristal (glassmorphism).',
+                'hero.desc2':'La interfaz guía al usuario desde el descubrimiento de la tecnología hasta la comprensión del protocolo de conexión neuronal, utilizando animaciones suaves y una narrativa visual inmersiva.',
+                'section.identity':'Identidad Visual',
+                'typo.bold.desc':'Tipografía principal para titulares. Limpia y rotunda.',
+                'typo.light.desc':'Tipografía para el cuerpo de texto. Legibilidad máxima y contraste elegante.',
+                'nav.prev':'← Proyecto Anterior','nav.next':'Proyecto Siguiente →',
+            },
+            en: {
+                'nav.contact':'Contact','nav.about':'About Me','nav.gallery':'Gallery','nav.projects':'Projects',
+                'subtitle':'Oneiric Architecture / Web Design',
+                'detail.role':'Role','detail.year':'Year',
+                'hero.desc1':'<span class="highlight">DreamSync</span> is a conceptual platform that allows recording, reliving and analysing dreams with 8K neural fidelity. The web design aims to reflect this futuristic technology through a dark aesthetic, amber gradients and glass effects (glassmorphism).',
+                'hero.desc2':'The interface guides the user from discovering the technology to understanding the neural connection protocol, using smooth animations and an immersive visual narrative.',
+                'section.identity':'Visual Identity',
+                'typo.bold.desc':'Main typeface for headlines. Clean and bold.',
+                'typo.light.desc':'Typeface for body text. Maximum readability and elegant contrast.',
+                'nav.prev':'← Previous Project','nav.next':'Next Project →',
+            }
+        };
+        function setLanguage(lang) {
+            const key = lang.toLowerCase();
+            const t = translations[key];
+            if (!t) return;
+            document.querySelectorAll('[data-i18n]').forEach(el => { if (t[el.dataset.i18n] !== undefined) el.textContent = t[el.dataset.i18n]; });
+            document.querySelectorAll('[data-i18n-html]').forEach(el => { if (t[el.dataset.i18nHtml] !== undefined) el.innerHTML = t[el.dataset.i18nHtml]; });
+            const langBtn = document.getElementById('lang-btn');
+            if (langBtn) langBtn.textContent = key === 'es' ? 'EN' : 'ES';
+            localStorage.setItem('userLang', key);
+        }
+        document.getElementById('lang-btn').addEventListener('click', () => {
+            const current = localStorage.getItem('userLang') || 'es';
+            setLanguage(current === 'es' ? 'en' : 'es');
+        });
+        setLanguage((localStorage.getItem('userLang') || 'es').toLowerCase());
 
     </script>
 </body>

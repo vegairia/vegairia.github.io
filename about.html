@@ -107,10 +107,17 @@
         .nav-right { justify-self: end; }
         .nav-right ul { display: flex; gap: 2rem; align-items: center; }
         
-        .nav-right a:hover { 
-            color: var(--accent-color); 
-            text-decoration: none; 
+        .nav-right a:hover {
+            color: var(--accent-color);
+            text-decoration: none;
         }
+
+        .lang-toggle-btn {
+            background: none; border: none; font-family: inherit; font-size: inherit;
+            font-weight: 600; text-transform: uppercase; color: inherit;
+            cursor: pointer; letter-spacing: 1px; transition: color 0.3s ease;
+        }
+        .lang-toggle-btn:hover { color: var(--specific-red); }
 
         .active-nav {
             color: var(--specific-red) !important;
@@ -184,6 +191,30 @@
             font-weight: 500;
             color: var(--text-color);
         }
+
+        .cv-link {
+            display: inline-block;
+            margin-top: 1.8rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--specific-red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            transition: opacity 0.3s;
+        }
+        .cv-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--specific-red);
+            transition: width 0.3s ease;
+        }
+        .cv-link:hover::after { width: 100%; }
+        .cv-link:hover { opacity: 0.75; }
 
         /* --- RESUME GRID --- */
         .resume-section {
@@ -441,6 +472,57 @@
             background-color: var(--switch-knob-on); 
         }
 
+        /* --- HAMBURGER --- */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            z-index: 1001;
+        }
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background-color: var(--text-color);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        /* --- MOBILE NAV OVERLAY --- */
+        .mobile-nav {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            background-color: var(--bg-color);
+            z-index: 998;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-12px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .mobile-nav.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .mobile-nav a {
+            font-size: clamp(1.8rem, 8vw, 3rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-color);
+            transition: color 0.3s;
+        }
+        .mobile-nav a:hover { color: var(--specific-red); }
+
         @media (max-width: 900px) {
             .skills-grid { grid-template-columns: 1fr 1fr; } /* 2 columnas en tablet */
         }
@@ -455,7 +537,8 @@
                 letter-spacing: 0.5px;
             }
             .nav-left { display: none; }
-            .nav-right ul { gap: 1rem; }
+            .nav-right { display: none; }
+            .hamburger { display: flex; }
             .logo-img { height: 32px; }
 
             main { padding-top: 100px; }
@@ -491,7 +574,7 @@
 <body>
 
     <header>
-        <div class="nav-left"><a href="index.html#contact">Contact</a></div>
+        <div class="nav-left"><a href="index.html#contact" data-i18n="nav.contact">Contact</a></div>
         
         <div class="logo-container">
             <a href="index.html">
@@ -502,27 +585,42 @@
         
         <nav class="nav-right">
             <ul>
-                <li><a href="about.html" class="active-nav">About Me</a></li>
-                <li><a href="index.html#projects">Projects</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="about.html" class="active-nav" data-i18n="nav.about">About Me</a></li>
+                <li><a href="index.html#projects" data-i18n="nav.projects">Projects</a></li>
+                <li><a href="gallery.html" data-i18n="nav.gallery">Gallery</a></li>
+                <li><button class="lang-toggle-btn" id="lang-btn">ES</button></li>
             </ul>
         </nav>
+        <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+            <span></span><span></span><span></span>
+        </button>
     </header>
+
+    <div class="mobile-nav" id="mobile-nav">
+        <a href="about.html" data-i18n="nav.about">About Me</a>
+        <a href="index.html#projects" data-i18n="nav.projects">Projects</a>
+        <a href="gallery.html" data-i18n="nav.gallery">Gallery</a>
+        <a href="index.html#contact" data-i18n="nav.contact">Contact</a>
+    </div>
 
     <main>
         <section class="bio-container">
             <div class="bio-text">
-                <h1 class="reveal">HOLA<br>SOY <span class="highlight">IRIA</span></h1>
-                
-                <p class="reveal delay-100">
+                <h1 class="reveal" data-i18n-html="bio.title">HOLA<br>SOY <span class="highlight">IRIA</span></h1>
+
+                <p class="reveal delay-100" data-i18n="bio.p1">
                     Diseñadora UX/UI con Grado en Experiencias Interactivas y Máster en Producto Digital.
                 </p>
-                <p class="reveal delay-200">
+                <p class="reveal delay-200" data-i18n="bio.p2">
                     Pasé de preguntarme cómo las personas interactúan con la tecnología a ser la persona que diseña esa experiencia. Combino mi background académico con un fuerte enfoque visual y flujos de trabajo optimizados con IA para crear productos digitales que no solo son intuitivos, sino visualmente impecables.
                 </p>
-                <p class="reveal delay-200">
+                <p class="reveal delay-200" data-i18n="bio.p3">
                     Funcionalidad, estética y el usuario, siempre en el centro de cada decisión.
                 </p>
+
+                <a href="IriaVega_UXUIdesigner_CV.pdf" download class="cv-link reveal delay-300" data-i18n="bio.cv">
+                    Descarga aquí mi CV
+                </a>
             </div>
             
             <div class="bio-image-wrapper reveal delay-200">
@@ -531,102 +629,94 @@
         </section>
 
         <section class="resume-section reveal">
-            
+
             <div class="resume-col">
-                <h3>Educación</h3>
-                
+                <h3 data-i18n="edu.title">Educación</h3>
+
                 <div class="resume-item reveal delay-100">
-                    <span class="resume-date">2025 - Presente</span> 
-                    <div class="resume-role">Máster Digital Design, UX/UI</div> 
-                    <div class="resume-place">BAU Centre Universitari d'Arts i Disseny</div> 
+                    <span class="resume-date" data-i18n="edu1.date">2025 - Presente</span>
+                    <div class="resume-role" data-i18n="edu1.role">Máster Digital Design, UX/UI</div>
+                    <div class="resume-place" data-i18n="edu1.place">BAU Centre Universitari d'Arts i Disseny</div>
                 </div>
 
                 <div class="resume-item reveal delay-200">
-                    <span class="resume-date">2021 - 2025</span> 
-                    <div class="resume-role">Grado de Diseño</div> 
-                    <div class="resume-place">ELISAVA Facultat de Disseny</div> 
-                    <div class="resume-desc">Mención de Experiencias Interactivas.</div> 
+                    <span class="resume-date" data-i18n="edu2.date">2021 - 2025</span>
+                    <div class="resume-role" data-i18n="edu2.role">Grado de Diseño</div>
+                    <div class="resume-place" data-i18n="edu2.place">ELISAVA Facultat de Disseny</div>
+                    <div class="resume-desc" data-i18n="edu2.desc">Mención de Experiencias Interactivas.</div>
                 </div>
             </div>
 
             <div class="resume-col">
-                <h3>Experiencia</h3>
-                
+                <h3 data-i18n="exp.title">Experiencia</h3>
+
                 <div class="resume-item reveal delay-100">
-                    <span class="resume-date">Droyz Toys</span> 
-                    <div class="resume-role">Diseñadora Digital</div>
-                    <div class="resume-desc">
-                        Prácticas profesionales. Diseño y desarrollo de la página web B2B y creación de experiencias interactivas para Comic Con Málaga.
-                    </div>
+                    <span class="resume-date" data-i18n="exp1.date">Droyz Toys</span>
+                    <div class="resume-role" data-i18n="exp1.role">Diseñadora Digital</div>
+                    <div class="resume-desc" data-i18n="exp1.desc">Prácticas profesionales. Diseño y desarrollo de la página web B2B y creación de experiencias interactivas para Comic Con Málaga.</div>
                 </div>
 
                 <div class="resume-item reveal delay-200">
-                    <span class="resume-date">Spiralglass (Freelance)</span> 
-                    <div class="resume-role">Diseñadora Web</div>
-                    <div class="resume-desc">
-                        Diseño integral de la web desde Figma, destacando el carácter artesanal de la marca.
-                    </div>
+                    <span class="resume-date" data-i18n="exp2.date">Spiralglass (Freelance)</span>
+                    <div class="resume-role" data-i18n="exp2.role">Diseñadora Web</div>
+                    <div class="resume-desc" data-i18n="exp2.desc">Diseño integral de la web desde Figma, destacando el carácter artesanal de la marca.</div>
                 </div>
 
                 <div class="resume-item reveal delay-200">
-                    <span class="resume-date">Agora Consultors (Freelance)</span> 
-                    <div class="resume-role">Diseñadora Web</div>
-                    <div class="resume-desc">
-                        Rediseño completo de web corporativa y actualización de identidad visual.
-                    </div>
+                    <span class="resume-date" data-i18n="exp3.date">Agora Consultors (Freelance)</span>
+                    <div class="resume-role" data-i18n="exp3.role">Diseñadora Web</div>
+                    <div class="resume-desc" data-i18n="exp3.desc">Rediseño completo de web corporativa y actualización de identidad visual.</div>
                 </div>
 
                 <div class="resume-item reveal delay-300">
-                    <span class="resume-date">MIGA (Freelance)</span> 
-                    <div class="resume-role">Branding</div>
-                    <div class="resume-desc">
-                        Diseño completo de una corporación.
-                    </div>
+                    <span class="resume-date" data-i18n="exp4.date">MIGA (Freelance)</span>
+                    <div class="resume-role" data-i18n="exp4.role">Branding</div>
+                    <div class="resume-desc" data-i18n="exp4.desc">Diseño completo de una corporación.</div>
                 </div>
             </div>
 
         </section>
 
         <section class="skills-grid reveal">
-            
+
             <div class="skill-group reveal delay-100">
-                <h4>Design & Dev</h4>
+                <h4 data-i18n="skills.design">Design & Dev</h4>
                 <ul class="skill-list">
-                    <li>Figma <span class="skill-tag">Pro</span></li> 
-                    <li>HTML / CSS / JS <span class="skill-tag">Básico</span></li> 
-                    <li>WordPress <span class="skill-tag">Elementor</span></li> 
-                    <li>Processing <span class="skill-tag">Creative</span></li> 
-                    <li>Arduino <span class="skill-tag">Hardware</span></li> 
+                    <li>Figma <span class="skill-tag">Pro</span></li>
+                    <li>HTML / CSS / JS <span class="skill-tag">Básico</span></li>
+                    <li>WordPress <span class="skill-tag">Elementor</span></li>
+                    <li>Processing <span class="skill-tag">Creative</span></li>
+                    <li>Arduino <span class="skill-tag">Hardware</span></li>
                 </ul>
             </div>
 
             <div class="skill-group reveal delay-150">
-                <h4>AI & No-Code</h4>
+                <h4 data-i18n="skills.ai">AI & No-Code</h4>
                 <ul class="skill-list">
-                    <li>Lovable <span class="skill-tag">App Gen</span></li> 
-                    <li>Framer <span class="skill-tag">Web</span></li> 
-                    <li>Figma Make <span class="skill-tag">UI Gen</span></li> 
-                    <li>Claude Code <span class="skill-tag">Prompting</span></li> 
+                    <li>Lovable <span class="skill-tag">App Gen</span></li>
+                    <li>Framer <span class="skill-tag">Web</span></li>
+                    <li>Figma Make <span class="skill-tag">UI Gen</span></li>
+                    <li>Claude Code <span class="skill-tag">Prompting</span></li>
                 </ul>
             </div>
 
             <div class="skill-group reveal delay-200">
-                <h4>Soft Skills</h4>
+                <h4 data-i18n="skills.soft">Soft Skills</h4>
                 <ul class="skill-list">
-                    <li>Trabajo en equipo</li> 
-                    <li>Organización</li> 
-                    <li>Comunicación</li> 
-                    <li>Compromiso</li> 
-                    <li>Ética profesional</li> 
+                    <li data-i18n="soft1">Trabajo en equipo</li>
+                    <li data-i18n="soft2">Organización</li>
+                    <li data-i18n="soft3">Comunicación</li>
+                    <li data-i18n="soft4">Compromiso</li>
+                    <li data-i18n="soft5">Ética profesional</li>
                 </ul>
             </div>
 
             <div class="skill-group reveal delay-300">
-                <h4>Idiomas</h4>
+                <h4 data-i18n="skills.lang">Idiomas</h4>
                 <ul class="skill-list">
-                    <li>Catalán <span class="skill-tag">Nativo</span></li> 
-                    <li>Castellano <span class="skill-tag">Nativo</span></li> 
-                    <li>Inglés <span class="skill-tag">Fluido</span></li> 
+                    <li><span data-i18n="lang1">Catalán</span> <span class="skill-tag">Nativo</span></li>
+                    <li><span data-i18n="lang2">Castellano</span> <span class="skill-tag">Nativo</span></li>
+                    <li><span data-i18n="lang3">Inglés</span> <span class="skill-tag">Fluido</span></li>
                 </ul>
             </div>
 
@@ -637,7 +727,7 @@
             <div class="cp-left">
                 <h2>LET'S WORK<br>TOGETHER</h2>
                 <div class="status-badge">
-                    <span class="status-dot"></span> Available for work
+                    <span class="status-dot"></span> <span data-i18n="status">Available for work</span>
                 </div>
                 <div class="copy-right">
                     &copy; 2026 Iria Vega<br>All rights reserved.
@@ -659,7 +749,7 @@
         </section>
 
         <div class="bottom-nav reveal delay-300">
-            <a href="index.html" class="back-link">← Go Back to Home</a>
+            <a href="index.html" class="back-link" data-i18n="back">← Go Back to Home</a>
         </div>
 
     </main>
@@ -670,6 +760,99 @@
     </label>
 
     <script>
+        // --- SISTEMA DE TRADUCCIONES ---
+        const translations = {
+            es: {
+                'nav.contact': 'Contacto', 'nav.about': 'Sobre mí',
+                'nav.projects': 'Proyectos', 'nav.gallery': 'Galería',
+                'bio.title': 'HOLA<br>SOY <span class="highlight">IRIA</span>',
+                'bio.p1': 'Diseñadora UX/UI con Grado en Experiencias Interactivas y Máster en Producto Digital.',
+                'bio.p2': 'Pasé de preguntarme cómo las personas interactúan con la tecnología a ser la persona que diseña esa experiencia. Combino mi background académico con un fuerte enfoque visual y flujos de trabajo optimizados con IA para crear productos digitales que no solo son intuitivos, sino visualmente impecables.',
+                'bio.p3': 'Funcionalidad, estética y el usuario, siempre en el centro de cada decisión.',
+                'bio.cv': 'Descarga aquí mi CV',
+                'edu.title': 'Educación',
+                'edu1.date': '2025 - Presente', 'edu1.role': 'Máster Digital Design, UX/UI',
+                'edu1.place': "BAU Centre Universitari d'Arts i Disseny",
+                'edu2.date': '2021 - 2025', 'edu2.role': 'Grado de Diseño',
+                'edu2.place': 'ELISAVA Facultat de Disseny',
+                'edu2.desc': 'Mención de Experiencias Interactivas.',
+                'exp.title': 'Experiencia',
+                'exp1.date': 'Droyz Toys', 'exp1.role': 'Diseñadora Digital',
+                'exp1.desc': 'Prácticas profesionales. Diseño y desarrollo de la página web B2B y creación de experiencias interactivas para Comic Con Málaga.',
+                'exp2.date': 'Spiralglass (Freelance)', 'exp2.role': 'Diseñadora Web',
+                'exp2.desc': 'Diseño integral de la web desde Figma, destacando el carácter artesanal de la marca.',
+                'exp3.date': 'Agora Consultors (Freelance)', 'exp3.role': 'Diseñadora Web',
+                'exp3.desc': 'Rediseño completo de web corporativa y actualización de identidad visual.',
+                'exp4.date': 'MIGA (Freelance)', 'exp4.role': 'Branding',
+                'exp4.desc': 'Diseño completo de una corporación.',
+                'skills.design': 'Design & Dev', 'skills.ai': 'AI & No-Code',
+                'skills.soft': 'Soft Skills', 'skills.lang': 'Idiomas',
+                'soft1': 'Trabajo en equipo', 'soft2': 'Organización',
+                'soft3': 'Comunicación', 'soft4': 'Compromiso', 'soft5': 'Ética profesional',
+                'lang1': 'Catalán', 'lang2': 'Castellano', 'lang3': 'Inglés',
+                'status': 'Disponible para trabajar',
+                'back': '← Volver al Inicio',
+            },
+            en: {
+                'nav.contact': 'Contact', 'nav.about': 'About Me',
+                'nav.projects': 'Projects', 'nav.gallery': 'Gallery',
+                'bio.title': 'HI<br>I\'M <span class="highlight">IRIA</span>',
+                'bio.p1': "UX/UI Designer with a Degree in Interactive Experiences and a Master's in Digital Product.",
+                'bio.p2': "I went from wondering how people interact with technology to becoming the person who designs that experience. I blend my academic background with a strong visual approach and AI-optimised workflows to create digital products that are not only intuitive, but visually flawless.",
+                'bio.p3': 'Functionality, aesthetics, and the user — always at the centre of every decision.',
+                'bio.cv': 'Download my CV',
+                'edu.title': 'Education',
+                'edu1.date': '2025 – Present', 'edu1.role': "Master's in Digital Design, UX/UI",
+                'edu1.place': "BAU Centre Universitari d'Arts i Disseny",
+                'edu2.date': '2021 – 2025', 'edu2.role': 'Degree in Design',
+                'edu2.place': 'ELISAVA School of Design',
+                'edu2.desc': 'Specialisation in Interactive Experiences.',
+                'exp.title': 'Experience',
+                'exp1.date': 'Droyz Toys', 'exp1.role': 'Digital Designer',
+                'exp1.desc': 'Internship. Design and development of the B2B website and creation of interactive experiences for Comic Con Málaga.',
+                'exp2.date': 'Spiralglass (Freelance)', 'exp2.role': 'Web Designer',
+                'exp2.desc': "End-to-end web design from Figma, highlighting the brand's handcrafted character.",
+                'exp3.date': 'Agora Consultors (Freelance)', 'exp3.role': 'Web Designer',
+                'exp3.desc': 'Full corporate website redesign and visual identity update.',
+                'exp4.date': 'MIGA (Freelance)', 'exp4.role': 'Branding',
+                'exp4.desc': 'Complete corporate identity design.',
+                'skills.design': 'Design & Dev', 'skills.ai': 'AI & No-Code',
+                'skills.soft': 'Soft Skills', 'skills.lang': 'Languages',
+                'soft1': 'Teamwork', 'soft2': 'Organisation',
+                'soft3': 'Communication', 'soft4': 'Commitment', 'soft5': 'Professional Ethics',
+                'lang1': 'Catalan', 'lang2': 'Spanish', 'lang3': 'English',
+                'status': 'Available for work',
+                'back': '← Back to Home',
+            }
+        };
+
+        function setLanguage(lang) {
+            const key = lang.toLowerCase();
+            const t = translations[key];
+            if (!t) return;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                if (t[el.dataset.i18n] !== undefined) el.textContent = t[el.dataset.i18n];
+            });
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                if (t[el.dataset.i18nHtml] !== undefined) el.innerHTML = t[el.dataset.i18nHtml];
+            });
+            const langBtn = document.getElementById('lang-btn');
+            if (langBtn) langBtn.textContent = key.toUpperCase();
+            localStorage.setItem('userLang', key);
+        }
+
+        // Aplicar idioma guardado al cargar
+        setLanguage((localStorage.getItem('userLang') || 'es').toLowerCase());
+
+        // Botón toggle ES/EN
+        const langBtn = document.getElementById('lang-btn');
+        if (langBtn) {
+            langBtn.addEventListener('click', () => {
+                const current = (localStorage.getItem('userLang') || 'es').toLowerCase();
+                setLanguage(current === 'es' ? 'en' : 'es');
+            });
+        }
+
         // --- LOGICA MODO OSCURO (SIN JS PARA LOGO, TODO POR CSS) ---
         const toggle = document.getElementById('theme-toggle');
         const body = document.body;
@@ -706,6 +889,24 @@
 
         document.querySelectorAll('.reveal').forEach(el => {
             observer.observe(el);
+        });
+
+        // --- HAMBURGER MENU ---
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobile-nav');
+
+        hamburger.addEventListener('click', () => {
+            const isOpen = hamburger.classList.toggle('open');
+            mobileNav.classList.toggle('open', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileNav.classList.remove('open');
+                document.body.style.overflow = '';
+            });
         });
     </script>
 </body>

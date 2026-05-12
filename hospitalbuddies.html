@@ -86,6 +86,8 @@
 
         .nav-right { justify-self: end; }
         .nav-right ul { display: flex; gap: 2rem; align-items: center; }
+        .lang-toggle-btn { background: none; border: none; color: inherit; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; padding: 0; font-family: var(--font-display); transition: opacity 0.3s; }
+        .lang-toggle-btn:hover { opacity: 0.6; }
 
         /* LOGO CENTRADO Y DINÁMICO */
         .logo-container { justify-self: center; }
@@ -336,8 +338,8 @@
 <body>
 
     <header>
-        <div class="nav-left"><a href="index.html#contact">Contact</a></div>
-        
+        <div class="nav-left"><a href="index.html#contact" data-i18n="nav.contact">Contacto</a></div>
+
         <div class="logo-container">
             <a href="index.html">
                 <img src="logos/LOGO_ROJO.png" alt="Logo Iria Vega" class="logo-img logo-light">
@@ -347,9 +349,10 @@
 
         <nav class="nav-right">
             <ul>
-                <li><a href="about.html">About Me</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="about.html" data-i18n="nav.about">Sobre mí</a></li>
+                <li><a href="gallery.html" data-i18n="nav.gallery">Galería</a></li>
+                <li><a href="index.html#projects" data-i18n="nav.projects">Proyectos</a></li>
+                <li><button class="lang-toggle-btn" id="lang-btn">ES</button></li>
             </ul>
         </nav>
     </header>
@@ -363,24 +366,24 @@
             
             <div class="hero-right-content">
                 <h1 class="project-title">Hospital Buddies</h1>
-                <p class="project-subtitle">El Walkie-Talkie Vecinal / App & Landing</p>
+                <p class="project-subtitle" data-i18n="subtitle">El Walkie-Talkie Vecinal / App & Landing</p>
 
                 <div class="hero-description">
-                    <p>
-                        En un hospital infantil, las barreras físicas impiden que los niños interactúen de forma natural. <span class="highlight">Hospital Buddies</span> es una experiencia digital diseñada para romper las paredes de la habitación. 
+                    <p data-i18n-html="hero.desc1">
+                        En un hospital infantil, las barreras físicas impiden que los niños interactúen de forma natural. <span class="highlight">Hospital Buddies</span> es una experiencia digital diseñada para romper las paredes de la habitación.
                     </p>
-                    <p>
+                    <p data-i18n="hero.desc2">
                         Inspirada en el clásico "teléfono de vasos de hilo", permite a los pacientes descubrir quién está cerca y comunicarse mediante voz y juegos de manera segura.
                     </p>
                 </div>
 
                 <div class="hero-info-grid">
                     <div class="detail-item">
-                        <span class="detail-label">Rol</span>
+                        <span class="detail-label" data-i18n="detail.role">Rol</span>
                         <span class="detail-value">UI/UX Design & Frontend</span>
                     </div>
                     <div class="detail-item">
-                        <span class="detail-label">Año</span>
+                        <span class="detail-label" data-i18n="detail.year">Año</span>
                         <span class="detail-value">2026</span>
                     </div>
                     <div class="detail-item">
@@ -388,7 +391,7 @@
                         <span class="detail-value">Figma, HTML</span>
                     </div>
                     <div class="detail-item">
-                        <span class="detail-label">Tipo</span>
+                        <span class="detail-label" data-i18n="detail.type">Tipo</span>
                         <span class="detail-value">App, Landing Page</span>
                     </div>
                 </div>
@@ -397,11 +400,11 @@
 
         <div class="content-wrapper">
             <section class="section-margin reveal">
-                <span class="section-header">01. Identidad & Privacidad</span>
-                
+                <span class="section-header" data-i18n="section.identity">01. Identidad & Privacidad</span>
+
                 <div class="intro-text narrow-text">
-                     <p>En el hospital, el niño pierde parte de su identidad. Para empoderarlos de nuevo, creamos <span class="highlight">identidades secretas</span>.</p>
-                     <p>Los avatares no tienen género ni edad, permitiendo que cualquier niño se camufle en ellos sin exponer su foto real ni su realidad médica.</p>
+                     <p data-i18n-html="identity.p1">En el hospital, el niño pierde parte de su identidad. Para empoderarlos de nuevo, creamos <span class="highlight">identidades secretas</span>.</p>
+                     <p data-i18n="identity.p2">Los avatares no tienen género ni edad, permitiendo que cualquier niño se camufle en ellos sin exponer su foto real ni su realidad médica.</p>
                 </div>
 
                 <div class="buddies-grid">
@@ -410,28 +413,28 @@
                             <model-viewer src="hospitalbuddies_img/bean.glb" auto-rotate rotation-per-second="45deg" camera-controls disable-zoom shadow-intensity="1"></model-viewer>
                         </div>
                         <span class="buddy-name">Bean</span>
-                        <span class="buddy-trait">Alegre</span>
+                        <span class="buddy-trait" data-i18n="trait.cheerful">Alegre</span>
                     </div>
                     <div class="buddy-card">
                         <div class="buddy-3d-wrapper">
                             <model-viewer src="hospitalbuddies_img/cube.glb" auto-rotate rotation-per-second="45deg" camera-controls disable-zoom shadow-intensity="1"></model-viewer>
                         </div>
                         <span class="buddy-name">Cube</span>
-                        <span class="buddy-trait">Serio</span>
+                        <span class="buddy-trait" data-i18n="trait.serious">Serio</span>
                     </div>
                     <div class="buddy-card">
                         <div class="buddy-3d-wrapper">
                             <model-viewer src="hospitalbuddies_img/rabbit.glb" auto-rotate rotation-per-second="45deg" camera-controls disable-zoom shadow-intensity="1"></model-viewer>
                         </div>
                         <span class="buddy-name">Rabbit</span>
-                        <span class="buddy-trait">Enérgico</span>
+                        <span class="buddy-trait" data-i18n="trait.energetic">Enérgico</span>
                     </div>
                     <div class="buddy-card">
                         <div class="buddy-3d-wrapper">
                             <model-viewer src="hospitalbuddies_img/cloud.glb" auto-rotate rotation-per-second="45deg" camera-controls disable-zoom shadow-intensity="1"></model-viewer>
                         </div>
                         <span class="buddy-name">Cloud</span>
-                        <span class="buddy-trait">Soñador</span>
+                        <span class="buddy-trait" data-i18n="trait.dreamy">Soñador</span>
                     </div>
                 </div>
             </section>
@@ -443,8 +446,8 @@
                 
                 <div class="ds-grid">
                     <div class="ds-block">
-                        <h3>Color Terapéutico</h3>
-                        <p style="color: var(--text-color); font-weight: 300; line-height: 1.6;">
+                        <h3 data-i18n="ds.color.title">Color Terapéutico</h3>
+                        <p style="color: var(--text-color); font-weight: 300; line-height: 1.6;" data-i18n="ds.color.desc">
                             Base neutra para aportar calma. Alegría a través de acentos vibrantes, descartando tonos que generen alerta médica.
                         </p>
                         
@@ -458,11 +461,11 @@
                     </div>
 
                     <div class="ds-block">
-                        <h3>Dualidad Tipográfica</h3>
-                        <p style="color: var(--text-color); font-weight: 300; line-height: 1.6; margin-bottom: 0;">
+                        <h3 data-i18n="ds.type.title">Dualidad Tipográfica</h3>
+                        <p style="color: var(--text-color); font-weight: 300; line-height: 1.6; margin-bottom: 0;" data-i18n="ds.type.desc">
                             Titulares rebeldes vs. cuerpo de texto de máxima legibilidad funcional.
                         </p>
-                        
+
                         <div class="type-preview">
                             <div class="type-item">
                                 <span class="type-label">Títulos / SoopaFresh</span>
@@ -470,7 +473,7 @@
                             </div>
                             <div class="type-item">
                                 <span class="type-label">Cuerpo / Cocogoose</span>
-                                <div class="type-body">Diseñado para ser amable, redondeado y fácil de leer para niños cansados.</div>
+                                <div class="type-body" data-i18n="ds.type.body">Diseñado para ser amable, redondeado y fácil de leer para niños cansados.</div>
                             </div>
                         </div>
                     </div>
@@ -482,7 +485,7 @@
             <div class="scroll-container-sticky">
                 
                 <div class="flow-header">
-                    <span class="gallery-label">03. App Flow: Interfaz Adaptable</span>
+                    <span class="gallery-label" data-i18n="section.flow">03. App Flow: Interfaz Adaptable</span>
                     
                     <div class="color-selector">
                         <div class="color-btn btn-orange active" data-color="naranja" title="Orange Theme"></div>
@@ -496,42 +499,42 @@
                     
                     <div class="scroll-item">
                         <img src="hospitalbuddies_img/cargando.png" alt="Cargando App">
-                        <span class="screen-caption">Inicio: Cargando</span>
+                        <span class="screen-caption" data-i18n="cap.loading">Inicio: Cargando</span>
                     </div>
 
                     <div class="scroll-item">
                         <img src="hospitalbuddies_img/control_parental.png" alt="Control Parental">
-                        <span class="screen-caption">Control Parental</span>
+                        <span class="screen-caption" data-i18n="cap.parental">Control Parental</span>
                     </div>
 
                     <div class="scroll-item">
                         <img src="hospitalbuddies_img/naranja/00_seleccion.png" data-filename="00_seleccion.png" class="flow-img" alt="Screen 0">
-                        <span class="screen-caption">0. Personalización</span>
+                        <span class="screen-caption" data-i18n="cap.custom">0. Personalización</span>
                     </div>
-                    
+
                     <div class="scroll-item">
                         <img src="hospitalbuddies_img/naranja/01_onboarding.png" data-filename="01_onboarding.png" class="flow-img" alt="Screen 1">
-                        <span class="screen-caption">1. Identidad Secreta</span>
+                        <span class="screen-caption" data-i18n="cap.identity">1. Identidad Secreta</span>
                     </div>
-                    
+
                     <div class="scroll-item">
                         <img src="hospitalbuddies_img/naranja/02_radar.png" data-filename="02_radar.png" class="flow-img" alt="Screen 2">
-                        <span class="screen-caption">2. El Sonar Vecinal</span>
+                        <span class="screen-caption" data-i18n="cap.sonar">2. El Sonar Vecinal</span>
                     </div>
 
                     <div class="scroll-item">
                         <img src="hospitalbuddies_img/naranja/03_notification_receive.png" data-filename="03_notification_receive.png" class="flow-img" alt="Screen 3">
-                        <span class="screen-caption">Alerta: ¡Vecino saluda!</span>
+                        <span class="screen-caption" data-i18n="cap.alert">Alerta: ¡Vecino saluda!</span>
                     </div>
 
                     <div class="scroll-item">
                         <img src="hospitalbuddies_img/naranja/04_wave_options.png" data-filename="04_wave_options.png" class="flow-img" alt="Screen 4">
-                        <span class="screen-caption">Romper el hielo</span>
+                        <span class="screen-caption" data-i18n="cap.icebreak">Romper el hielo</span>
                     </div>
 
                     <div class="scroll-item">
                         <img src="hospitalbuddies_img/naranja/05_wave_sent.png" data-filename="05_wave_sent.png" class="flow-img" alt="Screen 5">
-                        <span class="screen-caption">¡Toque enviado!</span>
+                        <span class="screen-caption" data-i18n="cap.tapsent">¡Toque enviado!</span>
                     </div>
 
                     <div class="scroll-item">
@@ -541,27 +544,27 @@
 
                     <div class="scroll-item">
                         <img src="hospitalbuddies_img/naranja/07_recording.png" data-filename="07_recording.png" class="flow-img" alt="Screen 7">
-                        <span class="screen-caption">Grabando mensaje</span>
+                        <span class="screen-caption" data-i18n="cap.recording">Grabando mensaje</span>
                     </div>
 
                     <div class="scroll-item">
                         <img src="hospitalbuddies_img/naranja/08_sending.png" data-filename="08_sending.png" class="flow-img" alt="Screen 8">
-                        <span class="screen-caption">Enviando...</span>
+                        <span class="screen-caption" data-i18n="cap.sending">Enviando...</span>
                     </div>
 
                     <div class="scroll-item">
                         <img src="hospitalbuddies_img/naranja/09_sended.png" data-filename="09_sended.png" class="flow-img" alt="Screen 9">
-                        <span class="screen-caption">Mensaje Entregado</span>
+                        <span class="screen-caption" data-i18n="cap.delivered">Mensaje Entregado</span>
                     </div>
 
                     <div class="scroll-item">
                         <img src="hospitalbuddies_img/naranja/10_error.png" data-filename="10_error.png" class="flow-img" alt="Screen 10">
-                        <span class="screen-caption">Edge Case: Conexión</span>
+                        <span class="screen-caption" data-i18n="cap.error">Edge Case: Conexión</span>
                     </div>
 
                     <div class="scroll-item">
                         <img src="hospitalbuddies_img/naranja/11_error_options.png" data-filename="11_error_options.png" class="flow-img" alt="Screen 11">
-                        <span class="screen-caption">Reintentar / Volver</span>
+                        <span class="screen-caption" data-i18n="cap.retry">Reintentar / Volver</span>
                     </div>
 
                 </div>
@@ -570,10 +573,10 @@
 
         <div class="content-wrapper">
             <section class="section-margin reveal">
-                <span class="section-header">04. Landing Pages</span>
-                
+                <span class="section-header" data-i18n="section.landing">04. Landing Pages</span>
+
                 <div class="intro-text">
-                     <p>Diseño de la plataforma web informativa. Adaptada tanto para visualización en monitores como para dispositivos móviles, manteniendo la frescura de la marca.</p>
+                     <p data-i18n="landing.desc">Diseño de la plataforma web informativa. Adaptada tanto para visualización en monitores como para dispositivos móviles, manteniendo la frescura de la marca.</p>
                 </div>
 
                 <div class="landings-grid">
@@ -588,8 +591,8 @@
         </div>
 
         <nav class="project-nav reveal">
-            <a href="luma.html">← Previous Project</a>
-            <a href="dreamsync.html">Next Project →</a>
+            <a href="luma.html" data-i18n="nav.prev">← Proyecto Anterior</a>
+            <a href="dreamsync.html" data-i18n="nav.next">Proyecto Siguiente →</a>
         </nav>
 
     </main>
@@ -692,6 +695,73 @@
                 });
             });
         });
+
+        // --- LANGUAGE SYSTEM ---
+        const translations = {
+            es: {
+                'nav.contact':'Contacto','nav.about':'Sobre mí','nav.gallery':'Galería','nav.projects':'Proyectos',
+                'subtitle':'El Walkie-Talkie Vecinal / App & Landing',
+                'hero.desc1':'En un hospital infantil, las barreras físicas impiden que los niños interactúen de forma natural. <span class="highlight">Hospital Buddies</span> es una experiencia digital diseñada para romper las paredes de la habitación.',
+                'hero.desc2':'Inspirada en el clásico "teléfono de vasos de hilo", permite a los pacientes descubrir quién está cerca y comunicarse mediante voz y juegos de manera segura.',
+                'detail.role':'Rol','detail.year':'Año','detail.type':'Tipo',
+                'section.identity':'01. Identidad & Privacidad',
+                'identity.p1':'En el hospital, el niño pierde parte de su identidad. Para empoderarlos de nuevo, creamos <span class="highlight">identidades secretas</span>.',
+                'identity.p2':'Los avatares no tienen género ni edad, permitiendo que cualquier niño se camufle en ellos sin exponer su foto real ni su realidad médica.',
+                'trait.cheerful':'Alegre','trait.serious':'Serio','trait.energetic':'Enérgico','trait.dreamy':'Soñador',
+                'ds.color.title':'Color Terapéutico',
+                'ds.color.desc':'Base neutra para aportar calma. Alegría a través de acentos vibrantes, descartando tonos que generen alerta médica.',
+                'ds.type.title':'Dualidad Tipográfica',
+                'ds.type.desc':'Titulares rebeldes vs. cuerpo de texto de máxima legibilidad funcional.',
+                'ds.type.body':'Diseñado para ser amable, redondeado y fácil de leer para niños cansados.',
+                'section.flow':'03. App Flow: Interfaz Adaptable',
+                'cap.loading':'Inicio: Cargando','cap.parental':'Control Parental','cap.custom':'0. Personalización',
+                'cap.identity':'1. Identidad Secreta','cap.sonar':'2. El Sonar Vecinal','cap.alert':'Alerta: ¡Vecino saluda!',
+                'cap.icebreak':'Romper el hielo','cap.tapsent':'¡Toque enviado!','cap.recording':'Grabando mensaje',
+                'cap.sending':'Enviando...','cap.delivered':'Mensaje Entregado','cap.error':'Edge Case: Conexión','cap.retry':'Reintentar / Volver',
+                'section.landing':'04. Landing Pages',
+                'landing.desc':'Diseño de la plataforma web informativa. Adaptada tanto para visualización en monitores como para dispositivos móviles, manteniendo la frescura de la marca.',
+                'nav.prev':'← Proyecto Anterior','nav.next':'Proyecto Siguiente →',
+            },
+            en: {
+                'nav.contact':'Contact','nav.about':'About Me','nav.gallery':'Gallery','nav.projects':'Projects',
+                'subtitle':'The Neighborhood Walkie-Talkie / App & Landing',
+                'hero.desc1':'In a children\'s hospital, physical barriers prevent children from interacting naturally. <span class="highlight">Hospital Buddies</span> is a digital experience designed to break down the walls of the room.',
+                'hero.desc2':'Inspired by the classic "string-cup telephone", it allows patients to discover who is nearby and communicate through voice and games safely.',
+                'detail.role':'Role','detail.year':'Year','detail.type':'Type',
+                'section.identity':'01. Identity & Privacy',
+                'identity.p1':'In the hospital, the child loses part of their identity. To empower them again, we created <span class="highlight">secret identities</span>.',
+                'identity.p2':'The avatars have no gender or age, allowing any child to camouflage themselves without exposing their real photo or medical reality.',
+                'trait.cheerful':'Cheerful','trait.serious':'Serious','trait.energetic':'Energetic','trait.dreamy':'Dreamy',
+                'ds.color.title':'Therapeutic Color',
+                'ds.color.desc':'Neutral base to bring calm. Joy through vibrant accents, discarding tones that trigger medical alerts.',
+                'ds.type.title':'Typographic Duality',
+                'ds.type.desc':'Rebellious headlines vs. body text of maximum functional legibility.',
+                'ds.type.body':'Designed to be friendly, rounded and easy to read for tired children.',
+                'section.flow':'03. App Flow: Adaptable Interface',
+                'cap.loading':'Start: Loading','cap.parental':'Parental Control','cap.custom':'0. Customisation',
+                'cap.identity':'1. Secret Identity','cap.sonar':'2. The Neighbourhood Sonar','cap.alert':'Alert: Neighbour says hi!',
+                'cap.icebreak':'Breaking the ice','cap.tapsent':'Tap sent!','cap.recording':'Recording message',
+                'cap.sending':'Sending...','cap.delivered':'Message Delivered','cap.error':'Edge Case: Connection','cap.retry':'Retry / Go back',
+                'section.landing':'04. Landing Pages',
+                'landing.desc':'Design of the informational web platform. Adapted for both desktop monitors and mobile devices, maintaining the freshness of the brand.',
+                'nav.prev':'← Previous Project','nav.next':'Next Project →',
+            }
+        };
+        function setLanguage(lang) {
+            const key = lang.toLowerCase();
+            const t = translations[key];
+            if (!t) return;
+            document.querySelectorAll('[data-i18n]').forEach(el => { if (t[el.dataset.i18n] !== undefined) el.textContent = t[el.dataset.i18n]; });
+            document.querySelectorAll('[data-i18n-html]').forEach(el => { if (t[el.dataset.i18nHtml] !== undefined) el.innerHTML = t[el.dataset.i18nHtml]; });
+            const langBtn = document.getElementById('lang-btn');
+            if (langBtn) langBtn.textContent = key === 'es' ? 'EN' : 'ES';
+            localStorage.setItem('userLang', key);
+        }
+        document.getElementById('lang-btn').addEventListener('click', () => {
+            const current = localStorage.getItem('userLang') || 'es';
+            setLanguage(current === 'es' ? 'en' : 'es');
+        });
+        setLanguage((localStorage.getItem('userLang') || 'es').toLowerCase());
     </script>
 </body>
 </html>

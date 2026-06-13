@@ -23,7 +23,8 @@
             --c-luma: #9B7CBF;       
             --c-hospital: #00B4D8;   
             --c-orange: #FF9800;     
-            --c-red: #FF3B30;        
+            --c-red: #FF3B30;
+            --c-leskys: #7B2FBE;
         }
 
         body.dark-mode {
@@ -268,9 +269,17 @@
         .star-shape { width: 25px; height: 25px; background-color: var(--text-color); clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); animation: spin 2s infinite linear; } 
         #p-dreamsync:hover .star-shape { background-color: var(--c-orange); }
         
-        #p-synthdata:hover .project-name { color: var(--c-red); } 
-        .matrix-box { width: 20px; height: 25px; overflow: hidden; font-family: monospace; font-size: 10px; line-height: 10px; font-weight: bold; text-align: center; color: var(--text-color); } 
-        #p-synthdata:hover .matrix-box { color: var(--c-red); text-shadow: 0 0 4px rgba(255, 0, 0, 0.5); } 
+        #p-synthdata:hover .project-name { color: var(--c-red); }
+        .matrix-box { width: 20px; height: 25px; overflow: hidden; font-family: monospace; font-size: 10px; line-height: 10px; font-weight: bold; text-align: center; color: var(--text-color); }
+        #p-synthdata:hover .matrix-box { color: var(--c-red); text-shadow: 0 0 4px rgba(255, 0, 0, 0.5); }
+
+        #p-leskys:hover .project-name { color: var(--c-leskys); }
+        .pixel-board { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; width: 22px; height: 22px; }
+        .pixel-cell { background-color: var(--text-color); border-radius: 2px; transition: background-color 0.3s; }
+        #p-leskys:hover .pixel-cell { background-color: var(--c-leskys); }
+        #p-leskys:hover .pixel-cell:nth-child(1) { animation: placePiece 1s ease 0s infinite; }
+        #p-leskys:hover .pixel-cell:nth-child(4) { animation: placePiece 1s ease 0.5s infinite; }
+        @keyframes placePiece { 0%, 100% { opacity: 1; } 50% { opacity: 0.15; } } 
         .matrix-rain { animation: matrixRain 0.8s infinite linear; }
 
         /* --- CONTACTO --- */
@@ -508,10 +517,31 @@
             <span class="section-label" data-i18n="section.work">Selected Work (04)</span>
             
             <div class="project-list">
-                
-                <a href="luma.html" class="project-item" id="p-luma">
+
+                <a href="leskys.html" class="project-item" id="p-leskys">
                     <div class="project-left">
                         <span class="project-index">01/</span>
+                        <span class="project-name">Lesky's Shop</span>
+                        <div class="icon-container">
+                            <div class="pixel-board">
+                                <div class="pixel-cell"></div>
+                                <div class="pixel-cell"></div>
+                                <div class="pixel-cell"></div>
+                                <div class="pixel-cell"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-right">
+                        <div class="project-img-wrapper">
+                            <img src="leskys_img/IDLE-INICIO.GIF" alt="Lesky's Shop">
+                        </div>
+                        <span class="project-tags">GAME / UX·UI / 2026</span>
+                    </div>
+                </a>
+
+                <a href="luma.html" class="project-item" id="p-luma">
+                    <div class="project-left">
+                        <span class="project-index">02/</span>
                         <span class="project-name">Luma</span>
                         <div class="icon-container"><div class="luma-loader"></div></div>
                     </div>
@@ -525,7 +555,7 @@
 
                 <a href="hospitalbuddies.html" class="project-item" id="p-hospital">
                     <div class="project-left">
-                        <span class="project-index">02/</span>
+                        <span class="project-index">03/</span>
                         <span class="project-name">Hospital Buddies</span>
                         <div class="icon-container"><div class="radar"><div class="radar-line"></div></div></div>
                     </div>
@@ -536,10 +566,10 @@
                         <span class="project-tags">APP / UI / 2025</span>
                     </div>
                 </a>
-                
+
                 <a href="dreamsync.html" class="project-item" id="p-dreamsync">
                     <div class="project-left">
-                        <span class="project-index">03/</span>
+                        <span class="project-index">04/</span>
                         <span class="project-name">DreamSync</span>
                         <div class="icon-container"><div class="star-shape"></div></div>
                     </div>
@@ -550,10 +580,10 @@
                         <span class="project-tags">WEB / UX / 2026</span>
                     </div>
                 </a>
-                
+
                 <a href="synthdata.html" class="project-item" id="p-synthdata">
                     <div class="project-left">
-                        <span class="project-index">04/</span>
+                        <span class="project-index">05/</span>
                         <span class="project-name">SynthData</span>
                         <div class="icon-container"><div class="matrix-box"><div class="matrix-rain">1 0<br>0 1<br>1 1<br>0 0<br>1 0<br>0 1<br>1 0<br>0 1</div></div></div>
                     </div>
@@ -591,7 +621,7 @@
                 'nav.projects':  'Proyectos',
                 'nav.gallery':   'Galería',
                 'speech':        'Soy Iria, Diseñadora UX/UI',
-                'section.work':  'Trabajos Seleccionados (04)',
+                'section.work':  'Trabajos Seleccionados (05)',
                 'contact.intro': '¿Tienes un proyecto en mente?',
                 'marquee': 'DISPONIBLE PARA PROYECTOS  —  NUEVAS COLABORACIONES  —  DISEÑO UX/UI  —  DISPONIBLE PARA PROYECTOS  —  NUEVAS COLABORACIONES  —  DISEÑO UX/UI  —  DISPONIBLE PARA PROYECTOS  —  NUEVAS COLABORACIONES  —  DISEÑO UX/UI  —  DISPONIBLE PARA PROYECTOS  —  NUEVAS COLABORACIONES  —  DISEÑO UX/UI  —  DISPONIBLE PARA PROYECTOS  —  NUEVAS COLABORACIONES  —  DISEÑO UX/UI  —  DISPONIBLE PARA PROYECTOS  —  NUEVAS COLABORACIONES  —  DISEÑO UX/UI  —  DISPONIBLE PARA PROYECTOS  —  NUEVAS COLABORACIONES  —  DISEÑO UX/UI  —  DISPONIBLE PARA PROYECTOS  —  NUEVAS COLABORACIONES  —  DISEÑO UX/UI  —',
             },
@@ -601,7 +631,7 @@
                 'nav.projects':  'Projects',
                 'nav.gallery':   'Gallery',
                 'speech':        "I'm Iria, UX/UI Designer",
-                'section.work':  'Selected Work (04)',
+                'section.work':  'Selected Work (05)',
                 'contact.intro': 'Got a project in mind?',
                 'marquee': 'AVAILABLE FOR FREELANCE WORK  —  OPEN TO NEW PROJECTS  —  UX/UI DESIGN  —  AVAILABLE FOR FREELANCE WORK  —  OPEN TO NEW PROJECTS  —  UX/UI DESIGN  —  AVAILABLE FOR FREELANCE WORK  —  OPEN TO NEW PROJECTS  —  UX/UI DESIGN  —  AVAILABLE FOR FREELANCE WORK  —  OPEN TO NEW PROJECTS  —  UX/UI DESIGN  —  AVAILABLE FOR FREELANCE WORK  —  OPEN TO NEW PROJECTS  —  UX/UI DESIGN  —  AVAILABLE FOR FREELANCE WORK  —  OPEN TO NEW PROJECTS  —  UX/UI DESIGN  —  AVAILABLE FOR FREELANCE WORK  —  OPEN TO NEW PROJECTS  —  UX/UI DESIGN  —  AVAILABLE FOR FREELANCE WORK  —  OPEN TO NEW PROJECTS  —  UX/UI DESIGN  —',
             }

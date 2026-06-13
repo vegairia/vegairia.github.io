@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iria Vega | Lesky's Shop</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1a1a1a;
+            --accent-color: #666;
+            --line-color: #e0e0e0;
+            --project-color: #7B2FBE;
+            --hover-red: #CD2424;
+            --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --font-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --switch-bg-off: #e9e9ea;
+            --switch-bg-on: #ffffff;
+            --switch-knob-off: #ffffff;
+            --switch-knob-on: #000000;
+        }
+        body.dark-mode {
+            --bg-color: #050505;
+            --text-color: #f0f0f0;
+            --accent-color: #aaa;
+            --line-color: #333;
+            --switch-bg-off: #3a3a3c;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: var(--font-main); transition: background-color 0.4s ease, color 0.4s ease; overflow-x: hidden; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+        a { text-decoration: none; color: inherit; transition: opacity 0.3s; }
+        ul { list-style: none; }
+
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 1.5rem 3rem; position: fixed; top: 0; width: 100%; z-index: 1000; background-color: rgba(255,255,255,0.8); backdrop-filter: blur(10px); text-transform: uppercase; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; }
+        body.dark-mode header { background-color: rgba(10,10,10,0.8); }
+        .nav-left { justify-self: start; }
+        .nav-left a:hover { color: var(--hover-red); opacity: 1; }
+        .nav-right { justify-self: end; }
+        .nav-right ul { display: flex; gap: 2rem; align-items: center; }
+        .lang-toggle-btn { background: none; border: none; color: inherit; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; padding: 0; font-family: var(--font-display); transition: opacity 0.3s; }
+        .lang-toggle-btn:hover { opacity: 0.6; }
+        .logo-container { justify-self: center; }
+        .logo-img { height: 35px; width: auto; display: block; }
+        .logo-dark { display: none; }
+        body.dark-mode .logo-light { display: none; }
+        body.dark-mode .logo-dark { display: block; }
+
+        .project-hero { padding: 160px 5% 80px 5%; max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .hero-left-image { width: 100%; max-width: 90%; justify-self: center; }
+        .main-image { width: 100%; height: auto; display: block; filter: drop-shadow(0 20px 40px rgba(123,47,190,0.15)); transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); border-radius: 12px; }
+        .hero-left-image:hover .main-image { transform: scale(1.02); }
+        .hero-right-content { display: flex; flex-direction: column; justify-content: center; }
+        .project-title { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 900; text-transform: uppercase; line-height: 0.9; margin-bottom: 1rem; color: var(--project-color); letter-spacing: -2px; }
+        .project-subtitle { font-size: 1rem; margin-bottom: 3rem; color: var(--accent-color); text-transform: uppercase; letter-spacing: 1px; font-weight: 300; }
+        .hero-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; font-size: 0.85rem; padding-top: 2rem; border-top: 1px solid var(--line-color); }
+        .detail-item { display: flex; flex-direction: column; gap: 0.5rem; }
+        .detail-label { color: var(--accent-color); text-transform: uppercase; font-size: 0.75rem; font-weight: 300; }
+        .detail-value { font-weight: 700; text-transform: uppercase; }
+        .hero-description p { font-size: 1.15rem; line-height: 1.7; font-weight: 200; margin-bottom: 1.5rem; }
+        .highlight { color: var(--project-color); font-weight: 600; }
+
+        .content-wrapper { max-width: 1000px; margin: 0 auto; padding: 0 5%; }
+        .section-margin { margin-bottom: 8rem; }
+        .section-header { color: var(--text-color); text-transform: uppercase; margin-bottom: 2rem; font-size: 1rem; font-weight: 300; display: block; border-bottom: 1px solid var(--line-color); padding-bottom: 1rem; letter-spacing: 1px; }
+
+        .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+        .text-block p { font-size: 1.1rem; line-height: 1.7; font-weight: 300; margin-bottom: 1.5rem; }
+
+        .round-card { border-left: 2px solid var(--project-color); padding-left: 1.5rem; margin-bottom: 2.5rem; }
+        .round-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--project-color); margin-bottom: 0.3rem; }
+        .round-card h3 { font-size: 1.2rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .round-card p { font-size: 1rem; font-weight: 300; color: var(--accent-color); line-height: 1.6; margin-bottom: 1rem; }
+        .round-reward { display: flex; align-items: center; gap: 0.8rem; }
+        .reward-img { height: 56px; width: auto; object-fit: contain; }
+        .reward-label { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-color); }
+
+        .usp-quote { padding: 4rem 0; text-align: center; margin: 4rem 0; }
+        .usp-quote h2 { font-size: clamp(1.8rem, 3.5vw, 3rem); font-weight: 900; line-height: 1.15; color: var(--project-color); text-transform: uppercase; letter-spacing: -1px; }
+
+        .ds-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+        .ds-block h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-color); text-transform: uppercase; }
+        .color-area-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 90px 90px; gap: 0.5rem; margin-top: 2rem; }
+        .color-area { border-radius: 10px; position: relative; overflow: hidden; transition: transform 0.3s; }
+        .color-area:hover { transform: scale(1.02); }
+        .color-area-label { position: absolute; bottom: 0.6rem; left: 0.8rem; display: flex; flex-direction: column; gap: 0.1rem; }
+        .color-area-label .color-name { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .color-area-label .color-hex { font-size: 0.58rem; opacity: 0.75; }
+        .c-l-1 .color-name, .c-l-2 .color-name, .c-l-3 .color-name, .c-l-5 .color-name { color: rgba(255,255,255,0.85); }
+        .c-l-1 .color-hex, .c-l-2 .color-hex, .c-l-3 .color-hex, .c-l-5 .color-hex { color: rgba(255,255,255,0.6); }
+        .c-l-4 .color-name, .c-l-6 .color-name { color: rgba(0,0,0,0.55); }
+        .c-l-4 .color-hex, .c-l-6 .color-hex { color: rgba(0,0,0,0.4); }
+        .c-l-1 { background: #0D0A1F; }
+        .c-l-2 { background: #3D1A6B; }
+        .c-l-3 { background: #7B2FBE; }
+        .c-l-4 { background: #6BCB77; }
+        .c-l-5 { background: #8B1A1A; }
+        .c-l-6 { background: #E4B429; }
+        .type-preview { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1.2rem; }
+        .type-item { display: flex; flex-direction: column; gap: 0.2rem; }
+        .type-title { font-size: 3rem; font-weight: 900; line-height: 1.1; color: var(--text-color); }
+        .type-body { font-size: 1.1rem; line-height: 1.5; font-weight: 300; }
+        .type-label { font-size: 0.7rem; color: var(--accent-color); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+
+        .img-text-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 6rem; }
+        .img-text-grid.reverse { direction: rtl; }
+        .img-text-grid.reverse > * { direction: ltr; }
+        .section-img { width: 100%; height: auto; border-radius: 12px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); transition: transform 0.5s; }
+        .section-img:hover { transform: scale(1.02); }
+        .concept-text h3 { font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem; text-transform: uppercase; color: var(--project-color); }
+        .concept-text p { font-size: 1.1rem; font-weight: 300; line-height: 1.7; margin-bottom: 1rem; }
+
+        .scroll-container-outer { height: 400vh; position: relative; margin-bottom: 8rem; }
+        .scroll-container-sticky { position: sticky; top: 0; height: 100vh; width: 100%; overflow: hidden; display: flex; flex-direction: column; justify-content: center; background-color: var(--bg-color); }
+        .flow-header { position: absolute; top: 80px; left: 5%; z-index: 10; }
+        .gallery-label { color: var(--accent-color); text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; font-weight: 300; }
+        .scroll-track { display: flex; gap: 3rem; padding: 0 5%; width: max-content; will-change: transform; margin-top: 120px; align-items: flex-end; }
+        .scroll-item { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+        .scroll-item img { height: 65vh; width: auto; object-fit: contain; border-radius: 16px; box-shadow: 0 15px 30px rgba(0,0,0,0.15); border: 1px solid var(--line-color); }
+        .screen-caption { font-size: 0.85rem; color: var(--accent-color); text-transform: uppercase; text-align: center; font-weight: 700; }
+
+        .gif-intro { font-size: 1.1rem; line-height: 1.7; font-weight: 300; max-width: 700px; margin-bottom: 3rem; }
+        .gif-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .gif-card { display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 1.5rem; border: 1px solid var(--line-color); border-radius: 12px; transition: border-color 0.3s, transform 0.3s; cursor: zoom-in; }
+        .gif-card:hover { border-color: var(--project-color); transform: translateY(-4px); }
+        .gif-card img { width: 100%; height: 180px; object-fit: contain; }
+        .gif-caption { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; text-align: center; color: var(--accent-color); }
+
+        /* LIGHTBOX */
+        .lightbox { position: fixed; inset: 0; z-index: 9999; background: rgba(255,255,255,0.75); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        body.dark-mode .lightbox { background: rgba(5,5,5,0.8); }
+        .lightbox.active { opacity: 1; pointer-events: all; }
+        .lightbox-inner { position: relative; display: flex; align-items: center; justify-content: center; max-width: 90vw; max-height: 90vh; }
+        .lightbox-img { max-width: 80vw; max-height: 80vh; object-fit: contain; border-radius: 8px; }
+        .lightbox-caption { position: absolute; bottom: -2.5rem; left: 0; right: 0; text-align: center; color: rgba(255,255,255,0.6); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        .lightbox-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.15); color: #1a1a1a; width: 48px; height: 48px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s; }
+        .lightbox-btn:hover { background: rgba(123,47,190,0.15); border-color: #7B2FBE; color: #7B2FBE; }
+        body.dark-mode .lightbox-btn { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: #f0f0f0; }
+        body.dark-mode .lightbox-btn:hover { background: rgba(123,47,190,0.5); border-color: #7B2FBE; color: #fff; }
+        .lightbox-prev { right: calc(100% + 1.5rem); }
+        .lightbox-next { left: calc(100% + 1.5rem); }
+        .lightbox-close { position: absolute; top: -3.5rem; right: 0; background: none; border: none; color: rgba(0,0,0,0.4); font-size: 1.5rem; cursor: pointer; line-height: 1; transition: color 0.2s; }
+        .lightbox-close:hover { color: #1a1a1a; }
+        body.dark-mode .lightbox-close { color: rgba(255,255,255,0.4); }
+        body.dark-mode .lightbox-close:hover { color: #fff; }
+        .lightbox-caption { position: absolute; bottom: -2.5rem; left: 0; right: 0; text-align: center; color: rgba(0,0,0,0.5); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        body.dark-mode .lightbox-caption { color: rgba(255,255,255,0.5); }
+
+        .project-nav { display: flex; justify-content: space-between; padding: 4rem 5%; border-top: 1px solid var(--line-color); text-transform: uppercase; font-weight: 300; font-size: 1rem; background-color: var(--bg-color); position: relative; z-index: 10; }
+        .project-nav a { opacity: 1; }
+        .project-nav a:hover { color: var(--project-color); text-decoration: underline; opacity: 1; }
+
+        .apple-switch { position: fixed; bottom: 30px; right: 30px; z-index: 1000; display: inline-block; width: 50px; height: 30px; }
+        .apple-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--switch-bg-off); transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 2px; bottom: 2px; background-color: var(--switch-knob-off); transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--switch-bg-on); }
+        input:checked + .slider:before { transform: translateX(20px); background-color: var(--switch-knob-on); }
+
+        @media (max-width: 900px) {
+            .project-hero { grid-template-columns: 1fr; padding-top: 120px; gap: 2rem; max-width: 90%; }
+            .hero-left-image { max-width: 90%; }
+            .split-grid, .ds-grid, .img-text-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .img-text-grid.reverse { direction: ltr; }
+            .gif-grid { grid-template-columns: 1fr 1fr; }
+            .scroll-container-outer { height: auto; margin-bottom: 4rem; }
+            .scroll-container-sticky { position: relative; height: auto; padding: 4rem 0; }
+            .scroll-track { overflow-x: auto; width: 100%; margin-top: 2rem; padding-bottom: 2rem; }
+            .flow-header { position: relative; top: 0; padding: 0 5%; margin-bottom: 1rem; }
+            .scroll-item img { height: 50vh; }
+        }
+        @media (max-width: 768px) {
+            header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.2rem; font-size: 0.7rem; }
+            .nav-left { display: none; }
+            .nav-right ul { gap: 1rem; }
+            .logo-img { height: 32px; }
+            .project-hero { padding-top: 80px; }
+            .gif-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            header { padding: 0.8rem 1rem; font-size: 0.6rem; }
+            .logo-img { height: 26px; }
+            .nav-right ul { gap: 0.7rem; }
+            .hero-info-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .project-nav { flex-direction: column; gap: 1rem; text-align: center; }
+            .project-hero { padding: 80px 5% 30px 5%; }
+            .scroll-item img { height: 40vh; }
+            .section-margin { margin-bottom: 4rem; }
+            .usp-quote { padding: 2rem 0; margin: 2rem 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-left"><a href="index.html#contact" data-i18n="nav.contact">Contacto</a></div>
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="logos/LOGO_ROJO.png" alt="Logo Iria Vega" class="logo-img logo-light">
+                <img src="logos/bLOGO_ROJO.png" alt="Logo Iria Vega" class="logo-img logo-dark">
+            </a>
+        </div>
+        <nav class="nav-right">
+            <ul>
+                <li><a href="about.html" data-i18n="nav.about">Sobre mí</a></li>
+                <li><a href="gallery.html" data-i18n="nav.gallery">Galería</a></li>
+                <li><a href="index.html#projects" data-i18n="nav.projects">Proyectos</a></li>
+                <li><button class="lang-toggle-btn" id="lang-btn">ES</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="project-hero">
+            <div class="hero-left-image">
+                <img src="leskys_img/1.PNG" alt="Lesky's Shop" class="main-image">
+            </div>
+            <div class="hero-right-content">
+                <h1 class="project-title">Lesky's Shop</h1>
+                <p class="project-subtitle" data-i18n="subtitle">Game Design / UX·UI / Ilustración</p>
+                <div class="hero-description">
+                    <p data-i18n-html="hero.desc">En una semana, construimos un juego de mesa digital desde cero. <span class="highlight">Lesky's Shop</span> es un juego de colocación por turnos simultáneos a ciegas, con estética retro/indie dibujada a mano —nacido en una Hackathon de 2026.</p>
+                </div>
+                <div class="hero-info-grid">
+                    <div class="detail-item">
+                        <span class="detail-label" data-i18n="detail.role">Rol</span>
+                        <span class="detail-value" data-i18n="detail.role.value">UX/UI · Game Design · Ilustración</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label" data-i18n="detail.year">Año</span>
+                        <span class="detail-value">2026</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label" data-i18n="detail.team">Equipo</span>
+                        <span class="detail-value" data-i18n="detail.team.value">4 personas · 1 Diseñadora</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label" data-i18n="detail.context">Contexto</span>
+                        <span class="detail-value" data-i18n="detail.context.value">Hackathon 1 semana</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="content-wrapper">
+
+            <!-- CONCEPTO + MECÁNICAS -->
+            <section class="section-margin reveal">
+                <span class="section-header" data-i18n="section.concept">01. El Proyecto</span>
+                <div class="split-grid">
+                    <div class="text-block">
+                        <p data-i18n="concept.p1">Un juego de colocación para dos jugadores donde el engaño y la anticipación lo son todo. Ambos eligen dónde colocar su ficha al mismo tiempo, sin ver la elección del rival. Si coinciden en la misma casilla, el movimiento se anula para ambos.</p>
+                        <p data-i18n="concept.p2">Siendo la única diseñadora del equipo, asumí todos los frentes creativos: reglas del juego, arquitectura de información, ilustración de personajes, animaciones frame a frame e interfaz completa. Todo en paralelo con tres desarrolladores, iterando en tiempo real.</p>
+                    </div>
+                    <div>
+                        <div class="round-card">
+                            <div class="round-label" data-i18n="round1.label">Ronda 1 — Tablero 3×3</div>
+                            <h3 data-i18n="round1.title">El Duende Lesky</h3>
+                            <p data-i18n="round1.desc">Elección simultánea a ciegas. Si coincidís, el movimiento se anula. Gana quien coloque más piezas.</p>
+                            <div class="round-reward">
+                                <img src="leskys_img/TESORO2.GIF" alt="Tesoro 1" class="reward-img">
+                                <span class="reward-label" data-i18n="round1.reward">Frasco de Poción con Pulpo</span>
+                            </div>
+                        </div>
+                        <div class="round-card">
+                            <div class="round-label" data-i18n="round2.label">Ronda 2 — Tablero 4×4</div>
+                            <h3 data-i18n="round2.title">El Monstruo del Callejón</h3>
+                            <p data-i18n="round2.desc">Misma mecánica, tablero más grande. Al ganar, se revela que el "monstruo terrorífico" eran cuatro gnomos apilados.</p>
+                            <div class="round-reward">
+                                <img src="leskys_img/TESORO1.GIF" alt="Tesoro 2" class="reward-img">
+                                <span class="reward-label" data-i18n="round2.reward">Libro Antiguo con Gran Ojo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- USP QUOTE -->
+            <section class="reveal usp-quote">
+                <h2 data-i18n="usp">"Entre rondas, el jugador inventa una nueva regla que altera la partida. Cada vez que juegas, el juego es diferente."</h2>
+            </section>
+
+            <!-- DESIGN SYSTEM -->
+            <section class="section-margin reveal">
+                <span class="section-header" data-i18n="section.ds">02. Identidad Visual</span>
+                <div class="ds-grid">
+                    <div class="ds-block">
+                        <h3 data-i18n="ds.color.title">Paleta del Mundo</h3>
+                        <p style="font-weight:300; line-height:1.6;" data-i18n="ds.color.desc">Dos escenarios, dos paletas. La tienda mágica del duende: verdes de poción y dorados de tesoro. El callejón oscuro del monstruo: azules nocturnos y púrpuras sombríos. El carmesí actúa sobre los tapetes del tablero.</p>
+                        <div class="color-area-grid">
+                            <div class="color-area c-l-1"><div class="color-area-label"><span class="color-name" data-i18n="col1.name">Noche</span><span class="color-hex">#0D0A1F</span></div></div>
+                            <div class="color-area c-l-2"><div class="color-area-label"><span class="color-name" data-i18n="col2.name">Místico</span><span class="color-hex">#3D1A6B</span></div></div>
+                            <div class="color-area c-l-3"><div class="color-area-label"><span class="color-name" data-i18n="col3.name">Violeta</span><span class="color-hex">#7B2FBE</span></div></div>
+                            <div class="color-area c-l-4"><div class="color-area-label"><span class="color-name" data-i18n="col4.name">Tóxico</span><span class="color-hex">#6BCB77</span></div></div>
+                            <div class="color-area c-l-5"><div class="color-area-label"><span class="color-name" data-i18n="col5.name">Carmesí</span><span class="color-hex">#8B1A1A</span></div></div>
+                            <div class="color-area c-l-6"><div class="color-area-label"><span class="color-name" data-i18n="col6.name">Tesoro</span><span class="color-hex">#E4B429</span></div></div>
+                        </div>
+                    </div>
+                    <div class="ds-block">
+                        <h3 data-i18n="ds.type.title">Tipografía</h3>
+                        <p style="font-weight:300; line-height:1.6; margin-bottom:0;" data-i18n="ds.type.desc">Fuentes hand-drawn y desgastadas para títulos y UI diegética —pergaminos, tablillas de madera—. Tipografía legible para instrucciones y textos de juego.</p>
+                        <div class="type-preview">
+                            <div class="type-item">
+                                <span class="type-label" data-i18n="ds.type.label1">Display / Diegética</span>
+                                <div class="type-body" data-i18n="ds.type.body1">Desgastada, imperfecta, orgánica. Fuentes hand-drawn para títulos, pergaminos y tablillas. Refuerzan la estética de artefacto mágico.</div>
+                            </div>
+                            <div class="type-item">
+                                <span class="type-label" data-i18n="ds.type.label2">UI / Instrucciones</span>
+                                <div class="type-body" data-i18n="ds.type.body2">Limpia y funcional para que reglas y mecánica se entiendan sin fricción, incluso bajo presión de turno.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- UI SECTION CON IMAGEN -->
+            <section class="section-margin reveal">
+                <span class="section-header" data-i18n="section.ui">03. Interfaz Diegética</span>
+                <div class="img-text-grid">
+                    <img src="leskys_img/3.PNG" alt="UI del juego" class="section-img">
+                    <div class="concept-text">
+                        <h3 data-i18n="ui.title">El Mundo como Interfaz</h3>
+                        <p data-i18n="ui.p1">Todo elemento de UI existe dentro del juego: los menús son pergaminos de papel antiguo, los botones son tablillas de madera, y los cursores adoptan la forma de las manos de los personajes —la garra del monstruo, la mano del duende.</p>
+                        <p data-i18n="ui.p2">Los dos escenarios (tienda y callejón) tienen paletas propias de UI, haciendo el cambio de ambientación entre rondas inmediatamente reconocible sin texto explicativo.</p>
+                    </div>
+                </div>
+                <div class="img-text-grid reverse">
+                    <img src="leskys_img/4.PNG" alt="Gameplay" class="section-img">
+                    <div class="concept-text">
+                        <h3 data-i18n="ui.title2">Las Reglas del Jugador</h3>
+                        <p data-i18n="ui.p3">El mayor reto de UI fue que el jugador escriba sus propias normas sin romper la estética. La solución: un sistema de "papel viejo" con textura de ruido (dithering) donde escribe con fuente hand-drawn, como si firmara un contrato mágico.</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- GALERÍA -->
+        <div class="scroll-container-outer reveal">
+            <div class="scroll-container-sticky">
+                <div class="flow-header">
+                    <span class="gallery-label" data-i18n="gallery.label">04. Capturas del Juego</span>
+                </div>
+                <div class="scroll-track" id="scroll-track">
+                    <div class="scroll-item"><img src="leskys_img/1.PNG" alt="Pantalla 1"><span class="screen-caption" data-i18n="cap.1">Pantalla de Inicio</span></div>
+                    <div class="scroll-item"><img src="leskys_img/2.PNG" alt="Pantalla 2"><span class="screen-caption" data-i18n="cap.2">La Tienda de Lesky</span></div>
+                    <div class="scroll-item"><img src="leskys_img/3.PNG" alt="Pantalla 3"><span class="screen-caption" data-i18n="cap.3">Ronda 1: Tablero 3×3</span></div>
+                    <div class="scroll-item"><img src="leskys_img/4.PNG" alt="Pantalla 4"><span class="screen-caption" data-i18n="cap.4">El Callejón</span></div>
+                    <div class="scroll-item"><img src="leskys_img/5.png" alt="Pantalla 5"><span class="screen-caption" data-i18n="cap.5">Ronda 2: Tablero 4×4</span></div>
+                    <div class="scroll-item"><img src="leskys_img/6.PNG" alt="Pantalla 6"><span class="screen-caption" data-i18n="cap.6">La Gran Revelación</span></div>
+                    <div class="scroll-item"><img src="leskys_img/7.PNG" alt="Pantalla 7"><span class="screen-caption" data-i18n="cap.7">Pantalla Final</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EL ARTE -->
+        <div class="content-wrapper section-margin reveal">
+            <span class="section-header" data-i18n="section.art">05. El Arte de Lesky's Shop</span>
+            <p class="gif-intro" data-i18n="art.intro">Animar frame a frame durante una semana es síntesis radical. Cada animación debía comunicar personalidad con el mínimo de frames posible. El resultado: personajes que respiran y tienen peso, creados en días, no en meses.</p>
+            <div class="gif-grid" id="gif-grid">
+                <div class="gif-card" data-index="0"><img src="leskys_img/IDLE-INICIO.GIF" alt="Lesky Idle"><span class="gif-caption" data-i18n="gif.idleinicio">Lesky — Idle Inicio</span></div>
+                <div class="gif-card" data-index="1"><img src="leskys_img/IDLE-DAR.GIF" alt="Lesky Dar"><span class="gif-caption" data-i18n="gif.idledar">Lesky — Entrega el Tesoro</span></div>
+                <div class="gif-card" data-index="2"><img src="leskys_img/GNOMO.GIF" alt="Gnomo"><span class="gif-caption" data-i18n="gif.gnomo">El Gnomo Oculto</span></div>
+                <div class="gif-card" data-index="3"><img src="leskys_img/MONSTRUO.GIF" alt="Monstruo"><span class="gif-caption" data-i18n="gif.monstruo">El Monstruo del Callejón</span></div>
+                <div class="gif-card" data-index="4"><img src="leskys_img/TESORO1.GIF" alt="Tesoro 1"><span class="gif-caption" data-i18n="gif.tesoro1">Tesoro 1 — Frasco de Poción</span></div>
+                <div class="gif-card" data-index="5"><img src="leskys_img/TESORO2.GIF" alt="Tesoro 2"><span class="gif-caption" data-i18n="gif.tesoro2">Tesoro 2 — Libro del Gran Ojo</span></div>
+            </div>
+
+            <!-- LIGHTBOX -->
+            <div class="lightbox" id="lightbox">
+                <div class="lightbox-inner">
+                    <button class="lightbox-close" id="lb-close">✕</button>
+                    <button class="lightbox-btn lightbox-prev" id="lb-prev">&#8592;</button>
+                    <img class="lightbox-img" id="lb-img" src="" alt="">
+                    <span class="lightbox-caption" id="lb-caption"></span>
+                    <button class="lightbox-btn lightbox-next" id="lb-next">&#8594;</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <nav class="project-nav">
+        <a href="index.html#projects" data-i18n="nav.portfolio">← Ver Todos los Proyectos</a>
+        <a href="luma.html" data-i18n="nav.next">Proyecto Siguiente →</a>
+    </nav>
+
+    <label class="apple-switch">
+        <input type="checkbox" id="dark-mode-toggle">
+        <span class="slider"></span>
+    </label>
+
+    <script>
+        document.querySelectorAll('.reveal').forEach(el => {
+            new IntersectionObserver(([e]) => { if (e.isIntersecting) { e.target.classList.add('active'); } }, { threshold: 0.1 }).observe(el);
+        });
+
+        const toggle = document.getElementById('dark-mode-toggle');
+        if (localStorage.getItem('darkMode') === 'true') { document.body.classList.add('dark-mode'); toggle.checked = true; }
+        toggle.addEventListener('change', () => { document.body.classList.toggle('dark-mode', toggle.checked); localStorage.setItem('darkMode', toggle.checked); });
+
+        // LIGHTBOX
+        const gifData = [
+            { src: 'leskys_img/IDLE-INICIO.GIF', caption: document.querySelector('[data-i18n="gif.idleinicio"]')?.textContent },
+            { src: 'leskys_img/IDLE-DAR.GIF',    caption: document.querySelector('[data-i18n="gif.idledar"]')?.textContent },
+            { src: 'leskys_img/GNOMO.GIF',        caption: document.querySelector('[data-i18n="gif.gnomo"]')?.textContent },
+            { src: 'leskys_img/MONSTRUO.GIF',     caption: document.querySelector('[data-i18n="gif.monstruo"]')?.textContent },
+            { src: 'leskys_img/TESORO1.GIF',      caption: document.querySelector('[data-i18n="gif.tesoro1"]')?.textContent },
+            { src: 'leskys_img/TESORO2.GIF',      caption: document.querySelector('[data-i18n="gif.tesoro2"]')?.textContent },
+        ];
+        let lbCurrent = 0;
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lb-img');
+        const lbCap = document.getElementById('lb-caption');
+
+        function openLightbox(index) {
+            lbCurrent = index;
+            lbImg.src = gifData[lbCurrent].src;
+            lbCap.textContent = document.querySelectorAll('.gif-caption')[lbCurrent]?.textContent || '';
+            lb.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() { lb.classList.remove('active'); document.body.style.overflow = ''; }
+        function moveLightbox(dir) {
+            lbCurrent = (lbCurrent + dir + gifData.length) % gifData.length;
+            lbImg.src = gifData[lbCurrent].src;
+            lbCap.textContent = document.querySelectorAll('.gif-caption')[lbCurrent]?.textContent || '';
+        }
+
+        document.querySelectorAll('.gif-card').forEach(card => {
+            card.addEventListener('click', () => openLightbox(+card.dataset.index));
+        });
+        document.getElementById('lb-close').addEventListener('click', closeLightbox);
+        document.getElementById('lb-prev').addEventListener('click', () => moveLightbox(-1));
+        document.getElementById('lb-next').addEventListener('click', () => moveLightbox(1));
+        lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+        document.addEventListener('keydown', e => {
+            if (!lb.classList.contains('active')) return;
+            if (e.key === 'ArrowLeft') moveLightbox(-1);
+            if (e.key === 'ArrowRight') moveLightbox(1);
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        const outer = document.querySelector('.scroll-container-outer');
+        const track = document.getElementById('scroll-track');
+        window.addEventListener('scroll', () => {
+            if (!outer || !track) return;
+            const pct = Math.max(0, Math.min(1, (window.scrollY - outer.offsetTop) / (outer.offsetHeight - window.innerHeight)));
+            track.style.transform = window.innerWidth > 900 ? `translateX(-${(track.scrollWidth - window.innerWidth) * pct}px)` : 'none';
+        });
+
+        const translations = {
+            es: {
+                'nav.contact':'Contacto','nav.about':'Sobre mí','nav.gallery':'Galería','nav.projects':'Proyectos',
+                'subtitle':'Game Design / UX·UI / Ilustración',
+                'hero.desc':'En una semana, construimos un juego de mesa digital desde cero. <span class="highlight">Lesky\'s Shop</span> es un juego de colocación por turnos simultáneos a ciegas, con estética retro/indie dibujada a mano —nacido en una Hackathon de 2026.',
+                'detail.role':'Rol','detail.year':'Año','detail.team':'Equipo','detail.context':'Contexto',
+                'detail.role.value':'UX/UI · Game Design · Ilustración',
+                'detail.team.value':'4 personas · 1 Diseñadora',
+                'detail.context.value':'Hackathon 1 semana',
+                'section.concept':'01. El Proyecto',
+                'concept.p1':'Un juego de colocación para dos jugadores donde el engaño y la anticipación lo son todo. Ambos eligen dónde colocar su ficha al mismo tiempo, sin ver la elección del rival. Si coinciden en la misma casilla, el movimiento se anula para ambos.',
+                'concept.p2':'Siendo la única diseñadora del equipo, asumí todos los frentes creativos: reglas del juego, arquitectura de información, ilustración de personajes, animaciones frame a frame e interfaz completa. Todo en paralelo con tres desarrolladores, iterando en tiempo real.',
+                'round1.label':'Ronda 1 — Tablero 3×3','round1.title':'El Duende Lesky',
+                'round1.desc':'Elección simultánea a ciegas. Si coincidís, el movimiento se anula. Gana quien coloque más piezas.',
+                'round1.reward':'Frasco de Poción con Pulpo',
+                'round2.label':'Ronda 2 — Tablero 4×4','round2.title':'El Monstruo del Callejón',
+                'round2.desc':'Misma mecánica, tablero más grande. Al ganar, se revela que el "monstruo terrorífico" eran cuatro gnomos apilados.',
+                'round2.reward':'Libro Antiguo con Gran Ojo',
+                'usp':'"Entre rondas, el jugador inventa una nueva regla que altera la partida. Cada vez que juegas, el juego es diferente."',
+                'section.ds':'02. Identidad Visual',
+                'ds.color.title':'Paleta del Mundo',
+                'ds.color.desc':'Dos escenarios, dos paletas. La tienda mágica del duende: verdes de poción y dorados de tesoro. El callejón oscuro del monstruo: azules nocturnos y púrpuras sombríos. El carmesí actúa sobre los tapetes del tablero.',
+                'col1.name':'Noche','col2.name':'Místico','col3.name':'Violeta','col4.name':'Tóxico','col5.name':'Carmesí','col6.name':'Tesoro',
+                'ds.type.title':'Tipografía',
+                'ds.type.desc':'Fuentes hand-drawn y desgastadas para títulos y UI diegética —pergaminos, tablillas de madera—. Tipografía legible para instrucciones y textos de juego.',
+                'ds.type.label1':'Display / Diegética','ds.type.label2':'UI / Instrucciones',
+                'ds.type.body1':'Desgastada, imperfecta, orgánica. Fuentes hand-drawn para títulos, pergaminos y tablillas. Refuerzan la estética de artefacto mágico.',
+                'ds.type.body2':'Limpia y funcional para que reglas y mecánica se entiendan sin fricción, incluso bajo presión de turno.',
+                'section.ui':'03. Interfaz Diegética',
+                'ui.title':'El Mundo como Interfaz',
+                'ui.p1':'Todo elemento de UI existe dentro del juego: los menús son pergaminos de papel antiguo, los botones son tablillas de madera, y los cursores adoptan la forma de las manos de los personajes —la garra del monstruo, la mano del duende.',
+                'ui.p2':'Los dos escenarios (tienda y callejón) tienen paletas propias de UI, haciendo el cambio de ambientación entre rondas inmediatamente reconocible sin texto explicativo.',
+                'ui.title2':'Las Reglas del Jugador',
+                'ui.p3':'El mayor reto de UI fue que el jugador escriba sus propias normas sin romper la estética. La solución: un sistema de "papel viejo" con textura de ruido (dithering) donde escribe con fuente hand-drawn, como si firmara un contrato mágico.',
+                'gallery.label':'04. Capturas del Juego',
+                'cap.1':'Pantalla de Inicio','cap.2':'La Tienda de Lesky','cap.3':'Ronda 1: Tablero 3×3',
+                'cap.4':'El Callejón','cap.5':'Ronda 2: Tablero 4×4','cap.6':'La Gran Revelación','cap.7':'Pantalla Final',
+                'section.art':'05. El Arte de Lesky\'s Shop',
+                'art.intro':'Animar frame a frame durante una semana es síntesis radical. Cada animación debía comunicar personalidad con el mínimo de frames posible. El resultado: personajes que respiran y tienen peso, creados en días, no en meses.',
+                'gif.idleinicio':'Lesky — Idle Inicio','gif.idledar':'Lesky — Entrega el Tesoro',
+                'gif.gnomo':'El Gnomo Oculto','gif.monstruo':'El Monstruo del Callejón',
+                'gif.tesoro1':'Tesoro 1 — Frasco de Poción','gif.tesoro2':'Tesoro 2 — Libro del Gran Ojo',
+                'nav.next':'Proyecto Siguiente →','nav.portfolio':'← Ver Todos los Proyectos',
+            },
+            en: {
+                'nav.contact':'Contact','nav.about':'About Me','nav.gallery':'Gallery','nav.projects':'Projects',
+                'subtitle':'Game Design / UX·UI / Illustration',
+                'hero.desc':'In one week, we built a digital board game from scratch. <span class="highlight">Lesky\'s Shop</span> is a simultaneous blind tile-placement game with a hand-drawn retro/indie aesthetic — born at a 2026 Hackathon.',
+                'detail.role':'Role','detail.year':'Year','detail.team':'Team','detail.context':'Context',
+                'detail.role.value':'UX/UI · Game Design · Illustration',
+                'detail.team.value':'4 people · 1 Designer',
+                'detail.context.value':'1-week Hackathon',
+                'section.concept':'01. The Project',
+                'concept.p1':'A two-player tile placement game where deception and anticipation are everything. Both players choose where to place their piece simultaneously, without seeing each other\'s choice. If they pick the same square, the move is cancelled for both.',
+                'concept.p2':'As the only designer on the team, I took on all creative fronts: game rules, information architecture, character illustration, frame-by-frame animations and the full interface. All in parallel with three developers, iterating in real time.',
+                'round1.label':'Round 1 — 3×3 Board','round1.title':'Lesky the Gnome',
+                'round1.desc':'Blind simultaneous choice. If you both pick the same square, both moves are cancelled. Most pieces placed wins.',
+                'round1.reward':'Potion Flask with Octopus',
+                'round2.label':'Round 2 — 4×4 Board','round2.title':'The Alley Monster',
+                'round2.desc':'Same mechanic, bigger board. Upon winning, it\'s revealed the "terrifying monster" was four gnomes stacked on each other.',
+                'round2.reward':'Ancient Book with a Great Eye',
+                'usp':'"Between rounds, the player invents a new rule that changes the game. Every time you play, the game is different."',
+                'section.ds':'02. Visual Identity',
+                'ds.color.title':'World Palette',
+                'ds.color.desc':'Two settings, two palettes. The gnome\'s magical shop: potion greens and treasure golds. The monster\'s dark alley: night blues and shadowy purples. Crimson acts on the board felt.',
+                'col1.name':'Night','col2.name':'Mystic','col3.name':'Violet','col4.name':'Toxic','col5.name':'Crimson','col6.name':'Treasure',
+                'ds.type.title':'Typography',
+                'ds.type.desc':'Hand-drawn, worn fonts for titles and diegetic UI — parchment scrolls, wooden tablets. Legible type for instructions and game text.',
+                'ds.type.label1':'Display / Diegetic','ds.type.label2':'UI / Instructions',
+                'ds.type.body1':'Worn, imperfect, organic. Hand-drawn fonts for titles, scrolls and wooden tablets. Reinforces the magical artefact aesthetic.',
+                'ds.type.body2':'Clean and functional so rules and mechanics are understood without friction, even when the player is under turn pressure.',
+                'section.ui':'03. Diegetic Interface',
+                'ui.title':'The World as Interface',
+                'ui.p1':'Every UI element exists within the game world: menus are ancient parchment scrolls, buttons are rustic wooden tablets, and cursors take the shape of characters\' hands — the monster\'s claw, the gnome\'s hand.',
+                'ui.p2':'The two settings (shop and alley) have their own UI palettes, making the atmosphere shift between rounds immediately recognisable without any explanatory text.',
+                'ui.title2':'The Player\'s Rules',
+                'ui.p3':'The biggest UI challenge was letting the player write their own rules without breaking the aesthetic. The solution: an "old paper" system with noise texture (dithering) where they write in a hand-drawn font, as if signing a magical contract.',
+                'gallery.label':'04. Game Screenshots',
+                'cap.1':'Start Screen','cap.2':'Lesky\'s Shop','cap.3':'Round 1: 3×3 Board',
+                'cap.4':'The Alley','cap.5':'Round 2: 4×4 Board','cap.6':'The Big Reveal','cap.7':'Final Screen',
+                'section.art':'05. The Art of Lesky\'s Shop',
+                'art.intro':'Animating frame by frame in one week is radical synthesis. Each animation had to communicate personality with the minimum possible frames. The result: characters that breathe and have weight, created in days, not months.',
+                'gif.idleinicio':'Lesky — Starting Idle','gif.idledar':'Lesky — Delivers the Treasure',
+                'gif.gnomo':'The Hidden Gnome','gif.monstruo':'The Alley Monster',
+                'gif.tesoro1':'Treasure 1 — Potion Flask','gif.tesoro2':'Treasure 2 — Book of the Great Eye',
+                'nav.next':'Next Project →','nav.portfolio':'← View All Projects',
+            }
+        };
+
+        function setLanguage(lang) {
+            const key = lang.toLowerCase();
+            const t = translations[key];
+            if (!t) return;
+            document.querySelectorAll('[data-i18n]').forEach(el => { if (t[el.dataset.i18n] !== undefined) el.textContent = t[el.dataset.i18n]; });
+            document.querySelectorAll('[data-i18n-html]').forEach(el => { if (t[el.dataset.i18nHtml] !== undefined) el.innerHTML = t[el.dataset.i18nHtml]; });
+            const langBtn = document.getElementById('lang-btn');
+            if (langBtn) langBtn.textContent = key === 'es' ? 'EN' : 'ES';
+            localStorage.setItem('userLang', key);
+        }
+        document.getElementById('lang-btn').addEventListener('click', () => {
+            const current = localStorage.getItem('userLang') || 'es';
+            setLanguage(current === 'es' ? 'en' : 'es');
+        });
+        setLanguage((localStorage.getItem('userLang') || 'es').toLowerCase());
+    </script>
+</body>
+</html>

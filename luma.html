@@ -236,9 +236,8 @@
         .img-text-grid.reverse { direction: rtl; }
         .img-text-grid.reverse > * { direction: ltr; }
 
-        .section-img { width: 100%; height: auto; border-radius: 8px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); transition: transform 0.5s ease; }
-        .section-img:hover { transform: scale(1.02); }
-        .section-img.no-shadow { box-shadow: none; filter: drop-shadow(0 15px 20px rgba(0,0,0,0.1)); }
+        .section-img { width: 100%; height: auto; display: block; }
+        .section-img.no-shadow { box-shadow: none; filter: none; }
 
         .concept-text h3 { font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem; text-transform: uppercase; color: var(--project-color); }
         .concept-text p { font-size: 1.1rem; font-weight: 300; line-height: 1.6; margin-bottom: 1rem; }
@@ -295,19 +294,91 @@
         input:checked + .slider { background-color: var(--switch-bg-on); }
         input:checked + .slider:before { transform: translateX(20px); background-color: var(--switch-knob-on); }
 
+        /* --- LIVE APP BUTTON --- */
+        .live-btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background-color: var(--project-color); color: white;
+            font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            padding: 0.8rem 1.5rem; border-radius: 50px;
+            transition: opacity 0.3s, transform 0.3s;
+            margin-top: 1.5rem; width: fit-content;
+        }
+        .live-btn:hover { opacity: 0.85; transform: translateY(-2px); color: white; }
+
+        /* --- VIDEO SECTION --- */
+        .video-section { max-width: 560px; margin: 0 auto 6rem auto; padding: 0 5%; }
+        .project-video { width: 100%; height: auto; display: block; border-radius: 8px; }
+
+        /* --- PROFILE CARD WITH PHOTO --- */
+        .profile-card-row { display: flex; align-items: flex-start; gap: 1.5rem; }
+        .profile-photo { width: 110px; height: auto; flex-shrink: 0; }
+
+        /* --- TWO UP GRID (LUMI + LOGO SIDE BY SIDE) --- */
+        .two-up-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+        .two-up-item { display: flex; flex-direction: column; gap: 1.5rem; }
+        .two-up-item img { width: 100%; height: auto; display: block; }
+        /* Logo bullets as 2x2 grid to avoid tall column */
+        .logo-bullets { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem 1.2rem; padding: 0; list-style: none; margin-top: 0.5rem; }
+        .logo-bullets li { font-size: 0.85rem; font-weight: 300; color: var(--accent-color); line-height: 1.4; padding-top: 0.6rem; border-top: 1px solid var(--line-color); }
+        .logo-bullets li strong { display: block; color: var(--text-color); font-weight: 700; margin-bottom: 0.2rem; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.3px; }
+
+        /* --- FASES PHASES GRID --- */
+        .fases-phases { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem 3rem; margin-top: 2rem; }
+        .fase-item { display: flex; flex-direction: column; gap: 0.3rem; padding-top: 0.8rem; border-top: 1px solid var(--line-color); }
+        .fase-num { font-size: 0.7rem; font-weight: 700; color: var(--project-color); text-transform: uppercase; letter-spacing: 2px; }
+        .fase-item strong { font-size: 0.9rem; font-weight: 800; text-transform: uppercase; color: var(--project-color); }
+        .fase-item p { font-size: 0.85rem; font-weight: 300; color: var(--accent-color); line-height: 1.5; margin: 0; }
+
+        /* --- TEAM CAROUSEL --- */
+        .team-carousel { position: relative; overflow: hidden; margin-top: 2rem; border-radius: 8px; }
+        .carousel-track { display: flex; transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); }
+        .carousel-slide { min-width: 100%; }
+        .carousel-slide img { width: 100%; height: auto; display: block; max-height: 68vh; object-fit: contain; }
+        .carousel-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem; }
+        .carousel-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--line-color); transition: background 0.3s; cursor: pointer; }
+        .carousel-dot.active { background: var(--project-color); }
+
+
+        /* --- FASES / ONBOARDING SECTION --- */
+        .section-img-full { width: 100%; height: auto; display: block; margin-top: 2rem; }
+
+        /* --- PDF DOWNLOAD --- */
+        .download-block {
+            border: 1px solid var(--line-color); border-radius: 12px;
+            padding: 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+        }
+        .download-info h3 { font-size: 1.4rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.4rem; }
+        .download-info p { font-size: 1rem; font-weight: 300; color: var(--accent-color); }
+        .download-btn {
+            display: inline-flex; align-items: center; gap: 0.5rem; flex-shrink: 0;
+            border: 2px solid var(--project-color); color: var(--project-color);
+            font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            padding: 0.8rem 1.5rem; border-radius: 50px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .download-btn:hover { background-color: var(--project-color); color: white; }
+
+        /* --- TEAM PHOTO --- */
+        .team-photo-wrap {
+            width: 100%; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1); margin-top: 2rem;
+        }
+        .team-photo-wrap img { width: 100%; height: auto; display: block; }
+
         /* RESPONSIVE */
         @media (max-width: 900px) {
             .project-hero { grid-template-columns: 1fr; padding-top: 120px; gap: 2rem; max-width: 90%; }
             .hero-left-image { max-width: 90%; }
             .project-title { font-size: 15vw; }
             .hero-info-grid { grid-template-columns: 1fr 1fr; }
-            .split-grid, .ds-grid, .img-text-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .split-grid, .ds-grid, .img-text-grid, .two-up-grid { grid-template-columns: 1fr; gap: 3rem; }
             .img-text-grid.reverse { direction: ltr; }
             .color-palette-flex { justify-content: center; gap: 0.8rem; }
             .browser-mockup { height: 70vh; min-height: 450px; width: 100%; border-radius: 0; }
         }
 
         @media (max-width: 768px) {
+            .download-block { flex-direction: column; text-align: center; padding: 2rem; }
             header {
                 display: flex;
                 align-items: center;
@@ -372,11 +443,10 @@
         
         <section class="project-hero">
             <div class="hero-left-image">
-                <img src="luma_img/portada.png" alt="Luma App Cover" class="main-image">
+                <img src="luma_img/esquema_luma_svg.svg" alt="Luma App Cover" class="main-image">
             </div>
-            
+
             <div class="hero-right-content">
-                <span class="wip-badge" data-i18n="wip">Work in Progress</span>
                 <h1 class="project-title">Luma</h1>
                 <p class="project-subtitle" data-i18n="subtitle">App de Inteligencia Biológica / TFM Máster UX/UI</p>
 
@@ -385,6 +455,8 @@
                         El mundo está diseñado de forma lineal, pero la biología femenina es cíclica. Mientras otras apps actúan como calendarios fríos, <span class="highlight">LUMA</span> traduce los cambios hormonales en una experiencia humana, comprensible y accionable.
                     </p>
                 </div>
+
+                <a href="https://luma-bio-sync-whisper.vercel.app/" target="_blank" rel="noopener" class="live-btn" data-i18n="live.btn" style="margin-bottom: 3rem;">Ver App en Vivo</a>
 
                 <div class="hero-info-grid">
                     <div class="detail-item">
@@ -427,12 +499,22 @@
 
                     <div>
                         <div class="profile-card">
-                            <h3 data-i18n="profile.marta.name">Marta (La desconectada funcional)</h3>
-                            <p data-i18n="profile.marta.desc">Necesita validación emocional, permiso para descansar y "hacks" rápidos para no cancelar su vida por el dolor.</p>
+                            <div class="profile-card-row">
+                                <img src="luma_img/marta.png" alt="Marta" class="profile-photo">
+                                <div>
+                                    <h3 data-i18n="profile.marta.name">Marta (La desconectada funcional)</h3>
+                                    <p data-i18n="profile.marta.desc">Necesita validación emocional, permiso para descansar y "hacks" rápidos para no cancelar su vida por el dolor.</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="profile-card" style="border-color: #353334;">
-                            <h3 style="color: #353334;" data-i18n="profile.andrea.name">Andrea (La optimizadora)</h3>
-                            <p data-i18n="profile.andrea.desc">Busca rendimiento, datos y rigor científico para adaptar sus entrenos a sus picos de energía.</p>
+                            <div class="profile-card-row">
+                                <img src="luma_img/andrea.png" alt="Andrea" class="profile-photo andrea">
+                                <div>
+                                    <h3 style="color: #353334;" data-i18n="profile.andrea.name">Andrea (La optimizadora)</h3>
+                                    <p data-i18n="profile.andrea.desc">Busca rendimiento, datos y rigor científico para adaptar sus entrenos a sus picos de energía.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -481,36 +563,72 @@
             </section>
 
             <section class="section-margin reveal">
-                <div class="img-text-grid">
-                    <img src="luma_img/lumi.png" alt="Mascota Lumi" class="section-img no-shadow">
-                    <div class="concept-text">
-                        <h3 data-i18n="mascot.title">Lumi, la mascota compañera</h3>
-                        <p data-i18n="mascot.p1">El elemento más diferencial de la app es Lumi. Se seleccionó la figura del elefante debido a su simbolismo, funcionando como un guía que humaniza el producto y acompaña a la usuaria durante todos sus ciclos.</p>
-                        <p data-i18n="mascot.p2">El sistema visual se compone de una biblioteca de estados que reaccionan a los datos introducidos. El estilo técnico emplea trazos suaves sin ángulos rectos, acompañados de sombras coloreadas y degradados sutiles que se integran orgánicamente en la interfaz.</p>
+                <div class="two-up-grid" style="grid-template-columns: 1.8fr 1.3fr; align-items: end;">
+                    <div class="two-up-item">
+                        <img src="luma_img/lumi_ficha.png" alt="Mascota Lumi" style="width: 125%; margin-left: -12%">
+                        <div class="concept-text">
+                            <h3 data-i18n="mascot.title">Lumi, la mascota compañera</h3>
+                            <p data-i18n="mascot.p1">Lumi es el elefante que humaniza la app. Su biblioteca de estados reacciona a los datos del ciclo con trazos suaves, sombras coloreadas y degradados orgánicos.</p>
+                        </div>
+                    </div>
+                    <div class="two-up-item">
+                        <div class="concept-text">
+                            <h3 data-i18n="logo.title">Concepto del Logotipo</h3>
+                            <ul class="logo-bullets">
+                                <li data-i18n-html="logo.li1"><strong>Lumi, el agente de cambio:</strong> Representa la fuerza interior empujando la estructura.</li>
+                                <li data-i18n-html="logo.li2"><strong>La "l" como linealidad impuesta:</strong> La representación gráfica de las expectativas de la sociedad.</li>
+                                <li data-i18n-html="logo.li3"><strong>Rompiendo el molde:</strong> Al inclinar la "l", la estructura cede ante la naturaleza.</li>
+                                <li data-i18n-html="logo.li4"><strong>La fluidez cíclica:</strong> "uma" fluye con formas suaves evocando las fases biológicas.</li>
+                            </ul>
+                        </div>
+                        <img src="luma_img/logo_concept.png" alt="Concepto Logotipo Luma">
                     </div>
                 </div>
             </section>
 
             <section class="section-margin reveal">
-                <div class="img-text-grid reverse">
-                    <img src="luma_img/logo_concept.png" alt="Concepto Logotipo Luma" class="section-img no-shadow">
+                <span class="section-header" data-i18n="section.fases">Las 4 Fases</span>
+                <div class="img-text-grid" style="align-items: center; grid-template-columns: 1.4fr 1fr;">
+                    <img src="luma_img/fases.png" alt="Las 4 Fases" style="width: 100%; height: auto; display: block;">
                     <div class="concept-text">
-                        <h3 data-i18n="logo.title">Concepto del Logotipo</h3>
-                        <p data-i18n="logo.p1">El diseño del logotipo utiliza la interacción directa entre la ilustración y la tipografía para contar una historia de liberación y aceptación de los ciclos:</p>
-                        <ul>
-                            <li data-i18n-html="logo.li1"><strong>Lumi, el agente de cambio:</strong> Representa la fuerza interior empujando la estructura.</li>
-                            <li data-i18n-html="logo.li2"><strong>La "l" como linealidad impuesta:</strong> La representación gráfica de las expectativas de la sociedad: una línea recta, vertical y rígida.</li>
-                            <li data-i18n-html="logo.li3"><strong>Rompiendo el molde:</strong> Al inclinar la "l", Lumi demuestra que la estructura debe ceder ante la naturaleza.</li>
-                            <li data-i18n-html="logo.li4"><strong>La fluidez cíclica:</strong> Tras vencer la barrera, "uma" fluye con formas suaves y curvas, evocando las fases biológicas.</li>
-                        </ul>
+                        <p data-i18n="fases.desc">La experiencia de Luma se organiza en 4 fases que mapean las zonas de migración del elefante a lo largo del ciclo, adaptando la interfaz y los consejos a cada momento hormonal.</p>
+                        <div class="fases-phases">
+                            <div class="fase-item">
+                                <span class="fase-num">01 — Menstruación</span>
+                                <strong data-i18n="fases.f1.title">La Cueva</strong>
+                                <p data-i18n="fases.f1.desc">Recarga y regeneración. Lumi guía hacia el descanso y la introspección.</p>
+                            </div>
+                            <div class="fase-item">
+                                <span class="fase-num">02 — Folicular</span>
+                                <strong data-i18n="fases.f2.title">La Sabana</strong>
+                                <p data-i18n="fases.f2.desc">Energía ascendente. Momento ideal para nuevos proyectos y creatividad.</p>
+                            </div>
+                            <div class="fase-item">
+                                <span class="fase-num">03 — Ovulatoria</span>
+                                <strong data-i18n="fases.f3.title">El Oasis</strong>
+                                <p data-i18n="fases.f3.desc">Pico de energía. La comunicación y la conexión social están en su máximo.</p>
+                            </div>
+                            <div class="fase-item">
+                                <span class="fase-num">04 — Lútea</span>
+                                <strong data-i18n="fases.f4.title">La Meseta</strong>
+                                <p data-i18n="fases.f4.desc">Foco y reflexión. Tiempo de completar tareas y preparar el siguiente ciclo.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
-        </div> 
+
+            <div class="video-section reveal">
+                <video class="project-video" autoplay muted loop playsinline>
+                    <source src="luma_img/video_luma.mov" type="video/quicktime">
+                    <source src="luma_img/video_luma.mov" type="video/mp4">
+                </video>
+            </div>
+        </div>
 
         <section class="section-margin reveal">
             <div class="content-wrapper" style="margin-bottom: 3rem;">
-                <span class="section-header" data-i18n="section.landing">Landing Page (WIP)</span>
+                <span class="section-header" data-i18n="section.landing">Landing Page</span>
             </div>
             
             <div class="browser-mockup">
@@ -524,8 +642,41 @@
             </div>
         </section>
 
+        <section class="section-margin reveal">
+            <div class="content-wrapper">
+                <span class="section-header" data-i18n="section.memoria">Memoria del Proyecto</span>
+                <div class="download-block">
+                    <div class="download-info">
+                        <h3 data-i18n="memoria.title">Memoria Completa</h3>
+                        <p data-i18n="memoria.desc">Documento completo del proyecto con investigación, proceso de diseño y resultados finales.</p>
+                    </div>
+                    <a href="luma_img/memoria_LUMA.pdf" download class="download-btn" data-i18n="memoria.btn">Descargar PDF</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-margin reveal">
+            <div class="content-wrapper">
+                <span class="section-header" data-i18n="section.equipo">El Equipo</span>
+                <div class="team-carousel">
+                    <div class="carousel-track">
+                        <div class="carousel-slide"><img src="luma_img/imagen_equipo1.png" alt="Equipo Luma 1"></div>
+                        <div class="carousel-slide"><img src="luma_img/imagen_equipo2.png" alt="Equipo Luma 2"></div>
+                        <div class="carousel-slide"><img src="luma_img/imagen_equipo3.png" alt="Equipo Luma 3"></div>
+                        <div class="carousel-slide"><img src="luma_img/imagen_equipo4.png" alt="Equipo Luma 4"></div>
+                    </div>
+                    <div class="carousel-dots">
+                        <div class="carousel-dot active"></div>
+                        <div class="carousel-dot"></div>
+                        <div class="carousel-dot"></div>
+                        <div class="carousel-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <nav class="project-nav reveal">
-            <a href="index.html" data-i18n="nav.back">← Volver al Inicio</a>
+            <a href="index.html#projects" data-i18n="nav.back">← Volver al Inicio</a>
             <a href="hospitalbuddies.html" data-i18n="nav.next">Proyecto Siguiente →</a>
         </nav>
 
@@ -611,15 +762,29 @@
                 'ds.type.label1':'Títulos / Peachi (Serif)','ds.type.label2':'Cuerpo / Degular (Sans)',
                 'ds.type.body':'Aporta contraste visual. Su geometría limpia y alta legibilidad la hacen fundamental para textos largos, aportando precisión frente a la emoción de los títulos.',
                 'mascot.title':'Lumi, la mascota compañera',
-                'mascot.p1':'El elemento más diferencial de la app es Lumi. Se seleccionó la figura del elefante debido a su simbolismo, funcionando como un guía que humaniza el producto y acompaña a la usuaria durante todos sus ciclos.',
-                'mascot.p2':'El sistema visual se compone de una biblioteca de estados que reaccionan a los datos introducidos. El estilo técnico emplea trazos suaves sin ángulos rectos, acompañados de sombras coloreadas y degradados sutiles que se integran orgánicamente en la interfaz.',
+                'mascot.p1':'Lumi es el elefante que humaniza la app. Su biblioteca de estados reacciona a los datos del ciclo con trazos suaves, sombras coloreadas y degradados orgánicos.',
                 'logo.title':'Concepto del Logotipo',
                 'logo.p1':'El diseño del logotipo utiliza la interacción directa entre la ilustración y la tipografía para contar una historia de liberación y aceptación de los ciclos:',
                 'logo.li1':'<strong>Lumi, el agente de cambio:</strong> Representa la fuerza interior empujando la estructura.',
                 'logo.li2':'<strong>La "l" como linealidad impuesta:</strong> La representación gráfica de las expectativas de la sociedad: una línea recta, vertical y rígida.',
                 'logo.li3':'<strong>Rompiendo el molde:</strong> Al inclinar la "l", Lumi demuestra que la estructura debe ceder ante la naturaleza.',
                 'logo.li4':'<strong>La fluidez cíclica:</strong> Tras vencer la barrera, "uma" fluye con formas suaves y curvas, evocando las fases biológicas.',
-                'section.landing':'Landing Page (WIP)',
+                'section.landing':'Landing Page',
+                'live.btn':'Ver App en Vivo',
+                'section.onboarding':'Flujo de Onboarding',
+                'onboarding.desc':'El flujo completo de incorporación de la usuaria, desde el primer acceso hasta la personalización de su perfil de ciclo.',
+                'section.app':'La App',
+                'section.fases':'Las 4 Fases',
+                'fases.desc':'La experiencia de Luma se organiza en 4 fases que mapean las zonas de migración del elefante a lo largo del ciclo, adaptando la interfaz y los consejos a cada momento hormonal.',
+                'fases.f1.title':'La Cueva','fases.f1.desc':'Recarga y regeneración. Lumi guía hacia el descanso y la introspección.',
+                'fases.f2.title':'La Sabana','fases.f2.desc':'Energía ascendente. Momento ideal para nuevos proyectos y creatividad.',
+                'fases.f3.title':'El Oasis','fases.f3.desc':'Pico de energía. La comunicación y la conexión social están en su máximo.',
+                'fases.f4.title':'La Meseta','fases.f4.desc':'Foco y reflexión. Tiempo de completar tareas y preparar el siguiente ciclo.',
+                'section.memoria':'Memoria del Proyecto',
+                'memoria.title':'Memoria Completa',
+                'memoria.desc':'Documento completo del proyecto con investigación, proceso de diseño y resultados finales.',
+                'memoria.btn':'Descargar PDF',
+                'section.equipo':'El Equipo',
                 'nav.back':'← Volver al Inicio','nav.next':'Proyecto Siguiente →',
             },
             en: {
@@ -644,15 +809,29 @@
                 'ds.type.label1':'Headings / Peachi (Serif)','ds.type.label2':'Body / Degular (Sans)',
                 'ds.type.body':'Provides visual contrast. Its clean geometry and high legibility make it essential for long texts, bringing precision against the emotion of the titles.',
                 'mascot.title':'Lumi, the companion mascot',
-                'mascot.p1':'The most distinctive element of the app is Lumi. The elephant figure was chosen for its symbolism, acting as a guide that humanises the product and accompanies the user through all their cycles.',
-                'mascot.p2':'The visual system is made up of a library of states that react to inputted data. The technical style uses soft strokes without right angles, accompanied by coloured shadows and subtle gradients that integrate organically into the interface.',
+                'mascot.p1':'Lumi is the elephant that humanises the app. Her library of states reacts to cycle data with soft strokes, coloured shadows and organic gradients.',
                 'logo.title':'Logo Concept',
                 'logo.p1':'The logo design uses the direct interaction between illustration and typography to tell a story of liberation and acceptance of cycles:',
                 'logo.li1':'<strong>Lumi, the agent of change:</strong> Represents the inner force pushing against the structure.',
                 'logo.li2':'<strong>The "l" as imposed linearity:</strong> The graphic representation of society\'s expectations: a straight, vertical and rigid line.',
                 'logo.li3':'<strong>Breaking the mould:</strong> By tilting the "l", Lumi shows that structure must yield to nature.',
                 'logo.li4':'<strong>Cyclical fluidity:</strong> After overcoming the barrier, "uma" flows with soft curves, evoking biological phases.',
-                'section.landing':'Landing Page (WIP)',
+                'section.landing':'Landing Page',
+                'live.btn':'Try the Live App',
+                'section.onboarding':'Onboarding Flow',
+                'onboarding.desc':'The full user onboarding flow, from first access to cycle profile personalisation.',
+                'section.app':'The App',
+                'section.fases':'The 4 Phases',
+                'fases.desc':'Luma\'s experience is organised around 4 phases mapping the elephant\'s migration zones through the cycle, adapting the interface and advice to each hormonal moment.',
+                'fases.f1.title':'La Cueva','fases.f1.desc':'Recharge and regeneration. Lumi guides toward rest and introspection.',
+                'fases.f2.title':'La Sabana','fases.f2.desc':'Rising energy. The ideal moment for new projects and creativity.',
+                'fases.f3.title':'El Oasis','fases.f3.desc':'Peak energy. Communication and social connection are at their highest.',
+                'fases.f4.title':'La Meseta','fases.f4.desc':'Focus and reflection. Time to complete tasks and prepare for the next cycle.',
+                'section.memoria':'Project Report',
+                'memoria.title':'Full Report',
+                'memoria.desc':'Complete project document including research, design process and final results.',
+                'memoria.btn':'Download PDF',
+                'section.equipo':'The Team',
                 'nav.back':'← Back to Index','nav.next':'Next Project →',
             }
         };
@@ -671,6 +850,43 @@
             setLanguage(current === 'es' ? 'en' : 'es');
         });
         setLanguage((localStorage.getItem('userLang') || 'es').toLowerCase());
+
+        // --- TEAM CAROUSEL ---
+        const carouselTrack = document.querySelector('.carousel-track');
+        if (carouselTrack) {
+            const dots = document.querySelectorAll('.carousel-dot');
+            const slideCount = document.querySelectorAll('.carousel-slide').length;
+            let idx = 0;
+            function goToSlide(n) {
+                idx = (n + slideCount) % slideCount;
+                carouselTrack.style.transition = 'transform 0.7s cubic-bezier(0.25, 1, 0.5, 1)';
+                carouselTrack.style.transform = `translateX(-${idx * 100}%)`;
+                dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+            }
+            dots.forEach((d, i) => d.addEventListener('click', () => goToSlide(i)));
+            setInterval(() => goToSlide(idx + 1), 3500);
+
+            // Touch swipe
+            let touchX = 0;
+            carouselTrack.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+            carouselTrack.addEventListener('touchend', e => {
+                const dx = e.changedTouches[0].clientX - touchX;
+                if (Math.abs(dx) > 40) goToSlide(dx < 0 ? idx + 1 : idx - 1);
+            }, { passive: true });
+
+            // Mouse drag
+            let mouseX = 0, dragging = false;
+            carouselTrack.style.cursor = 'grab';
+            carouselTrack.addEventListener('mousedown', e => { mouseX = e.clientX; dragging = true; carouselTrack.style.cursor = 'grabbing'; });
+            carouselTrack.addEventListener('mouseup', e => {
+                if (!dragging) return;
+                dragging = false;
+                carouselTrack.style.cursor = 'grab';
+                const dx = e.clientX - mouseX;
+                if (Math.abs(dx) > 40) goToSlide(dx < 0 ? idx + 1 : idx - 1);
+            });
+            carouselTrack.addEventListener('mouseleave', () => { dragging = false; carouselTrack.style.cursor = 'grab'; });
+        }
     </script>
 </body>
 </html>

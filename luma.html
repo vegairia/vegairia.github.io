@@ -371,10 +371,22 @@
             .hero-left-image { max-width: 90%; }
             .project-title { font-size: 15vw; }
             .hero-info-grid { grid-template-columns: 1fr 1fr; }
-            .split-grid, .ds-grid, .img-text-grid, .two-up-grid { grid-template-columns: 1fr; gap: 3rem; }
+            /* !important overrides inline grid-template-columns styles */
+            .split-grid, .ds-grid, .img-text-grid, .two-up-grid { grid-template-columns: 1fr !important; gap: 2.5rem; }
             .img-text-grid.reverse { direction: ltr; }
             .color-palette-flex { justify-content: center; gap: 0.8rem; }
             .browser-mockup { height: 70vh; min-height: 450px; width: 100%; border-radius: 0; }
+            /* Flip logo column so image comes before text on mobile */
+            .two-up-item-flip { flex-direction: column-reverse; }
+            /* Profile photo: stack vertically, full width */
+            .profile-card-row { flex-direction: column; gap: 0.8rem; }
+            .profile-photo { width: 100%; max-width: 180px; }
+            /* Fases phases collapse to 1 col */
+            .fases-phases { grid-template-columns: 1fr; }
+            /* Logo bullets collapse to 1 col */
+            .logo-bullets { grid-template-columns: 1fr; }
+            /* Reset lumi overflow on mobile */
+            .two-up-item img[style] { width: 100% !important; margin-left: 0 !important; }
         }
 
         @media (max-width: 768px) {
@@ -571,7 +583,7 @@
                             <p data-i18n="mascot.p1">Lumi es el elefante que humaniza la app. Su biblioteca de estados reacciona a los datos del ciclo con trazos suaves, sombras coloreadas y degradados orgánicos.</p>
                         </div>
                     </div>
-                    <div class="two-up-item">
+                    <div class="two-up-item two-up-item-flip">
                         <div class="concept-text">
                             <h3 data-i18n="logo.title">Concepto del Logotipo</h3>
                             <ul class="logo-bullets">

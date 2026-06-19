@@ -254,8 +254,17 @@
         @keyframes matrixRain { 0% { transform: translateY(0); } 100% { transform: translateY(-33.33%); } } 
 
         #p-luma:hover .project-name { color: var(--c-luma); }
-        .luma-loader { width: 20px; height: 20px; border: 3px solid var(--text-color); border-top-color: transparent; border-radius: 50%; animation: spin 1s infinite linear; }
-        #p-luma:hover .luma-loader { border-color: var(--c-luma); }
+        .cycle-wheel {
+            width: 26px; height: 26px; border-radius: 50%;
+            background: conic-gradient(var(--text-color) 0deg 90deg, transparent 90deg 180deg, var(--text-color) 180deg 270deg, transparent 270deg);
+            opacity: 0.25; transition: opacity 0.3s;
+        }
+        #p-luma:hover .cycle-wheel {
+            background: conic-gradient(var(--c-luma) 0deg 90deg, #FEC0F9 90deg 180deg, #F1E8FB 180deg 270deg, rgba(155,124,191,0.4) 270deg 360deg);
+            animation: cycleRotate 4s linear infinite;
+            opacity: 1;
+        }
+        @keyframes cycleRotate { to { transform: rotate(360deg); } }
 
         #p-hospital:hover .project-name { color: var(--c-hospital); }
         .radar { width: 30px; height: 30px; border: 4px solid var(--text-color); border-radius: 50%; position: relative; }
@@ -287,9 +296,9 @@
 
         .contact-intro { text-transform: uppercase; letter-spacing: 3px; margin-bottom: 2rem; color: var(--accent-color); font-weight: 300; font-size: 0.9rem; }
         
-        .email-big { 
-            font-size: clamp(1.8rem, 6.5vw, 4.8rem); font-weight: 800; text-transform: uppercase; line-height: 1; 
-            margin-bottom: 4rem; position: relative; display: inline-block; word-break: break-all;
+        .email-big {
+            font-size: clamp(1.8rem, 6.5vw, 4.8rem); font-weight: 800; text-transform: uppercase; line-height: 1;
+            margin-bottom: 4rem; position: relative; display: inline-block;
         }
         
         .email-big::after { 
@@ -437,6 +446,7 @@
             .hero-photo { height: 71vh; }
             .project-name { font-size: 1.5rem; }
             .project-tags { font-size: 0.8rem; }
+            .email-big { font-size: 4.8vw; white-space: nowrap; }
         }
     </style>
 </head>
@@ -543,7 +553,7 @@
                     <div class="project-left">
                         <span class="project-index">02/</span>
                         <span class="project-name">Luma</span>
-                        <div class="icon-container"><div class="luma-loader"></div></div>
+                        <div class="icon-container"><div class="cycle-wheel"></div></div>
                     </div>
                     <div class="project-right">
                         <div class="project-img-wrapper">
